@@ -7,16 +7,12 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
-using Election.ViewModels.Views;
 
 namespace Election.Services
 {
     public static class DataService
     {
-        //private static string electionId = "A13ACD4A-D415-4B27-AFE6-E2310AC71BC6";
-        // ngrok http https://localhost:44365 -host-header="localhost:44365";
-        private readonly static string electionUrl = "https://6f134493aed1.ngrok.io/api";
+        private readonly static string electionUrl = ElectionModels.Misc.Utils.ElectionUrl;
 
         private static HttpClient client { get; set; }
 

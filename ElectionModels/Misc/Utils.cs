@@ -4,13 +4,14 @@ using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ElectionModels.Misc
 {
     public class Utils
     {
+        // ngrok http https://localhost:44365 -host-header="localhost:44365";
+        public static string ElectionUrl = "https://6f134493aed1.ngrok.io/api";
 
         public static void EncryptAesManaged(string raw)
         {
@@ -55,7 +56,6 @@ namespace ElectionModels.Misc
             byte[] ans = Convert.FromBase64String(cipherText);
             return Utils.Decrypt(ans, key, IV);
         }
-
 
         static (byte[] key, byte[] IV) GetAesManaged(string AesSeed)
         {

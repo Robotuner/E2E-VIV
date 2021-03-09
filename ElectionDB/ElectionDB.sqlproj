@@ -58,6 +58,7 @@
     <Folder Include="Properties" />
     <Folder Include="dbo" />
     <Folder Include="Trigger" />
+    <Folder Include="StoredProcedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Election.sql" />
@@ -76,6 +77,9 @@
     <Build Include="Trigger\Vote_Count_InsertTrigger.sql" />
     <Build Include="dbo\Ballot.sql" />
     <Build Include="dbo\SignatureNotice.sql" />
+    <Build Include="StoredProcedures\Election.sql" />
+    <Build Include="StoredProcedures\ElectionResult.sql" />
+    <Build Include="StoredProcedures\washingtonData.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ElectionDB.refactorlog" />

@@ -19,12 +19,8 @@ namespace OneVote.Services
 {
     public static class DataService 
     {
-        // ngrok http https://localhost:44365 -host-header="localhost:44365";
-        private static readonly string electionUrl = "https://6f134493aed1.ngrok.io/api";
-        private static readonly string electionResultUrl = "https://6f134493aed1.ngrok.io/api";
-
-        //private static string electionUrl = "http://localhost/api";
-        //private static string electionResultUrl = "http://localhost/api";
+        private static readonly string electionUrl = ElectionModels.Misc.Utils.ElectionUrl;
+        private static readonly string electionResultUrl = ElectionModels.Misc.Utils.ElectionUrl;
 
         private static HttpClient client { get; set; }
 

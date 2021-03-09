@@ -32,7 +32,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="OpenCvSharp4.runtime.osx.10.15-x64" Version="4.5.1.20210123" />
+    <PackageReference Include="OpenCvSharp4.Windows" Version="4.5.1.20201229" />
     <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />  

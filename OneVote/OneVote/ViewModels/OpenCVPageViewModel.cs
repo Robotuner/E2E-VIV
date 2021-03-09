@@ -1,5 +1,4 @@
 ﻿using ElectionModels;
-using OneVote.Models;
 using OpenCvSharp;
 using System;
 using System.Collections.Generic;
@@ -9,8 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Xamarin.Forms;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace OneVote.ViewModels
 {
