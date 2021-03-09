@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="Election.Pages.Views.TicketsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Election"
+             xmlns:view="clr-namespace:Election.Pages.Views"
+             mc:Ignorable="d"  Style="{StaticResource UserControlStyle}"
+             DataContextChanged="TicketsView_DataContextChanged"
+             d:DesignHeight="800" d:DesignWidth="300" Margin="20,0">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="{x:Static local:Resource.Tickets_Header}" Style="{StaticResource Election-Header1}"/>
+        <Grid Grid.Row="1" Background="DarkGray" Width="300" HorizontalAlignment="Left" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="{x:Static local:FontAwesome.PlusCircle}" Grid.Column="0" Style="{StaticResource FAButtonStyle}" 
+                    Click="AddButton_Click" Margin="5,0" FontFamily="{StaticResource FontAwesomeSolid}" 
+                    ToolTip="{x:Static local:Resource.Ticket_AddButtonToolTip}"/>
+            <Button Content="{x:Static local:FontAwesome.MinusCircle}" Grid.Column="1" Style="{StaticResource FAButtonStyle}" 
+                    Click="RemoveButton_Click" Margin="5,0" FontFamily="{StaticResource FontAwesomeSolid}"
+                    IsEnabled="{Binding HasSelectedTicket}"
+                    ToolTip="{x:Static local:Resource.Ticket_RemoveButtonToolTip}">
+            </Button>
+
+            <Button Content="{x:Static local:FontAwesome.UpArrow}" Grid.Column="3" Style="{StaticResource FAButtonStyle}" 
+                    Click="UpButton_Click" Margin="5,0" IsEnabled="{Binding HasSelectedTicket}"
+                    ToolTip="{x:Static local:Resource.Ticket_UpButtonToolTip}"/>
+            <Button Content="{x:Static local:FontAwesome.DnArrow}" Grid.Column="4" Style="{StaticResource FAButtonStyle}" 
+                    Click="DnButton_Click" Margin="5,0" IsEnabled="{Binding HasSelectedTicket}"
+                    ToolTip="{x:Static local:Resource.Ticket_DnButtonToolTip}"/>
+        </Grid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Background="LightGray">
+            <Label Content="{Binding Display}"  Style="{StaticResource Election-Description}"/>
+        </StackPanel>
+        <ListBox Grid.Row="3" x:Name="ticketlist" ItemsSource="{Binding FilteredTickets}" MaxHeight="550" Width="300" SelectedItem="{Binding SelectedTicket}" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <view:TicketView />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>

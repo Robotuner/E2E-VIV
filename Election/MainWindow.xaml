@@ -1,0 +1,64 @@
+﻿<Window x:Class="Election.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:pages="clr-namespace:Election.Pages"
+        xmlns:views="clr-namespace:Election.Pages.Views"
+        xmlns:vm="clr-namespace:Election.ViewModels"
+        xmlns:vm1="clr-namespace:Election.ViewModels.Views"
+        mc:Ignorable="d"
+        Title="CreateQRCode" Height="800" Width="1600" >  
+
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:CreateQRCodeViewModel}">
+            <pages:CreateQRCode/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:FaceDetectionViewModel}">
+            <pages:FaceDetection/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm1:ElectionViewModel}">
+            <pages:ElectionView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm1:ElectionSummaryViewModel}">
+            <views:ElectionSummary/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm1:ElectionSignatureViewModel}">
+            <views:ElectionSignatureView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:WebCamPageViewModel}">
+            <pages:WebCamPage/>
+        </DataTemplate>
+         <!--<DataTemplate DataType="{x:Type vm:WebcamWindowViewModel}">
+            <pages:WebcamWindow/>
+        </DataTemplate>-->
+    </Window.Resources>
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="./Images/watermark.png" />
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="NavigationMenuListBox" ItemsSource="{Binding Menu}" SelectedItem="{Binding SelectedMenu}" Width="140">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="{Binding ElementName=NavigationMenuListBox, Path=Width}" Background="Aqua" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Content="{Binding Name}" FontSize="40" FontFamily="{StaticResource FontAwesomeRegular}"
+                               HorizontalAlignment="Center"/>
+                        <Label Grid.Row="1" Content="{Binding Description}" HorizontalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}"/>
+    </Grid>
+</Window>

@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[SignatureNotice]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [Nonce] INT NOT NULL, 
+    [BallotId] UNIQUEIDENTIFIER NOT NULL, 
+    [CreateDate] DATETIME NOT NULL
+)

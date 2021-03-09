@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OneVote.Views.ItemDetailPage"
+             xmlns:local="clr-namespace:OneVote.Views"
+             xmlns:converter="clr-namespace:OneVote.Converters"
+             xmlns:template="clr-namespace:OneVote.DataTemplateSelectors"
+             xmlns:vm="clr-namespace:OneVote.ViewModels"
+             xmlns:model="clr-namespace:OneVote.Models"  
+             Title="{Binding Title}">
+    <ContentPage.BindingContext>
+        <vm:ItemDetailViewModel />
+    </ContentPage.BindingContext>
+    <!--
+      x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
+      https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
+    -->
+    <ContentPage.Resources>
+        <converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter"/>
+        <DataTemplate x:Key="MeasureView">
+            <local:MeasureView/>
+        </DataTemplate>
+        <DataTemplate x:Key="FederalView">
+            <local:FederalView/>
+        </DataTemplate>
+        <DataTemplate x:Key="JudicialView">
+            <local:JudicialView/>
+        </DataTemplate>
+        <template:CategoryTemplateSelector x:Key="CategoryTemplateSelector" MeasureTemplate="{StaticResource MeasureView}" 
+               FederalTemplate="{StaticResource FederalView}" JudicialTemplate="{StaticResource JudicialView}"/>        
+    </ContentPage.Resources>
+    <CollectionView x:Name="ItemsListView" ItemsSource="{Binding CategoryList}"  SelectionMode="None"
+                    ItemSizingStrategy="MeasureAllItems" ItemTemplate="{StaticResource CategoryTemplateSelector}" />
+    <!--<ListView x:Name="ItemsListView" ItemsSource="{Binding CategoryList}"  SelectionMode="None"
+              ItemTemplate="{StaticResource CategoryTemplateSelector}" HasUnevenRows="True"/>-->
+</ContentPage>

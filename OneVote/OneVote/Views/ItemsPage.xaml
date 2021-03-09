@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OneVote.Views.ItemsPage"
+             xmlns:vc="clr-namespace:OneVote.Views"
+             xmlns:vm="clr-namespace:OneVote.ViewModels"
+             xmlns:models="clr-namespace:OneVote.Models"
+             Title="{Binding Title}"  x:DataType="vm:ItemsViewModel"
+             x:Name="BrowseItemsPage">
+    <ContentPage.BindingContext>
+        <vm:ItemsViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Party" Clicked="StraightTicket_Clicked"  Order="Primary" Priority="0" >
+            <!--<ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="FontAwesomeSolid"
+                                 Glyph="{x:Static models:FontAwesome.TimesCircle}" 
+                                 Color="{StaticResource WhiteBackground}" Size="Medium"/>
+            </ToolbarItem.IconImageSource>-->
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <CollectionView 
+                x:Name="ItemsListView" ItemsSource="{Binding Items}" SelectionMode="None" Margin="10,0" 
+                ItemSizingStrategy="MeasureAllItems" >
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <vc:CategoryTypeTemplate />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <StackLayout Grid.Row="1" Orientation="Vertical" Margin="10,0">
+            <Label Text="{Binding EncryptionMessage}"  FontSize="Small"  HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="Center" TextColor="Red"/>
+            <Label Text="{Binding ElapsedTime}" Padding="10,0" FontSize="Medium" HorizontalOptions="Center"
+                   VerticalOptions="Center" TextColor="Red"/>            
+        </StackLayout>
+
+        <StackLayout Grid.Row="2" Orientation="Horizontal">
+            <Button x:Name="submitButton" Text="Submit Ballot" FontSize="Large" BackgroundColor="CadetBlue" 
+                    Clicked="SubmitBallot_Clicked" HorizontalOptions="FillAndExpand" IsEnabled="{Binding CanSubmitBallot}" />
+            <Button x:Name="Review" Text="Review Choices" FontSize="Large" BackgroundColor="CadetBlue" 
+                    Clicked="ReviewBallot_Clicked" HorizontalOptions="FillAndExpand"/>
+        </StackLayout>
+    </Grid>
+
+</ContentPage>

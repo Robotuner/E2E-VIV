@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctrls="clr-namespace:OneVote.Controls"
+             xmlns:vm="clr-namespace:OneVote.ViewModels"
+             x:Class="OneVote.Views.SubmitAuthorizationPage">
+    <ContentPage.BindingContext>
+        <vm:SubmitAuthorizationPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Margin="10,0" VerticalOptions="Center">
+            <ctrls:GenericEntryField FieldLabel="Enter SSN" PlaceHolder="Enter SSN" 
+                    PlaceKeyboardTypeHolder="Numeric" FieldValue="{Binding SSN1}" AsPassword="True"/>
+            <ctrls:GenericEntryField FieldLabel="Re-Enter SSN" PlaceHolder="Re-Enter SSN" 
+                    PlaceKeyboardTypeHolder="Numeric" FieldValue="{Binding SSN2}" AsPassword="True"/>
+            <StackLayout Orientation="Horizontal" VerticalOptions="End">
+                <Button x:Name="OkButton" Text="OK" FontSize="Large" BackgroundColor="CadetBlue" 
+                        Clicked="OKButtonClicked" HorizontalOptions="FillAndExpand" IsEnabled="{Binding OKButtonEnabled}"/>
+                <Button x:Name="Review" Text="Cancel" FontSize="Large" BackgroundColor="CadetBlue" 
+                        Clicked="CancelButtonClicked" HorizontalOptions="FillAndExpand"/>                
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

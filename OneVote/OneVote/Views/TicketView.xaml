@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:OneVote.ViewModels"  
+             xmlns:converter="clr-namespace:OneVote.Converters"
+             xmlns:local="clr-namespace:OneVote.Views"
+             xmlns:template="clr-namespace:OneVote.DataTemplateSelectors"
+             xmlns:model="clr-namespace:OneVote.Models"  
+             x:Class="OneVote.Views.TicketView">
+    <ContentView.Resources>
+        <converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter"/>
+        <DataTemplate x:Key="SimpleTicketView">
+            <local:SimpleTicketView/>
+        </DataTemplate>
+        <DataTemplate x:Key="TicketWithPartyView">
+            <local:TicketWithPartyView/>
+        </DataTemplate>
+        <template:TicketTemplateSelector x:Key="TicketTemplateSelector" SimpleTicketTemplate="{StaticResource SimpleTicketView}" 
+               TicketWithPartyTemplate="{StaticResource TicketWithPartyView}"/>
+    </ContentView.Resources>    
+    <ContentView.Content>
+        <CollectionView  ItemsSource="{Binding}"  SelectionMode="None" ItemSizingStrategy="MeasureAllItems"
+                         HeightRequest="{Binding Source={RelativeSource AncestorType={x:Type vm:CategoryViewModel}}, Path=TicketViewHeight}"
+                         ItemTemplate="{StaticResource TicketTemplateSelector}">
+        </CollectionView>
+    </ContentView.Content>
+</ContentView>

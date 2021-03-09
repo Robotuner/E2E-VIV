@@ -1,0 +1,95 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;NOTIncludeNonce</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Dlib\DLibUtils.cs" />
+    <Compile Remove="Dlib\EyePoints.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Dlib\shape_predictor_68_face_landmarks.dat" />
+    <None Remove="Dnn\deploy.prototxt" />
+    <None Remove="Dnn\res10_300x300_ssd_iter_140000.caffemodel" />
+    <None Remove="Dnn\solver.prototxt" />
+    <None Remove="Dnn\test.prototxt" />
+    <None Remove="Dnn\train.prototxt" />
+    <None Remove="Haarcascade\haarcascade_eye.xml" />
+    <None Remove="Haarcascade\haarcascade_eye_tree_eyeglasses.xml" />
+    <None Remove="Haarcascade\haarcascade_frontalcatface_extended.xml" />
+    <None Remove="Haarcascade\haarcascade_frontalface_alt.xml" />
+    <None Remove="Haarcascade\haarcascade_frontalface_alt2.xml" />
+    <None Remove="Haarcascade\haarcascade_frontalface_alt_tree.xml" />
+    <None Remove="Haarcascade\haarcascade_frontalface_default.xml" />
+    <None Remove="Haarcascade\haarcascade_lefteye_2splits.xml" />
+    <None Remove="Haarcascade\haarcascade_profileface.xml" />
+    <None Remove="Haarcascade\haarcascade_righteye_2splits.xml" />
+    <None Remove="Haarcascade\haarcascade_smile.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Dlib\shape_predictor_68_face_landmarks.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dnn\deploy.prototxt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dnn\res10_300x300_ssd_iter_140000.caffemodel">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <AdditionalFiles Include="Dnn\solver.prototxt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <AdditionalFiles Include="Dnn\test.prototxt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <AdditionalFiles Include="Dnn\train.prototxt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <AdditionalFiles Include="Haarcascade\haarcascade_eye.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <AdditionalFiles Include="Haarcascade\haarcascade_eye_tree_eyeglasses.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <AdditionalFiles Include="Haarcascade\haarcascade_frontalcatface_extended.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <EmbeddedResource Include="Haarcascade\haarcascade_frontalface_alt.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <AdditionalFiles Include="Haarcascade\haarcascade_frontalface_alt2.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <AdditionalFiles Include="Haarcascade\haarcascade_frontalface_alt_tree.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <AdditionalFiles Include="Haarcascade\haarcascade_frontalface_default.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <AdditionalFiles Include="Haarcascade\haarcascade_lefteye_2splits.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <AdditionalFiles Include="Haarcascade\haarcascade_profileface.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <AdditionalFiles Include="Haarcascade\haarcascade_righteye_2splits.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+    <AdditionalFiles Include="Haarcascade\haarcascade_smile.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DlibDotNet" Version="19.21.0.20201122" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+</Project>

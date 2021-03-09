@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[VoteResult]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [ElectionId] UNIQUEIDENTIFIER NOT NULL, 
+    [CategoryId] UNIQUEIDENTIFIER NULL, 
+    [Count] INT NOT NULL
+)

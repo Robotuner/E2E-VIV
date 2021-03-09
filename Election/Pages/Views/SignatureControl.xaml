@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="Election.Pages.Views.SignatureControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Election.Pages.Views"
+             mc:Ignorable="d" Loaded="SignatureControl_Loaded"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Margin="5">
+            <TextBlock Text="{Binding Id, StringFormat=Id: {0}}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Name, StringFormat=Name: {0}}" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Confirmed, StringFormat=Confirmed: {0}}" VerticalAlignment="Center" Margin="0"/>
+            <TextBlock Text="{Binding BirthYear, StringFormat=BirthYear: {0}}" VerticalAlignment="Center" Margin="0"/>
+            <TextBlock Text="{Binding Longitude, StringFormat=Longitude: {0}}" VerticalAlignment="Center" Margin="0"/>
+            <TextBlock Text="{Binding Latitude, StringFormat=Latitude: {0}}" VerticalAlignment="Center" Margin="0"/>
+            <TextBlock Text="{Binding Platform, StringFormat=Platform: {0}}" VerticalAlignment="Center" Margin="0"/>
+            <TextBlock Text="{Binding SubmitDate, StringFormat=Submit Date: {0}}" VerticalAlignment="Center" Margin="0"/>
+            <TextBlock Text="{Binding Phonenumber, StringFormat=Phone: {0}}" VerticalAlignment="Center" Margin="0"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Rotate CCW" Command="{Binding RotateCCWCommand}" Margin="5" Padding="5,0"/>
+                <Button Content="Rotate CW" Command="{Binding RotateCWCommand}" Margin="5" Padding="5,0"/>
+            </StackPanel>
+            <Button Content="Detect Face" Command="{Binding DetectCommand}" Margin="5" Padding="5,0"/>
+        </StackPanel>
+        <Grid HorizontalAlignment="Left" >
+            <Image Source="{Binding ImageSource}" Name="image" Width="{Binding Width}" VerticalAlignment="Top"  />
+            <Canvas x:Name="canvas" Background="Transparent" Width="{Binding ElementName=image, Path=Width}"
+                                    Height="{Binding ElementName=image, Path=Height}"/>
+        </Grid>
+    </StackPanel>
+</UserControl>

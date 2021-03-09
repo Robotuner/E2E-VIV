@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:OneVote.ViewModels"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             x:Class="OneVote.Views.ReviewBallotChoices">
+    <ContentPage.BindingContext>
+        <vm:ReviewBallotChoicesViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackLayout Orientation="Horizontal" Margin="10,0">
+                <Label Text="Section: " FontSize="Medium" VerticalOptions="Center"/>
+                <Picker ItemsSource="{Binding CategoryTypes}" SelectedIndexChanged="CategoryTypes_SelectedIndexChanged" 
+                        SelectedItem="{Binding SelectedCategoryType}" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+            <CollectionView Grid.Row="1" ItemsSource="{Binding CategoryList}" Margin="10,0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Vertical" >
+                            <Label Text="{Binding Heading}"/>
+                            <Label Text="{Binding Title}" Margin="5,0"/>
+                            <Label Text="{Binding Selection.Description}" Margin="15,0"
+                                   FontSize="Large" TextColor="DarkGreen"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Label Grid.Row="1" Text="No Votes Found" FontSize="Large" HorizontalOptions="Center"
+                   VerticalOptions="Center" Margin="0,20" IsVisible="{Binding NoChoices}"/>
+            <StackLayout  Grid.Row="2" Orientation="Horizontal">
+                <Button Text="Approve and Submit" HorizontalOptions="FillAndExpand" VerticalOptions="Center" FontSize="Medium" 
+                    Background="CadetBlue" Clicked="ApproveBallotClicked"/>
+                <Button Text="Reject" HorizontalOptions="FillAndExpand" VerticalOptions="Center" FontSize="Medium" 
+                    Background="CadetBlue" Clicked="CloseBallotClicked"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

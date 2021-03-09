@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:OneVote.Views"
+             x:Class="OneVote.Views.FederalView">
+    <ContentView.Content>
+        <StackLayout Padding="10" >
+            <StackLayout Orientation="Horizontal" BackgroundColor="DeepSkyBlue" Padding="5,0">
+                <Label Text="{Binding Heading}" LineBreakMode="NoWrap" FontSize="16" />
+            </StackLayout>
+            <Label Text="{Binding Title}" LineBreakMode="NoWrap" FontSize="Default" />
+            <local:TicketView BindingContext="{Binding Tickets}"/>
+            <BoxView HeightRequest="1" BackgroundColor="Black"/>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

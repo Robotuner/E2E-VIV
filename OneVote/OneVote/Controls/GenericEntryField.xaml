@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctrls="clr-namespace:OneVote.Controls"
+             x:Class="OneVote.Controls.GenericEntryField">
+    <ContentView.Content>
+        <Grid x:Name="fieldPanel" Margin="5,0,5,1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" x:Name="fieldLabel" Style="{StaticResource DataLabelStyle}"/>
+            <Label Grid.Row="0" Grid.Column="1" x:Name="required" Style="{StaticResource RequiredMsgStyle}" HorizontalOptions="End" />
+            <ctrls:SelectAllEntry Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="fieldValue" Style="{StaticResource EntryValueStyle}" TextChanged="OnEntryChanged" />
+            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="fieldValueDisplay" Style="{StaticResource EntryValueDisplayStyle}" />
+        </Grid>
+    </ContentView.Content>
+</ContentView>

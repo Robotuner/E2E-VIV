@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OneVote.App">
+    <!--
+        Define global resources and styles here, that apply to all pages in your app.
+    -->
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Primary">#2196F3</Color>
+            <Style TargetType="Button">
+                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="#332196F3" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Color x:Key="DarkText">#000000</Color>
+            <Color x:Key="RequiredRedColor">#ff0000</Color>
+            <Color x:Key="WhiteBackground">#FFFFFF</Color>
+            <Color x:Key="LabelLightGreyText">#9D9D9D</Color>
+            <Style x:Key="DataLabelStyle" TargetType="Label">
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="{StaticResource Key=LabelLightGreyText}" />
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="LineBreakMode" Value="TailTruncation" />
+            </Style>
+            <Style x:Key="DataValueStyle" TargetType="Label" >
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="{StaticResource Key=DarkText}" />
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="LineBreakMode" Value="TailTruncation" />
+            </Style>
+            <Style TargetType="Label" x:Key="RequiredMsgStyle">
+                <Setter Property="HorizontalOptions" Value="Start"/>
+                <Setter Property="VerticalOptions" Value="Start"/>
+                <Setter Property="Margin" Value="1,0,1,0"/>
+                <Setter Property="FontSize" Value="Micro"/>
+                <Setter Property="Text" Value="(Required)"/>
+                <Setter Property="TextColor" Value="{StaticResource RequiredRedColor}"/>
+            </Style>
+            <Style x:Key="EntryValueStyle" TargetType="Entry" >
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="{StaticResource Key=DarkText}" />
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="BackgroundColor" Value="{StaticResource WhiteBackground}" />
+            </Style>
+            <Style x:Key="EntryValueDisplayStyle" TargetType="Label" >
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="{StaticResource Key=DarkText}" />
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="Margin" Value="5,0"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource WhiteBackground}" />
+            </Style>
+        </ResourceDictionary>        
+    </Application.Resources>
+</Application>

@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="Election.Pages.Views.TicketView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Election"
+             mc:Ignorable="d" Style="{StaticResource UserControlStyle}"
+             DataContextChanged="TicketView_DataContextChanged"
+             d:DesignHeight="450" d:DesignWidth="300">
+    <StackPanel Orientation="Vertical">
+        <Label Content="{x:Static local:Resource.Ticket_CandidateName}" Style="{StaticResource Election-Description}" HorizontalAlignment="Left" />
+        <TextBox Style="{StaticResource Election-TextBox}" Text="{Binding Description}" Width="250" />
+        <Label Content="{x:Static local:Resource.Ticket_SubTitle}" Style="{StaticResource Election-Description}" HorizontalAlignment="Left" Width="250"/>
+        <TextBox Style="{StaticResource Election-TextBox}" Text="{Binding Information}" Width="250" />
+
+        <StackPanel Orientation="Vertical" Margin="0,4" x:Name="legslativePositions" >
+            <Label Content="{x:Static local:Resource.Ticket_LegislativePosition}" Style="{StaticResource Election-Description}" HorizontalAlignment="Left" />
+            <ComboBox Width="250" ItemsSource="{Binding LegislativePositions}" SelectedItem="{Binding SelectedLegislativePosition}" 
+                      DisplayMemberPath="Name" HorizontalAlignment="Left" />
+        </StackPanel>  
+        
+        <StackPanel Orientation="Horizontal" Margin="0,4" >
+            <Label Content="{x:Static local:Resource.Ticket_Party}" Style="{StaticResource Election-Description}" />
+            <ComboBox Width="210" ItemsSource="{Binding Parties}" SelectedItem="{Binding SelectedParty}" 
+                      DisplayMemberPath="Name" />
+        </StackPanel>
+        
+        <Grid Margin="0,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="1" Content="Seq:" />
+            <Label Grid.Column="2" Content="{Binding Sequence}" />
+        </Grid>
+        <Separator/>
+    </StackPanel>
+</UserControl>

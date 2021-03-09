@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OneVote.Views.TicketWithPartyView">
+    <ContentView.Content>
+        <StackLayout Orientation="Horizontal" Padding="20, 5" >
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer  NumberOfTapsRequired="1" Command="{Binding VoteTapped}" CommandParameter="{Binding .}">
+                </TapGestureRecognizer>
+            </StackLayout.GestureRecognizers>            
+            
+            <Label Text="{Binding Icon}" TextColor="DarkGray" 
+                    HorizontalOptions="Center" VerticalOptions="Center" FontFamily="FontAwesomeSolid"
+                     FontSize="Large" WidthRequest="40" HeightRequest="24">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding Selected}" Value="True">
+                        <Setter Property="TextColor" Value="DarkGreen"/>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+            <StackLayout Orientation="Vertical">
+                <Label Text="{Binding Description}" VerticalOptions="Center" Margin="10,0"/>
+                <Label Text="{Binding Party}" VerticalOptions="Center" Margin="10,0" FontSize="Micro"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

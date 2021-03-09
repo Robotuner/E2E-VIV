@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:bc="clr-namespace:OneVote.ViewModels"
+             x:Class="OneVote.Views.StraightTicketPage">
+    <ContentPage.BindingContext>
+        <bc:StraightTicketPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Text="On contests were there are multiple candidates of the same party, no candidates are selected." Margin="10"
+                   FontSize="Medium"/>
+            <CollectionView Grid.Row="1" ItemsSource="{Binding Parties}" >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal" Padding="20, 5" >
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer  NumberOfTapsRequired="1" Command="{Binding PartyTapped}" CommandParameter="{Binding .}">
+                                </TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                            <Label Text="{Binding Icon}" TextColor="DarkGray" 
+                                HorizontalOptions="Center" VerticalOptions="Center" FontFamily="FontAwesomeSolid"
+                                    FontSize="Large" WidthRequest="40" HeightRequest="24">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding Selected}" Value="True">
+                                        <Setter Property="TextColor" Value="DarkGreen"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <Label Text="{Binding Description}" VerticalOptions="Center" Margin="10,0" FontSize="Large">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding Selected}" Value="True">
+                                        <Setter Property="TextColor" Value="Green"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView> 
+            <Button Grid.Row="2" Text="Close and Set Selections" Clicked="Close_Clicked"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
