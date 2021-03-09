@@ -25,15 +25,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectionAPITest", ".\Electi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4246CA06-564B-4664-9307-BF4B42F43CC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCvSharp", "C:\Code\OpenCvSharp-master3.2\src\OpenCvSharp\OpenCvSharp.csproj", "{658C140F-2E73-4E22-80A7-F05DF0A83318}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCvSharp", ".\OpenCvSharp-master3.2\src\OpenCvSharp\OpenCvSharp.csproj", "{658C140F-2E73-4E22-80A7-F05DF0A83318}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCvSharp.Android", "C:\Code\OpenCvSharp-master3.2\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj", "{F94F9E8A-E239-45EA-9C61-C7855C8B6F25}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCvSharp.Android", ".\OpenCvSharp-master3.2\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj", "{F94F9E8A-E239-45EA-9C61-C7855C8B6F25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCvSharp.Windows", "C:\Code\OpenCvSharp-master3.2\src\OpenCvSharp.Windows\OpenCvSharp.Windows.csproj", "{D7856971-D877-4CB1-A08C-C2A763EBFAD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCvSharp.Windows", ".\OpenCvSharp-master3.2\src\OpenCvSharp.Windows\OpenCvSharp.Windows.csproj", "{D7856971-D877-4CB1-A08C-C2A763EBFAD1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenCvSharpExtern", "C:\Code\OpenCvSharp-master3.2\src\OpenCvSharpExtern\OpenCvSharpExtern.vcxproj", "{8E7279F8-F801-4672-B42F-1ED2C68B16A4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenCvSharpExtern", ".\OpenCvSharp-master3.2\src\OpenCvSharpExtern\OpenCvSharpExtern.vcxproj", "{8E7279F8-F801-4672-B42F-1ED2C68B16A4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenCvSharpExternDroid", "C:\Code\OpenCvSharp-master3.2\src\OpenCvSharpExternDroid\OpenCvSharpExternDroid.vcxproj", "{707296F9-6AEF-4548-A66D-4CF3E5795B1A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenCvSharpExternDroid", ".\OpenCvSharp-master3.2\src\OpenCvSharpExternDroid\OpenCvSharpExternDroid.vcxproj", "{707296F9-6AEF-4548-A66D-4CF3E5795B1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

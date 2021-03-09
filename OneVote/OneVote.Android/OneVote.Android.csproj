@@ -107,11 +107,11 @@
     <AndroidResource Include="Resources\drawable\icon_feed.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\Code\OpenCvSharp-master3.2\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj">
+    <ProjectReference Include="..\..\OpenCvSharp-master3.2\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj">
       <Project>{f94f9e8a-e239-45ea-9c61-c7855c8b6f25}</Project>
       <Name>OpenCvSharp.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\..\Code\OpenCvSharp-master3.2\src\OpenCvSharp\OpenCvSharp.csproj">
+    <ProjectReference Include="..\..\OpenCvSharp-master3.2\src\OpenCvSharp\OpenCvSharp.csproj">
       <Project>{658c140f-2e73-4e22-80a7-f05df0a83318}</Project>
       <Name>OpenCvSharp</Name>
     </ProjectReference>
