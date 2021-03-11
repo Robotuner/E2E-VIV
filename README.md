@@ -27,3 +27,5 @@ Common objects used by both the **Election** and **One Vote** projects.
 
 ## OneVote Project
 Xamarin Forms app for both Android and iOS.  Represents the voting app the registered voters will use to cast votes.  This is rather fluid.  Mostly it is subject to what I think the UI should do, not feedback from any States hopefully will eventually choose to implement internet voting.  In particular, I have been attempting to use open source software (OpenCV) for face detection and image capturing based on user action (blinking).  I haven't been very succesful at it yet.  My preference is to do this using open source software rather than use either Google or Microsoft libraries which require licensing and fees.  If there are 150 million ballots, there are 150 million Head shots.  I don't know what it would cost to validate each head shot as unique.  It might not be a small number.
+
+The head shot speaks to the auditing capability of the E2E system, not the ability to tamper or inject ballots into the system.
