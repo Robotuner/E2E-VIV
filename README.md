@@ -1,17 +1,17 @@
 # E2E-VIV Initiative
 **Visual Studio 2019 Community Version 16.8.5**
 
-The E2E-VIV Initiative is born from the uncertainty of the 2020 Election.  The projects in this initiative represent source code used to mimic the End 2 End process.  If inclined, I would like help on all aspects of this initiative, Architect, DB, Testing, or any other input/feedback.  The goal is to fortify what I have to a point where DEVCON can be invited to test and find weaknesses and points of attack.  States will not implement internet voting without certification.  It is doubtful that the US EAC (US Election Assistance Commission) would even know how or what aspects should be certified for a reliable E2E VIV system.  The experience gained in this initiative would probably be of great value when that day arrives.  
+The E2E-VIV Initiative is born from the uncertainty of the 2020 Election.  The projects in this initiative represent source code used to mimic the End 2 End process as envisioned during the feasibility investigation.  If inclined, I would like help on all aspects of this initiative, Architect, DB, Testing, or any other input/feedback.  The goal is to fortify what I have to a point where DEVCON can be invited to test and find weaknesses and points of attack.  States will not implement internet voting without certification.  It is doubtful that the US EAC (US Election Assistance Commission) would even know how or what aspects should be certified for a reliable E2E VIV system.  The experience gained in this initiative would probably be of great value when that day arrives.  
 
 This initiative is important to me.  I believe it is important for this country.  Please support this effort by making a donation to support this effort.  https://www.paypal.com/donate?hosted_button_id=L25FJ3YJ8C8Q4 
 
 ## How I am using the code
-I have not set-up website for the API basically I am:
-1. Loading the Election API project is an VS Instance and running it as localhost.
+I have not set-up website for the API, basically I am:
+1. Loading the Election API project as an VS Instance and running it as localhost.
 2. Starting NGROK and pointing it to local host.  The command line I am using is:  NGROK http https:/localhost:#### -host-header="localhost:####"
-3. I am setting the ElectionModels.Misc.Utils.ElectionUrl = "https:ngrokurlhere";
-4. In another VS Instance2 I am running the Election Project QRScanCode view.
-5. In another VS Instance I am running either the iOS or Android OneVote app.
+3. I am setting the ElectionModels.Misc.Utils.ElectionUrl = "https:ngrokurlhere" then rebuilding both the Election and One Vote projects.
+4. In VS Instance2 I am running the Election Project QRScanCode view to create QRScan codes to load into the voting app.
+5. In a third VS Instance I am running either the iOS or Android OneVote app.
 
 To simulate a ballot, I run the app, scan the QRScan code in instance 2 then casting votes, taking the headshot and submitting the completed ballot.
 
