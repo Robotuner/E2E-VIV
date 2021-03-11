@@ -1,4 +1,4 @@
-# E2E-VIV
+# E2E-VIV Initiative
 Election Project: WPF Project for pieces of code that being tested of needed to support voting.
 
 Electon API: an API that serves ballots, and accepts signatures.
