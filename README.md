@@ -1,5 +1,7 @@
 # E2E-VIV Initiative
 The E2E-VIV Initiative is born from the uncertainty of the 2020 Election.  The projects in this initiative represent source code used to mimic the End 2 End process.  If inclined, I would like help on all aspects of this initiative, Architect, DB, Testing, or any other input/feedback.  The goal is to fortify what I have to a point where DEVCON can be invited to test and find weaknesses and points of attack.  States will not implement internet voting without certification.  It is doubtful that the US EAC (US Election Assistance Commission) would even know how or what aspects should be certified for a reliable E2E VIV system.  The experience gained in this initiative would probably be of great value when that day arrives.  
+This initiative is important to me.  I believe it is important for this country.  Please support this effort by making a donation to support this effort.  https://www.paypal.com/donate?hosted_button_id=L25FJ3YJ8C8Q4
+
 ## Election Project
 Election is a WPF project that has multiple views.  The Primary View is a **QR Scan Code** view that would create a QR Scan code similar to one provided by the State Registration Website.  The Scan code is used by the voting app (One Vote Xamarin Forms Project) to get a ballot. 
 QR Scan Code requirements:
