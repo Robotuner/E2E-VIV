@@ -1,5 +1,5 @@
 # E2E-VIV Initiative
-Visual Studio 2019 Community Version 16.8.5
+***Visual Studio 2019 Community Version 16.8.5
 
 The E2E-VIV Initiative is born from the uncertainty of the 2020 Election.  The projects in this initiative represent source code used to mimic the End 2 End process.  If inclined, I would like help on all aspects of this initiative, Architect, DB, Testing, or any other input/feedback.  The goal is to fortify what I have to a point where DEVCON can be invited to test and find weaknesses and points of attack.  States will not implement internet voting without certification.  It is doubtful that the US EAC (US Election Assistance Commission) would even know how or what aspects should be certified for a reliable E2E VIV system.  The experience gained in this initiative would probably be of great value when that day arrives.  
 
