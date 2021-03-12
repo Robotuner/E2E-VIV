@@ -9,7 +9,7 @@ This initiative is important to me.  I believe it is important for this country.
 I have not set-up website for the API, basically I am:
 1. Loading the Election API project as an VS Instance and running it as localhost.
 2. Starting NGROK and pointing it to local host.  The command line I am using is:  NGROK http https:/localhost:#### -host-header="localhost:####"
-3. I am setting the ElectionModels.Misc.Utils.ElectionUrl = "https:ngrokurlhere" then rebuilding both the Election and One Vote projects.
+3. I am setting the ElectionModels.Misc.Utils.ElectionUrl = "https:ngrokurlhere/api" then rebuilding both the Election and One Vote projects.
 4. In VS Instance2 I am running the Election Project QRScanCode view to create QRScan codes to load into the voting app.
 5. In a third VS Instance I am running either the iOS or Android OneVote app.
 
