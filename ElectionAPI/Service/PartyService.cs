@@ -11,9 +11,9 @@ namespace ElectionAPI.Service
 {
     public interface IPartyService
     {
-        Task<Party> Delete(IDbConnection context, int id);
-        Task<Party> Insert(IDbConnection context, Party Host);
-        Task<Party> Update(IDbConnection context, Party Host);
+        Task<Party> Delete(IUnitOfWork uow, int id);
+        Task<Party> Insert(IUnitOfWork uow, Party Host);
+        Task<Party> Update(IUnitOfWork uow, Party Host);
         Task<IEnumerable<Party>> GetAll(IDbConnection context);
         Task<Party> GetByID(IDbConnection context, int id);
     }
@@ -33,9 +33,9 @@ namespace ElectionAPI.Service
                 var p = new DynamicParameters();
                 p.Add("@active", true, System.Data.DbType.Boolean, System.Data.ParameterDirection.Input);
 
-                result = await context.QueryAsync<Party>(sql: "Party_Get", commandType: System.Data.CommandType.StoredProcedure);
+                result = await context.QueryAsync<Party>(sql: "Party_Get", p, commandType: System.Data.CommandType.StoredProcedure);
             }
-            catch 
+            catch (Exception ex)
             {
                 throw;
             }
@@ -70,15 +70,16 @@ namespace ElectionAPI.Service
             return p;
         }
 
-        public async Task<Party> Insert(IDbConnection context, Party party)
+        public async Task<Party> Insert(IUnitOfWork uow, Party party)
         {
             Party result = null;
             try
             {
                 var p = new DynamicParameters();
                 p.Add("@description", party.Description, DbType.String, ParameterDirection.Input);
-
-                result = await context.QuerySingleAsync<Party>(sql: "Party_Insert", param: p, commandType: System.Data.CommandType.StoredProcedure);
+                                
+                result = await uow.Context.QuerySingleAsync<Party>(sql: "Party_Insert", param: p,
+                    commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans);
             }
             catch (Exception ex)
             {
@@ -88,15 +89,16 @@ namespace ElectionAPI.Service
             return result;
         }
 
-        public async Task<Party> Update(IDbConnection context, Party party)
+        public async Task<Party> Update(IUnitOfWork uow, Party party)
         {
             Party result = null;
             try
             {
-                await context.QueryAsync<Party>(sql: "Party_Update", param: SetParam(party), commandType: System.Data.CommandType.StoredProcedure);
-                result = await this.GetByID(context, party.Id);
+                await uow.Context.QueryAsync<Party>(sql: "Party_Update", param: SetParam(party), 
+                    commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans);
+                result = await this.GetByID(uow.Context, party.Id);
             }
-            catch
+            catch (Exception ex)
             {
                 throw;
             }
@@ -105,15 +107,16 @@ namespace ElectionAPI.Service
         }
 
 
-        public async Task<Party> Delete(IDbConnection context, int id)
+        public async Task<Party> Delete(IUnitOfWork uow, int id)
         {
             try
             {
                 var p = new DynamicParameters();
                 p.Add("@id", id, DbType.Int32, ParameterDirection.Input);
 
-                await context.QueryAsync<Party>(sql: "Party_Delete", param: p, commandType: System.Data.CommandType.StoredProcedure);
-                Party result = await this.GetByID(context, id);
+                await uow.Context.QueryAsync<Party>(sql: "Party_Delete", param: p, 
+                    commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans);
+                Party result = await this.GetByID(uow.Context, id);
                 return result;
             }
             catch (Exception ex)

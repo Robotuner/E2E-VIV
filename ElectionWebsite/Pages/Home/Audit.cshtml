@@ -1,0 +1,109 @@
+﻿@page
+@model ElectionWebsite.Pages.Home.AuditModel
+@{
+}
+
+<div class="text-left">
+    <h1>E2E Audit</h1> 
+    <p>
+    The audit of the internet election results is a significant improvement over auditing of in-person and
+    mail-in processes.  Where in-person auditing requirements are minimal, mail-in requirements are complex
+    if not impractical because ballot chain of custody requires following ballots through numerous hands in
+    numerous uncontrolled locations.  It is impractical to follow a ballot through the mail service.  Even if each
+    ballot were tracked, to the delivery address, the chain is custody is broken because there is no reliable method
+    of ensuring that the registered voter actually received the ballot.  The ballot simply reappears when it is completed
+    returned to the poll location.  With internet voting, the digital trail of the ballot can remain unbroken.
+    </p><p>
+    The advantage of have duplicate databases hosted by the State, Republican and Democrat party is that each can conduct their
+    own audit and the results can be corroborated.
+    </p><p>
+    The combination of the Blockchain Nonce, and the signature enables detection of signature records that are directly inserted into the
+    signature and vote database tables.  It allows signatures and completed ballots that have been fraudulently inserted to be removed
+    from the candidate count totals.  It allows for discovery of signatures submitted by the same device, it allows discovery of
+    signatures submitted from the same location using an unusual number of different devices, it allows discovery of signatures where
+    the same head shot is used.
+
+    <h2>The audit.</h2> 
+    <ul>
+        <li>
+            Verify that the decrypted ballot authorization code (bac) exists in the State list of distributed ballot authorization codes. This means the State must provide an API that will respond with a true or false when presented with a bac. This prevents the
+            manufacture of ballots, something that was possible with mail-in voting.
+        </li>
+
+        <li>Verify that the recorded votes agree with the summary result vote count.</li>
+        <li> Verify that the total vote count in the signature agree with the vote count saved to the database for each signature.</li>
+        <li>
+            Verify that each signature is accompanied by at least one candidate vote. If there is a signature, it must have had a completed
+            ballot that included at least one candidate.
+        </li>
+        <li>
+            Verify that the signature Nonce on each of the host servers are the same.  This requried a simple API that returns true or false when
+            presented with a signature Id and Nonce.
+        </li>
+        <li>
+            Verify that the expected number of signatures match the actual number of signatures that were received.  If expected
+            exceeded actual, it means ballots were not set or lost in transmission, this potentially represents an attack of omission (altering
+            votes by never counting them).  If expected were less than actual, this means ballots those extra signatures are fraudulent ballots.
+        </li>
+        <li>Verify all votes counted has a signature submittal date within the allowed voting period.</li>
+        <li>Compare result totals on State, Democrat and Republican servers.  Investigate differences by comparing vote tales on each server.</li>
+        <li Compare number of signatures on State, Democrat and Republican servers.</li>
+        <li>
+            Examine the create date timestamp of all votes in the vote database with the same ballot id.  They must
+            all be within milliseconds of each other
+        </li>
+        <li>Ensure that the lastupdated date timestamp is the same as the createdate timestamp.</li>
+        <li>
+            Look for all signature recored that have the same id.
+            <p>
+            It is possible that someone might allow their device to be used by a friend for voting.  The longitude and latitude can be used
+            to determine if the location was a nursing home or a polling place.  If the same device Id in at different locations more investiation is needed.
+            Ultimately, will probably need to review head shots.
+            </p><p>
+            It the device was used two or three times, it was probably a relative.  If more then head shots need to be investigated.  The birth
+            year will aid in visual inspections.  Ballots that are judged to be frauds will have their votes removed from the final counts.
+            </p><p>
+            We anticipate the need to create a program that will automatically identify signatures within the same geographic vicinity with the
+            same device Id and visually display head shots for comparison.  The intent is to use facial landmarks for an automated comparision, but
+            alse have a visual display.</p>
+        </li>
+        <li>
+            Look for unusual clusters of devices in the same geographic area.  It is possible that ballots were showhow harvested.  In order
+            to submit votes with them, each must be accompanied by a unique head shot on a unique device.  It is possible to use burner phones. Even with burner phones a unique head shot must accompany each signature. We think there would be a
+            shortage of individuals willing to use their own mug for signatures when attemting to cast multiple ballots.  The is especially true as the ability to save
+            and match facial landmarks improve.
+        </li>
+    </ul>
+
+    <h3>What can be expected</h3>
+    <p>
+    In a perfect election each signature would contain a unique head shot and device id. And there would be no anomalies. Where there are
+    multiple uses of the same device id, it would only be limited to two or three.  When there are more than three uses of a device id,
+    the Geographic location info will tell us that it was a nursing home or polling location.  Either way, software would be used
+    to digitally inspect the head shots to ensure that they are all different.
+    </p><p>
+    Where there are clusters of different devices in the same location, the auditing would look at the headshots again to determine if
+    they are all unique.
+    <h3>About Head shots</h3>
+    <p>
+    Head shots are more a deterrent in its usefulness than a trait that can be used with absolute certainty.  We think that
+    the quality of headshots could be pretty good, but we think the confidence in any attempt at facial recognition is
+    not high enough (yet) for anything other than a subjective impression.  We doubt that it could distinguish between
+    twins.  It is also possible to use realistic masks for the head shot, but then again, the mask can only be used
+    once to theoretically escape detection.  If computer power were unlimited and facial recognition were exact, one could
+    ask the computer to find all headshots used more than once in the entire 150 million signatures.  It might already
+    be possible to do that. Certainly, on a State by State basis it is doable to digitally review all signatures that fit
+    a pattern of ballot harvesting and digitally compare head shots.
+    </p><p>
+    Nevertheless, the requirement of a real headshot (that is not a photograph of a headshot) is a deterrent.
+    A registered voter would certainly want to use their own face for the signature.  Using their face for another
+    ballot risks rejection of their ballot.  In addition, lending their face to multiple ballots identifies them as
+    attempting to commit a fraud.
+    </p><p>
+    The proposed system requires a head shot without other identification.  There is no name, address, or any other type
+    of identification linked to the head shot.  It is similar to photos taken of everyone at airports or other public places.
+    </p><p>
+    We also think that head shots of 150 million voter would be invaluable in refining the detection software to
+    automatically (digitally) discover duplicate faces in future elections.
+    </p>
+</div>

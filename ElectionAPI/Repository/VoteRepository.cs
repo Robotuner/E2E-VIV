@@ -16,6 +16,8 @@ namespace ElectionAPI.Repository
         Task<Vote> Update(IUnitOfWork uow, Vote vote);
         Task<List<Vote>> InsertElection(IUnitOfWork uow, List<Vote> votes);
         Task<List<Vote>> GetAll(IDbConnection context, Guid electionid, Guid categoryId, int offset = 0, int take = 1000, bool confirmed = true);
+        Task<List<Vote>> GetAllByElectionId(IDbConnection context, Guid electionid, int offset = 0, int take = 1000, bool confirmed = true);
+        Task<List<Vote>> GetAllByCategoryType(IDbConnection context, Guid electionid, int categorytype, int offset = 0, int take = 1000, bool confirmed = true);
         Task<List<VoteResult>> GetVoteSummary(IDbConnection context, Guid electionId);
     }
 
@@ -27,6 +29,36 @@ namespace ElectionAPI.Repository
         {
             this._logger = logger;
             this.voteService = voteService;
+        }
+
+        public async Task<List<Vote>> GetAllByElectionId(IDbConnection context, Guid electionid, int offset = 0, int take = 1000, bool confirmed = true)
+        {
+            List<Vote> result = new List<Vote>();
+            try
+            {
+                result = (await this.voteService.GetAllByElectionId(context, electionid, offset, take, confirmed))?.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return result;
+        }
+
+        public async Task<List<Vote>> GetAllByCategoryType(IDbConnection context, Guid electionid, int categorytype, int offset = 0, int take = 1000, bool confirmed = true)
+        {
+            List<Vote> result = new List<Vote>();
+            try
+            {
+                result = (await this.voteService.GetAllByCategoryType(context, electionid, categorytype, offset, take, confirmed))?.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return result;
         }
 
         public async Task<List<Vote>> GetAll(IDbConnection context, Guid electionid, Guid categoryId, int offset = 0, int take = 1000, bool confirmed = true)

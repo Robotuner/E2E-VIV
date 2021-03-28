@@ -11,9 +11,9 @@ namespace ElectionAPI.Service
 {
     public interface ITicketService
     {
-        Task<Ticket> Delete(IDbConnection context, Guid id);
-        Task<Ticket> Insert(IDbConnection context, Ticket Host);
-        Task<Ticket> Update(IDbConnection context, Ticket Host);
+        Task<Ticket> Delete(IUnitOfWork uow, Guid id);
+        Task<Ticket> Insert(IUnitOfWork uow, Ticket Host);
+        Task<Ticket> Update(IUnitOfWork uow, Ticket Host);
         Task<IEnumerable<Ticket>> GetByElection(IDbConnection context,Guid electionId);
         Task<Ticket> GetByID(IDbConnection context, Guid id);
     }
@@ -68,18 +68,18 @@ namespace ElectionAPI.Service
             }
             var p = new DynamicParameters();
             p.Add("@id", ticket.Id, DbType.Guid, ParameterDirection.Input);
-            p.Add("@partyId", ticket.PartyId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@partyid", ticket.PartyId, DbType.Int32, ParameterDirection.Input);
             p.Add("@electionid", ticket.ElectionId, DbType.Guid, ParameterDirection.Input);
             p.Add("@categoryid", ticket.CategoryId, DbType.Guid, ParameterDirection.Input);
             p.Add("@information", ticket.Information, DbType.String, ParameterDirection.Input);
             p.Add("@description", ticket.Description, DbType.String, ParameterDirection.Input);
-            p.Add("@ticketType", ticket.TicketType, DbType.Int32, ParameterDirection.Input);
+            p.Add("@tickettype", ticket.TicketType, DbType.Int32, ParameterDirection.Input);
             p.Add("@sequence", ticket.Sequence, DbType.Int32, ParameterDirection.Input);
 
             return p;
         }
 
-        public async Task<Ticket> Insert(IDbConnection context, Ticket election)
+        public async Task<Ticket> Insert(IUnitOfWork uow, Ticket election)
         {
             Ticket result = null;
             try
@@ -88,8 +88,8 @@ namespace ElectionAPI.Service
                 {
                     election.Id = Guid.NewGuid();
                 }
-                result = await context.QuerySingleAsync<Ticket>(sql: "Ticket_Insert", param: SetParam(election), 
-                    commandType: System.Data.CommandType.StoredProcedure);
+                result = await uow.Context.QuerySingleAsync<Ticket>(sql: "Ticket_Insert", param: SetParam(election), 
+                    commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans);
             }
             catch (Exception ex)
             {
@@ -99,18 +99,18 @@ namespace ElectionAPI.Service
             return result;
         }
 
-        public async Task<Ticket> Update(IDbConnection context, Ticket ticket)
+        public async Task<Ticket> Update(IUnitOfWork uow, Ticket ticket)
         {
             try
             {
-                Ticket foundTicket = await GetByID(context, ticket.Id);
+                Ticket foundTicket = await GetByID(uow.Context, ticket.Id);
                 if (foundTicket != null)
                 {
                     this.Changes = changeLogService.GetChanges(ticket, foundTicket);
                     if (Changes.Count > 0)
                     {
-                        List<Ticket> result = (await context.QueryAsync<Ticket>(sql: "Ticket_Update", param: SetParam(ticket),
-                            commandType: System.Data.CommandType.StoredProcedure)).ToList();
+                        List<Ticket> result = (await uow.Context.QueryAsync<Ticket>(sql: "Ticket_Update", param: SetParam(ticket),
+                            commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans)).ToList();
                         return result.FirstOrDefault();
                     }
                 }
@@ -123,15 +123,16 @@ namespace ElectionAPI.Service
         }
 
 
-        public async Task<Ticket> Delete(IDbConnection context, Guid id)
+        public async Task<Ticket> Delete(IUnitOfWork uow, Guid id)
         {
             try
             {
                 var p = new DynamicParameters();
                 p.Add("@id", id, DbType.Guid, ParameterDirection.Input);
 
-                List<Ticket> result = (await context.QueryAsync<Ticket>(sql: "Ticket_Delete", param: p, commandType: System.Data.CommandType.StoredProcedure)).ToList();
-                return result.FirstOrDefault();
+                List<Ticket> result = (await uow.Context.QueryAsync<Ticket>(sql: "Ticket_Delete", param: p,
+                    commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans)).ToList();
+                return await GetByID(uow.Context, id);
             }
             catch 
             {

@@ -56,7 +56,7 @@
 
             <Label Content="{x:Static local:Resource.Election_Description}" Style="{StaticResource Election-Description}" Grid.Row="5" Grid.Column="0"/>
             <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource Election-TextBox}"
-                     Text="{Binding AllowUpdates}"  />
+                     Text="{Binding Description}"  />
 
             <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1" >
                 <CheckBox IsChecked="{Binding AllowUpdates}" VerticalAlignment="Center" />

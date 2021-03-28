@@ -18,10 +18,24 @@ namespace ElectionAPI.Controllers
             this.voteRepository = voteRepository;
         }
 
-        [HttpGet]
-        public async Task<List<Vote>> Get(Guid electionid, Guid categoryId, int offset = 0, int take = 1000, bool confirmed = true)
+        [HttpGet("ByElectionId")]
+        public async Task<List<Vote>> Get(Guid electionid, int offset = 0, int take = 1000, bool confirmed = true)
         {
-            List<Vote> result = await this.voteRepository.GetAll(Context, electionid, categoryId, offset, take, confirmed);
+            List<Vote> result = await this.voteRepository.GetAllByElectionId(Context, electionid, offset, take, confirmed);
+            return result;
+        }
+
+        [HttpGet("ByCategoryType")]
+        public async Task<List<Vote>> Get(Guid electionid, int categorytype, int offset = 0, int take = 1000, bool confirmed = true)
+        {
+            List<Vote> result = await this.voteRepository.GetAllByCategoryType(Context, electionid, categorytype, offset, take, confirmed);
+            return result;
+        }
+
+        [HttpGet("ByCategoryId")]
+        public async Task<List<Vote>> Get(Guid electionid, Guid categoryid, int offset = 0, int take = 1000, bool confirmed = true)
+        {
+            List<Vote> result = await this.voteRepository.GetAll(Context, electionid, categoryid, offset, take, confirmed);
             return result;
         }
 

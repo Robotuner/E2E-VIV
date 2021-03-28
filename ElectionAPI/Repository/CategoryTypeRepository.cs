@@ -103,7 +103,7 @@ namespace ElectionAPI.Repository
 
         public async Task<CategoryType> Delete(IUnitOfWork uow, int id)
         {
-            _logger.LogInformation(string.Format("CategoryTypeRepository: Delete {0}", id));
+            _logger?.LogInformation(string.Format("CategoryTypeRepository: Delete {0}", id));
 
             CategoryType result = await this.categoryTypeService.Delete(uow, id);
             return result;

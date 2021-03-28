@@ -4,6 +4,7 @@ using ElectionModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -38,15 +39,16 @@ namespace ElectionAPI.Service
             try
             {    
                 var p = new DynamicParameters();   
-                p.Add("@offset", offset, DbType.Int32, ParameterDirection.Input);
+                p.Add("@oset", offset, DbType.Int32, ParameterDirection.Input);
                 p.Add("@take", take, DbType.Int32, ParameterDirection.Input);
                 p.Add("@electionid", electionId, DbType.Guid, ParameterDirection.Input);
                 p.Add("@confirmed", confirmed, DbType.Boolean, ParameterDirection.Input);
 
                 result = await context.QueryAsync<Signature>(sql: "Signature_GetAll", param:p, commandType: System.Data.CommandType.StoredProcedure);
             }
-            catch 
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 throw;
             }
 
@@ -82,7 +84,7 @@ namespace ElectionAPI.Service
                 result = await uow.Context.QuerySingleAsync<Signature>(sql: "Signature_GetById", param: p, 
                     commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans);
             }
-            catch
+            catch (Exception ex)
             {
                 throw;
             }
@@ -118,7 +120,7 @@ namespace ElectionAPI.Service
             try
             {
                 var p = new DynamicParameters(); 
-                p.Add("@ballotId", ballotId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@ballotid", ballotId, DbType.Guid, ParameterDirection.Input);
 
                 var ans = await uow.Context.QuerySingleAsync<SignatureNotice>(sql: "SignatureNotice_GetExpectedNonce", param: p,
                     commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans);
@@ -139,7 +141,7 @@ namespace ElectionAPI.Service
             {
                 var p = new DynamicParameters();
                 p.Add("@id", Guid.NewGuid(), DbType.Guid, ParameterDirection.Input);
-                p.Add("@ballotId", notice.BallotId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@ballotid", notice.BallotId, DbType.Guid, ParameterDirection.Input);
                 p.Add("@nonce", notice.Nonce, DbType.Int32, ParameterDirection.Input);
 
                 result = await context.QuerySingleAsync<SignatureNotice>(sql: "SignatureNotice_Insert", param: p,
@@ -165,19 +167,19 @@ namespace ElectionAPI.Service
 
                     var p = new DynamicParameters();
                     p.Add("@id", signature.Id, DbType.Guid, ParameterDirection.Input);
+                    p.Add("@ballotid", signature.BallotId, DbType.Guid, ParameterDirection.Input);
+                    p.Add("@electionid", signature.ElectionId, DbType.Guid, ParameterDirection.Input);
                     p.Add("@name", signature.Name, DbType.String, ParameterDirection.Input);
-                    p.Add("@birthYear", signature.BirthYear, DbType.Int32, ParameterDirection.Input);
-                    p.Add("@ballotId", signature.BallotId, DbType.Guid, ParameterDirection.Input);
-                    p.Add("@electionId", signature.ElectionId, DbType.Guid, ParameterDirection.Input);
+                    p.Add("@birthyear", signature.BirthYear, DbType.Int32, ParameterDirection.Input);
                     p.Add("@confirmed", signature.Confirmed, DbType.Boolean, ParameterDirection.Input);
-                    p.Add("@deviceId", signature.DeviceId, DbType.String, ParameterDirection.Input);
-                    p.Add("@imageArray", signature.ImageArray, DbType.Binary, ParameterDirection.Input);
+                    p.Add("@deviceid", signature.DeviceId, DbType.String, ParameterDirection.Input);
+                    p.Add("@imagearray", signature.ImageArray, DbType.Binary, ParameterDirection.Input);
                     p.Add("@longitude", signature.Longitude, DbType.Double, ParameterDirection.Input);
                     p.Add("@latitude", signature.Latitude, DbType.Double, ParameterDirection.Input);   
                     p.Add("@platform", signature.Platform, DbType.Int32, ParameterDirection.Input);
-                    p.Add("@previousSignature", signature.PreviousSignature, DbType.Guid, ParameterDirection.Input);
-                    p.Add("@signatureStatus", signature.SignatureStatus, DbType.Int32, ParameterDirection.Input);
-                    p.Add("@submitDate", signature.SubmitDate, DbType.DateTime, ParameterDirection.Input);
+                    p.Add("@previoussignature", signature.PreviousSignature, DbType.Guid, ParameterDirection.Input);
+                    p.Add("@signaturestatus", signature.SignatureStatus, DbType.Int32, ParameterDirection.Input);
+                    p.Add("@submitdate", signature.SubmitDate, DbType.DateTime, ParameterDirection.Input);
 
                     result = await uow.Context.QuerySingleAsync<Signature>(sql: "Signature_Insert", param: p, 
                         commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans);
@@ -203,7 +205,7 @@ namespace ElectionAPI.Service
             {
                 var p = new DynamicParameters();
                 p.Add("@id", signature.Id, DbType.Guid, ParameterDirection.Input);
-                p.Add("@signatureStatus", signature.SignatureStatus, DbType.Int32, ParameterDirection.Input);
+                p.Add("@signaturestatus", signature.SignatureStatus, DbType.Int32, ParameterDirection.Input);
 
                 result = await uow.Context.QuerySingleAsync<Signature>(sql: "Signature_UpdateStatus", param: p,
                     commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans);
@@ -224,8 +226,10 @@ namespace ElectionAPI.Service
             // remove votes that are no longer valid
             foreach(Vote vote in prevVotes)
             {
+                // get all candidates that he previously voted for                
                 if (!signature.Votes.Any(n => n.SelectionId == vote.SelectionId.Value))
                 {
+                    // if that candidate isn't on the current ballot, set the choiceRejected flag
                     vote.VoteStatus = (int)VoteStatusEnum.choiceRejected;
                     await this.voteService.Update(uow, vote);
                 }
@@ -233,8 +237,10 @@ namespace ElectionAPI.Service
             // add votes to the ballot
             foreach(Vote newVote in signature.Votes)
             {
+                // get all candidates that he wants to vote for
                 if (!prevVotes.Any(n => n.SelectionId == newVote.SelectionId))
-                {
+                { 
+                    // if he didn't vote for that candidate last time, set add as a new vote.
                     await voteService.Insert(uow, newVote);
                 }
             }

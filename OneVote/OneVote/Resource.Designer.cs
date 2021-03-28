@@ -106,7 +106,7 @@ namespace OneVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://www.engenious.com.
+        ///   Looks up a localized string similar to https://www.e2e-viv.org.
         /// </summary>
         public static string AboutLearnMoreUrl {
             get {

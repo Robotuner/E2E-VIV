@@ -11,7 +11,7 @@ namespace ElectionModels.Misc
     public class Utils
     {
         // ngrok http https://localhost:44365 -host-header="localhost:44365";
-        public static string ElectionUrl = "https://6f134493aed1.ngrok.io/api";
+        public static string ElectionUrl = "https://b06ace11bb0d.ngrok.io/api";
 
         public static void EncryptAesManaged(string raw)
         {

@@ -82,7 +82,7 @@ namespace Election.ViewModels.Views
             if (this.SelectedElection != null)
             {
                 this.AllResults = await DataService.GetElectionSummary(this.SelectedElection.Id);
-                this.AllCategories = this.Election.CategoryList;
+                this.AllCategories = this.Election?.CategoryList;
             }
         }
 

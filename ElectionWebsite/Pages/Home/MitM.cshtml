@@ -1,0 +1,110 @@
+﻿@page
+@model ElectionWebsite.Pages.Home.MitMModel
+@{
+}
+
+
+<div class="text-left">
+    <h1>Man in the Middle</h1>
+    <p>Are we concerned about Man in the Middle Attacks?</p>
+    <p>
+        Well, yes for something like internet voting that is a definite concern, however to place it in
+        perspective, one has to consider what the exposure is and where it can happen.  Classically,
+        it would happen after the completed ballot is submitted from the voting app and before it
+        is received at the vote counting server.  For security, all websites and servers will be setup to
+        require SSL technology.  That is the security technology that the financial world uses for
+        secure connections.
+    </p>
+    <p>
+        For E2E-VIV we are assuming that SSL is hackable by state level actors such as the opposing
+        party.  For that reason, Blockchain is used to ensure ballots are not tampered.
+    </p>
+    <p>
+        There are numerous articles and papers throughout the internet attempting to explain blockchain,
+        most of them make it difficult to envision how it can be used in a voting scenario.  "Blockchain is
+        a specific type of database.  It differs in the way it stores information; blockchains store data
+        in blocks that are chained together."  Yeah thats great, didn't help me figure out how it could be
+        used.
+    </p>
+    <p>
+        The 2020 Election had about 150 million ballots.  It is difficult to envision how a database where votes
+        are appended in a continious chain of 150 million ballots (each ballot represts a slate of contests)
+        would be workable.  Compound that with the concept of using Blockchain on a peer-to-peer networks, as
+        a way of ensuring proof of work, makes pure use of blockchain for voting somewhat preposterous.
+    </p>
+    <h3>What is Blockchain and how can it be used</h3>
+    <p>
+        Blockchain is a chain of blocks. Each bloc contains information specific to the block and the data
+        that one want to protect from modification.  The way it is protected is by creating a SHA-256 cryptographic
+        hash based on the entire block (containing the data).  When a cryptographic hash is created on a block,
+        the hash is unique to the block.  If anything changes (like the data was tampered), a recompute of the block will
+        give a different value.  This is how we can verify if the data has been tampered!
+    </p>
+    <p>
+        On the surface, simply employing SHA-256 hash would be enough to be able to discern if the vote has
+        been altered.  It isn't.  Because a successful MitM attack would intercept the entire block
+        alter the data, the alter the hash.  When the voting server gets the transmission and recomputes the hash,
+        it will be compared to the altered hash.
+    </p>
+    <h3>How can we defend against that?</h3>
+    <p>
+        This is the genious of Blockchain.  Computing a hash based on the block is fast enough that it would
+        escape detection (milliseconds), but if an added requirement of the hash was that it would also contain
+        a specified number of leading zeros (0’s), that is another matter.  It cannot be done as a single
+        computation.  It is a pure brute force requirement.  It is the Nonce.  The Nonce is an integer that is
+        added to the block (not the vote) and is included in the computation of the hash.  It is incremented
+        from zero (0) to as large as is required to arrive at a hash with the required number of leading zeros (0’s).
+    </p>
+    <p>
+        The effect is that an attack that intercepts the transmission of votes must now alter both the vote and
+        recompute a hash that can only be computed by brute force.  Instead of the re-computation taking milliseconds,
+        it can vary from milliseconds to minutes, not one minute but minutes with no limit that we can determine.
+        The length of time is un-predictable, and the effect is a limit on the number of signatures that can be
+        altered mid-transmission.  We have seen the time to mine a Nonce take over 15 minutes.
+    </p>
+    <p>
+        In a bitcoin scenario, where there is a chain of data, the Nonce is not just recomputed for the block where
+        the data was altered, it must also update for all subsequent blocks attached to the chain after the block
+        is changed.  On top of that, since Bitcoin is peer-to-peer, the chains on all the peers must also be altered.
+        A bitcoin attack is impossible.
+    </p>
+    <p>
+        However, for the voting scenario presented in this proposal, there is only one block.  The proposal also
+        does not employ a peer-to-peer network.  Computers are fast and getting faster, it is possible to launch a
+        MitM attack, defeat the SSL modify the block and escape detention.  There are two strategies to counter this.
+    </p>
+    <h3>Multi-step submittal</h3>
+    <ul>
+        <li>
+            Prior to submitting the Signature as a blockchain, compute the Nonce, then send a notice of submission
+            to the vote counting server with the Nonce to expect.
+        </li>
+        <li> The server responds with a confirmation that the message was received.</li>
+        <li> The voting device then submits the Signature.</li>
+        <li> When the vote counting server receives the signature, it validates the block.</li>
+        <li> Then it verifies the Nonce matches the expected Nonce.</li>
+    </ul>
+    <p>
+        This multi-step process present several additional challenges for the attacker after defeating SSL.  The notification message
+        must be intercepted, because any change in the ballot will require a different Nonce.  However, the voting server
+        must receive the notification message in order to acknowledge receipt and reply.  The voting app will not
+        send the Signature without an acknowledgment.  If the attacker could trick the voting app to send the signature, then the attacker
+        must successfully intercept the signature, defeat the SSL again, then modify the data, compute a new Nonce, insert that
+        Nonce into the notification message send the notification message to the voting server, wait for the response, intercept the
+        response, then send the altered signature.
+    </p>
+    <p>
+        The attack must intercept at least 4 separate transmssions, hold them and to update the Nonce, then continue the
+        transmission of each in the correct order.  It will need to do this when there are thousands of other signatures being
+        submitted at the same time.
+    </p>
+    <h3>Use multiple servers</h3>
+    <p>
+        Even if the MitM attach were successful in defeating the multi-step submittal process, since the submittal is to three
+        duplicate servers hosted by the State, Democrat and Republican parties, in order to escape detection, the attack would need to
+        simultaneously intercept the same transmissions in the same sequence at the same time for all three endpoint.  They would need to
+        alter the Nonce in one location and substitute in all three transmission paths.  The reason is because the Nonce is
+        dependent on a time stamp, hence it is not possible to compute the using separate computations for the three transmission and arrive
+        at the same Nonce for each.
+    </p>
+</div>

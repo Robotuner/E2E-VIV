@@ -326,7 +326,7 @@ namespace OneVote.ViewModels
             if (ans.Id != Guid.Empty)
             {
                 Signature result = await DataService.PutSignature(electionChain);
-                this.signatureConfirmationGuid = result.Id;
+                this.signatureConfirmationGuid = result == null ? Guid.Empty : result.Id;
 
                 SubmittalConfirmation?.Invoke(result);
                 // reset properties
@@ -388,22 +388,23 @@ namespace OneVote.ViewModels
 
             try
             {
-                if (Device.RuntimePlatform == Device.Android)
-                {
-                    using (var stream = await photo.OpenReadAsync())
-                    using (Mat frame = OpenCvSharp.Cv2.ImRead(photo.FullPath))
-                    {
-                        if (frame != null)
-                        {
-                            OpenCvSharp.Rect[] faces = GetHaarCascadeFaces(frame, 3);
-                            FaceFound = faces.Length == 1;
-                        }
-                    }
-                }
-                else
-                {
-                    FaceFound = true;
-                }
+                FaceFound = true;
+                //if (Device.RuntimePlatform == Device.Android)
+                //{
+                //    using (var stream = await photo.OpenReadAsync())
+                //    using (Mat frame = OpenCvSharp.Cv2.ImRead(photo.FullPath))
+                //    {
+                //        if (frame != null)
+                //        {
+                //            OpenCvSharp.Rect[] faces = GetHaarCascadeFaces(frame, 3);
+                //            FaceFound = faces.Length == 1;
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                //    FaceFound = true;
+                //}
             }
             catch (Exception ex)
             {

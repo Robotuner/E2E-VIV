@@ -13,13 +13,13 @@ namespace ElectionAPI.Repository
 {
     public interface IElectionRepository
     {
-        Task<Election> Delete(IDbConnection context, Guid id);
-        Task<Election> Insert(IDbConnection context, Election host);
-        Task<Election> Update(IDbConnection context, Election host);
+        Task<Election> Delete(IUnitOfWork uow, Guid id);
+        Task<Election> Insert(IUnitOfWork uow, Election host);
+        Task<Election> Update(IUnitOfWork uow, Election host);
         Task<List<Election>> GetAll(IDbConnection context);
         Task<Election> GetByID(IDbConnection context, Guid id);
         Task<Election> GetFullElection(IDbConnection context, Guid id);
-        Task<Election> SaveAllElection(IDbConnection uow, Election election);
+        Task<Election> SaveAllElection(IUnitOfWork uow, Election election);
     }
 
     public class ElectionRepository : BaseRepository, IElectionRepository
@@ -91,12 +91,12 @@ namespace ElectionAPI.Repository
             return p;
         }
 
-        public async Task<Election> SaveAllElection(IDbConnection context, Election election)
+        public async Task<Election> SaveAllElection(IUnitOfWork uow, Election election)
         {
             Election result = null;
             try
             {
-                result = await this.electionService.SaveAllElection(context, election);
+                result = await this.electionService.SaveAllElection(uow, election);
             }
             catch
             {
@@ -106,12 +106,12 @@ namespace ElectionAPI.Repository
             return result;
         }
 
-        public async Task<Election> Insert(IDbConnection context, Election election)
+        public async Task<Election> Insert(IUnitOfWork uow, Election election)
         {
             Election result = null;
             try
             {
-                result = await this.electionService.Insert(context, election);
+                result = await this.electionService.Insert(uow, election);
             }
             catch 
             {
@@ -121,12 +121,12 @@ namespace ElectionAPI.Repository
             return result;
         }
 
-        public async Task<Election> Update(IDbConnection context, Election election)
+        public async Task<Election> Update(IUnitOfWork uow, Election election)
         {
             Election result = null;
             try
             {
-                result = await this.electionService.Update(context, election);
+                result = await this.electionService.Update(uow, election);
             }
             catch 
             {
@@ -136,11 +136,11 @@ namespace ElectionAPI.Repository
             return result;
         }
 
-        public async Task<Election> Delete(IDbConnection context, Guid id)
+        public async Task<Election> Delete(IUnitOfWork uow, Guid id)
         {
-            _logger.LogInformation(string.Format("ElectionRepository: Delete {0}", id));
+            _logger?.LogInformation(string.Format("ElectionRepository: Delete {0}", id));
 
-            Election result = await this.electionService.Delete(context, id);
+            Election result = await this.electionService.Delete(uow, id);
             return result;
         }
     }

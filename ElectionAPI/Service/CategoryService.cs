@@ -12,10 +12,10 @@ namespace ElectionAPI.Service
 {
     public interface ICategoryService
     {
-        Task<Category> Delete(IDbConnection context, Guid id);
-        Task<Category> Insert(IDbConnection context, Category Host);
-        Task<Category> Update(IDbConnection context, Category Host);
-        Task<IEnumerable<Category>> GetAll(IDbConnection context);
+        Task<Category> Delete(IUnitOfWork uow, Guid id);
+        Task<Category> Insert(IUnitOfWork uowt, Category Host);
+        Task<Category> Update(IUnitOfWork uow, Category Host);
+
         Task<Category> GetByID(IDbConnection context, Guid id);
 
         Task<IEnumerable<Category>> GetByElection(IDbConnection context, Guid electionId);
@@ -27,24 +27,6 @@ namespace ElectionAPI.Service
         public CategoryService()
         {
 
-        }
-
-        public async Task<IEnumerable<Category>> GetAll(IDbConnection context)
-        {
-            IEnumerable<Category> result = new List<Category>();
-            try
-            {
-                //var p = new DynamicParameters();
-                //p.Add("@active", true, System.Data.DbType.Boolean, System.Data.ParameterDirection.Input);
-
-                result = await context.QueryAsync<Category>(sql: "Category_Get", commandType: System.Data.CommandType.StoredProcedure);
-            }
-            catch 
-            {
-                throw;
-            }
-
-            return result;
         }
 
         public async Task<Category> GetByID(IDbConnection context, Guid id)
@@ -72,7 +54,7 @@ namespace ElectionAPI.Service
             try
             {
                 var p = new DynamicParameters();
-                p.Add("@electionId", electionId, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
+                p.Add("@electionid", electionId, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
   
                 result = await context.QueryAsync<Category>(sql: "Category_GetByElection", param: p, commandType: System.Data.CommandType.StoredProcedure);
             }
@@ -97,7 +79,7 @@ namespace ElectionAPI.Service
             try
             {
                 var p = new DynamicParameters();
-                p.Add("@electionId", electionId, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
+                p.Add("@electionid", electionId, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
                 p.Add("@type", type, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
 
                 result = await context.QueryAsync<Category>(sql: "Category_GetByType", param: p, commandType: System.Data.CommandType.StoredProcedure);
@@ -118,11 +100,11 @@ namespace ElectionAPI.Service
             }
             var p = new DynamicParameters();
             p.Add("@id", data.Id, DbType.Guid, ParameterDirection.Input);
-            p.Add("@categoryTypeId", data.CategoryTypeId, DbType.Int32, ParameterDirection.Input);
-            p.Add("@electionId",data.ElectionId, DbType.Guid, ParameterDirection.Input);
+            p.Add("@categorytypeid", data.CategoryTypeId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@electionid",data.ElectionId, DbType.Guid, ParameterDirection.Input);
             p.Add("@heading", data.Heading, DbType.String, ParameterDirection.Input);
             p.Add("@title", data.Title, DbType.String, ParameterDirection.Input);
-            p.Add("@judgePosition", data.JudgePosition, DbType.Int32, ParameterDirection.Input);
+            p.Add("@judgeposition", data.JudgePosition, DbType.Int32, ParameterDirection.Input);
             p.Add("@information", data.Information, DbType.String, ParameterDirection.Input);
             p.Add("@subtitle", data.SubTitle, DbType.String, ParameterDirection.Input);
             p.Add("@sequence", data.Sequence, DbType.Int32, ParameterDirection.Input);
@@ -130,12 +112,12 @@ namespace ElectionAPI.Service
             return p;
         }
 
-        public async Task<Category> Insert(IDbConnection context, Category category)
+        public async Task<Category> Insert(IUnitOfWork uow, Category category)
         {
             try
             {
-                List<Category> ans = (await context.QueryAsync<Category>(sql: "Category_Insert", param: SetParam(category), 
-                            commandType: System.Data.CommandType.StoredProcedure)).ToList();
+                List<Category> ans = (await uow.Context.QueryAsync<Category>(sql: "Category_Insert", param: SetParam(category), 
+                            commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans)).ToList();
                 return ans.FirstOrDefault();
             }
             catch (Exception ex)
@@ -145,18 +127,19 @@ namespace ElectionAPI.Service
             }
         }
 
-        public async Task<Category> Update(IDbConnection context, Category category)
+        public async Task<Category> Update(IUnitOfWork uow, Category category)
         {
             try
             {
                 CatMessage(category);
-                Category foundCategory = await GetByID(context, category.Id);
+                Category foundCategory = await GetByID(uow.Context, category.Id);
                 if (foundCategory != null)
                 {
                     this.Changes = changeLogService.GetChanges(category, foundCategory);
                     if (Changes.Count > 0)
                     {
-                        List<Category> result = (await context.QueryAsync<Category>(sql: "Category_Update", param: SetParam(category), commandType: System.Data.CommandType.StoredProcedure)).ToList();
+                        List<Category> result = (await uow.Context.QueryAsync<Category>(sql: "Category_Update", param: SetParam(category), 
+                            commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans)).ToList();
                         return result.FirstOrDefault();
                     }
                 }
@@ -171,7 +154,7 @@ namespace ElectionAPI.Service
         }
 
 
-        public async Task<Category> Delete(IDbConnection context, Guid id)
+        public async Task<Category> Delete(IUnitOfWork uow, Guid id)
         {
             Category result = null;
             try
@@ -179,8 +162,8 @@ namespace ElectionAPI.Service
                 var p = new DynamicParameters();
                 p.Add("@id", id, DbType.Guid, ParameterDirection.Input);
 
-                await context.QueryAsync<Category>(sql: "Category_Delete", param: p, commandType: System.Data.CommandType.StoredProcedure);
-                result = await this.GetByID(context, id);
+                await uow.Context.QueryAsync<Category>(sql: "Category_Delete", param: p, commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans);
+                result = await this.GetByID(uow.Context, id);
             }
             catch (Exception ex)
             {

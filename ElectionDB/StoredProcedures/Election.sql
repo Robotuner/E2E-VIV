@@ -1,21 +1,21 @@
 
 CREATE PROCEDURE [dbo].[Ballot_Insert]
 	@id UNIQUEIDENTIFIER, 
-	@electionId UNIQUEIDENTIFIER,
-	@ballotChain nvarchar(max), 
+	@electionid UNIQUEIDENTIFIER,
+	@ballotchain nvarchar(max), 
 	@nonce int
 AS
 	INSERT INTO [dbo].[Ballot] (id, ElectionId, Nonce, BallotChain, CreateDate) VALUES 
-	(@id, @electionId, @nonce, @ballotChain, GetUTCDate())
+	(@id, @electionid, @nonce, @ballotchain, GetUTCDate())
 
 	SELECT * FROM [dbo].[Ballot] WHERE Id = @id
 RETURN 0
 GO
 
 CREATE PROCEDURE [dbo].[Ballot_GetByElection]
-	@electionId UNIQUEIDENTIFIER
+	@electionid UNIQUEIDENTIFIER
 AS
-	SELECT TOP 1 * FROM [dbo].[ballot] WHERE ElectionId = @electionId ORDER BY CreateDate DESC
+	SELECT TOP 1 * FROM [dbo].[ballot] WHERE ElectionId = @electionid ORDER BY CreateDate DESC
 
 RETURN 0
 GO
@@ -23,18 +23,18 @@ GO
 
 CREATE PROCEDURE [dbo].[Category_Insert]
 	@id UNIQUEIDENTIFIER, 
-	@electionId UNIQUEIDENTIFIER,
-	@categoryTypeId int, 
+	@electionid UNIQUEIDENTIFIER,
+	@categorytypeid int, 
 	@heading nvarchar(256),
 	@title nvarchar(100),
-	@judgePosition int,
+	@judgeposition int,
 	@information nvarchar(max),
 	@subtitle nvarchar(200),
 	@sequence int,
 	@selection UNIQUEIDENTIFIER
 AS
 	INSERT INTO [dbo].[Category] (id, ElectionId, CategoryTypeId, Heading, CreateDate, LastUpdated, Title, JudgePosition, Information, SubTitle, Sequence, Selection) VALUES 
-	(@id, @electionId, @categoryTypeId, @heading, GetUTCDate(), GetUTCDate(), @title, @judgePosition, @information, @subtitle,@sequence, @selection)
+	(@id, @electionid, @categorytypeid, @heading, GetUTCDate(), GetUTCDate(), @title, @judgeposition, @information, @subtitle,@sequence, @selection)
 
 	SELECT * FROM [dbo].[Category] WHERE Id = @id
 RETURN 0
@@ -42,18 +42,18 @@ GO
 
 CREATE PROCEDURE [dbo].[Category_Update]
 	@id UNIQUEIDENTIFIER, 
-	@electionId UNIQUEIDENTIFIER,
-	@categoryTypeId int, 
+	@electionid UNIQUEIDENTIFIER,
+	@categorytypeid int, 
 	@heading nvarchar(256),
 	@title nvarchar(100),
-	@judgePosition int,
+	@judgeposition int,
 	@information nvarchar(max),
 	@subtitle nvarchar(200),
 	@sequence int,
 	@selection UNIQUEIDENTIFIER
 AS
-	UPDATE [dbo].[Category] Set ElectionId=@electionId, CategoryTypeId=@categoryTypeId, Heading=@heading, LastUpdated=GetUTCDate(), 
-	        Title=@title, JudgePosition=@judgePosition, Information=@information, SubTitle=@subtitle, Sequence=@sequence, Selection=@selection
+	UPDATE [dbo].[Category] Set ElectionId=@electionid, CategoryTypeId=@categorytypeid, Heading=@heading, LastUpdated=GetUTCDate(), 
+	        Title=@title, Judgeposition=@judgePosition, Information=@information, SubTitle=@subtitle, Sequence=@sequence, Selection=@selection
 	WHERE Id=@id
 
 	SELECT * FROM [dbo].[Category] WHERE Id = @id
@@ -82,17 +82,17 @@ RETURN 0
 GO
 
 CREATE PROCEDURE [dbo].[Category_GetByElection]
-	@electionId UNIQUEIDENTIFIER
+	@electionid UNIQUEIDENTIFIER
 AS
-	SELECT * from [dbo].[Category] WHERE ElectionId=@electionId ORDER BY categorytypeId
+	SELECT * from [dbo].[Category] WHERE ElectionId=@electionid ORDER BY categoryTypeId
 RETURN 0
 GO
 
 CREATE PROCEDURE [dbo].[Category_GetByType]
-	@electionId UNIQUEIDENTIFIER,
+	@electionid UNIQUEIDENTIFIER,
 	@type int
 AS
-	SELECT * from [dbo].[Category] WHERE ElectionId=@electionId AND CategoryTypeId=@type
+	SELECT * from [dbo].[Category] WHERE ElectionId=@electionid AND CategoryTypeId=@type
 RETURN 0
 GO
 
@@ -245,13 +245,13 @@ CREATE PROCEDURE [dbo].[Ticket_Insert]
 	@electionid UNIQUEIDENTIFIER, 
 	@categoryid UNIQUEIDENTIFIER, 
 	@description nvarchar(256), 
-	@partyId int,
-	@ticketType int,
+	@partyid int,
+	@tickettype int,
 	@information nvarchar(max),
 	@sequence int
 AS
 	INSERT INTO [dbo].[Ticket] (id, ElectionId, CategoryId, Description, PartyId, TicketType, Information, Sequence, CreateDate, LastUpdated) VALUES 
-	(@id, @electionid, @categoryid, @description, @partyId, @ticketType, @information, @sequence, GetUTCDate(), GetUTCDate())
+	(@id, @electionid, @categoryid, @description, @partyid, @tickettype, @information, @sequence, GetUTCDate(), GetUTCDate())
 
 	SELECT * FROM [dbo].[Ticket] WHERE Id = @id
 RETURN 0
@@ -260,15 +260,15 @@ GO
 CREATE PROCEDURE [dbo].[Ticket_Update]
 	@id UNIQUEIDENTIFIER, 
 	@electionid UNIQUEIDENTIFIER, 
-	@categoryId UNIQUEIDENTIFIER, 
+	@categoryid UNIQUEIDENTIFIER, 
 	@description nvarchar(256), 
-	@partyId int,
-	@ticketType int,
+	@partyid int,
+	@tickettype int,
 	@information nvarchar(max),
 	@sequence int
 AS
-	UPDATE [dbo].[Ticket] SET ElectionId=@electionid, CategoryId=@categoryid, Description=@description, PartyId=@partyId,
-	TicketType=@ticketType, Information=@information, Sequence=@sequence, LastUpdated=GetUTCDate() 
+	UPDATE [dbo].[Ticket] SET ElectionId=@electionid, CategoryId=@categoryid, Description=@description, PartyId=@partyid,
+	TicketType=@tickettype, Information=@information, Sequence=@sequence, LastUpdated=GetUTCDate() 
 	WHERE Id=@id
 
 	SELECT * FROM [dbo].[Ticket] WHERE Id = @id

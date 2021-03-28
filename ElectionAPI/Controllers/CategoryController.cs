@@ -42,13 +42,13 @@ namespace ElectionAPI.Controllers
         [HttpPost]
         public async Task<Category> Create([FromBody] Category category)
         {
-            return await this.categoryRepository.Insert(Context, category);
+            return await this.categoryRepository.Insert(UOW, category);
         }
 
         [HttpPut("{Id}")]
         public async Task<Category> Update([FromBody] Category category)
         {
-            Category result = await this.categoryRepository.Update(Context, category);
+            Category result = await this.categoryRepository.Update(UOW, category);
             return result;
         }
 
@@ -56,7 +56,7 @@ namespace ElectionAPI.Controllers
         public async Task<bool> Delete(Guid Id)
         {
             // removes all records that references this category!
-            Category result = await this.categoryRepository.Delete(Context, Id);
+            Category result = await this.categoryRepository.Delete(UOW, Id);
             return true;
         }
     }

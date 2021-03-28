@@ -3,37 +3,39 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Election", ".\Election\Election.csproj", "{BCCF61A0-21CA-4EA7-BC65-AC09F34DBC1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Election", "Election\Election.csproj", "{BCCF61A0-21CA-4EA7-BC65-AC09F34DBC1D}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ElectionDB", ".\ElectionDB\ElectionDB.sqlproj", "{A7D66AD7-CD0A-49F9-AA7F-CC39EA857A5B}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ElectionDB", "ElectionDB\ElectionDB.sqlproj", "{A7D66AD7-CD0A-49F9-AA7F-CC39EA857A5B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectionAPI", ".\ElectionAPI\ElectionAPI.csproj", "{843F3177-7686-405B-93EC-4A9450CBC994}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectionAPI", "ElectionAPI\ElectionAPI.csproj", "{843F3177-7686-405B-93EC-4A9450CBC994}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectionResultAPI", ".\ElectionResultAPI\ElectionResultAPI.csproj", "{652D6AA4-9EBF-429B-B68B-DAE222CF6052}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectionResultAPI", "ElectionResultAPI\ElectionResultAPI.csproj", "{652D6AA4-9EBF-429B-B68B-DAE222CF6052}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ElectionResultDB", ".\ElectionResultDB\ElectionResultDB.sqlproj", "{939819D1-645E-4F22-A8A1-D5A06FCD254B}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ElectionResultDB", "ElectionResultDB\ElectionResultDB.sqlproj", "{939819D1-645E-4F22-A8A1-D5A06FCD254B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneVote.Android", ".\OneVote\OneVote.Android\OneVote.Android.csproj", "{8EB32C35-52D1-4595-A4F4-BC9F1D43D812}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneVote.Android", "OneVote\OneVote.Android\OneVote.Android.csproj", "{8EB32C35-52D1-4595-A4F4-BC9F1D43D812}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneVote.iOS", ".\OneVote\OneVote.iOS\OneVote.iOS.csproj", "{8685D683-48ED-47E3-83BF-406B9D00956D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneVote.iOS", "OneVote\OneVote.iOS\OneVote.iOS.csproj", "{8685D683-48ED-47E3-83BF-406B9D00956D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneVote", ".\OneVote\OneVote\OneVote.csproj", "{CAF84C25-6DF6-4458-BA94-C67E03E6AA82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneVote", "OneVote\OneVote\OneVote.csproj", "{CAF84C25-6DF6-4458-BA94-C67E03E6AA82}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectionModels", ".\ElectionModels\ElectionModels.csproj", "{4593D974-886D-49B7-A5E0-4DD98F3BC886}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectionModels", "ElectionModels\ElectionModels.csproj", "{4593D974-886D-49B7-A5E0-4DD98F3BC886}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectionAPITest", ".\ElectionAPITest\ElectionAPITest.csproj", "{3B230049-B946-4400-93F6-DD5FAE17C4C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectionAPITest", "ElectionAPITest\ElectionAPITest.csproj", "{3B230049-B946-4400-93F6-DD5FAE17C4C3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4246CA06-564B-4664-9307-BF4B42F43CC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCvSharp", ".\OpenCvSharp-master3.2\src\OpenCvSharp\OpenCvSharp.csproj", "{658C140F-2E73-4E22-80A7-F05DF0A83318}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCvSharp", "OpenCvSharp-master3.2\src\OpenCvSharp\OpenCvSharp.csproj", "{658C140F-2E73-4E22-80A7-F05DF0A83318}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCvSharp.Android", ".\OpenCvSharp-master3.2\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj", "{F94F9E8A-E239-45EA-9C61-C7855C8B6F25}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCvSharp.Android", "OpenCvSharp-master3.2\src\OpenCvSharp.Android\OpenCvSharp.Android.csproj", "{F94F9E8A-E239-45EA-9C61-C7855C8B6F25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCvSharp.Windows", ".\OpenCvSharp-master3.2\src\OpenCvSharp.Windows\OpenCvSharp.Windows.csproj", "{D7856971-D877-4CB1-A08C-C2A763EBFAD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCvSharp.Windows", "OpenCvSharp-master3.2\src\OpenCvSharp.Windows\OpenCvSharp.Windows.csproj", "{D7856971-D877-4CB1-A08C-C2A763EBFAD1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenCvSharpExtern", ".\OpenCvSharp-master3.2\src\OpenCvSharpExtern\OpenCvSharpExtern.vcxproj", "{8E7279F8-F801-4672-B42F-1ED2C68B16A4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenCvSharpExtern", "OpenCvSharp-master3.2\src\OpenCvSharpExtern\OpenCvSharpExtern.vcxproj", "{8E7279F8-F801-4672-B42F-1ED2C68B16A4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenCvSharpExternDroid", ".\OpenCvSharp-master3.2\src\OpenCvSharpExternDroid\OpenCvSharpExternDroid.vcxproj", "{707296F9-6AEF-4548-A66D-4CF3E5795B1A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenCvSharpExternDroid", "OpenCvSharp-master3.2\src\OpenCvSharpExternDroid\OpenCvSharpExternDroid.vcxproj", "{707296F9-6AEF-4548-A66D-4CF3E5795B1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectionWebsite", "ElectionWebsite\ElectionWebsite.csproj", "{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1164,6 +1166,76 @@ Global
 		{707296F9-6AEF-4548-A66D-4CF3E5795B1A}.Release-JP|x64.Build.0 = Release|x64
 		{707296F9-6AEF-4548-A66D-4CF3E5795B1A}.Release-JP|x86.ActiveCfg = Release|x86
 		{707296F9-6AEF-4548-A66D-4CF3E5795B1A}.Release-JP|x86.Build.0 = Release|x86
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Ad-Hoc|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Ad-Hoc|Any CPU.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Ad-Hoc|ARM.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Ad-Hoc|ARM.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Ad-Hoc|ARM64.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Ad-Hoc|ARM64.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Ad-Hoc|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Ad-Hoc|x64.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Ad-Hoc|x64.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Ad-Hoc|x86.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Ad-Hoc|x86.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.AppStore|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.AppStore|Any CPU.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.AppStore|ARM.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.AppStore|ARM.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.AppStore|ARM64.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.AppStore|ARM64.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.AppStore|iPhone.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.AppStore|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.AppStore|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.AppStore|x64.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.AppStore|x64.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.AppStore|x86.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.AppStore|x86.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Debug|ARM.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Debug|x64.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Debug|x86.Build.0 = Debug|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release|ARM.ActiveCfg = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release|ARM.Build.0 = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release|ARM64.Build.0 = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release|iPhone.Build.0 = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release|x64.ActiveCfg = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release|x64.Build.0 = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release|x86.ActiveCfg = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release|x86.Build.0 = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release-JP|Any CPU.ActiveCfg = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release-JP|Any CPU.Build.0 = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release-JP|ARM.ActiveCfg = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release-JP|ARM.Build.0 = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release-JP|ARM64.ActiveCfg = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release-JP|ARM64.Build.0 = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release-JP|iPhone.ActiveCfg = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release-JP|iPhone.Build.0 = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release-JP|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release-JP|iPhoneSimulator.Build.0 = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release-JP|x64.ActiveCfg = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release-JP|x64.Build.0 = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release-JP|x86.ActiveCfg = Release|Any CPU
+		{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}.Release-JP|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

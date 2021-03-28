@@ -39,7 +39,7 @@ namespace ElectionAPI.Service
             try
             {
                 var p = new DynamicParameters();
-                p.Add("@ballotId", Id, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
+                p.Add("@ballotid", Id, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
 
                 result = await context.QuerySingleAsync<SignatureNotice>(sql: "SignatureNotice_GetByBallot", param: p, commandType: System.Data.CommandType.StoredProcedure);
             }
@@ -58,7 +58,7 @@ namespace ElectionAPI.Service
                 var p = new DynamicParameters();
                 p.Add("@id", Guid.NewGuid(), DbType.Guid, ParameterDirection.Input);
                 p.Add("@nonce", notice.Nonce, DbType.Int32, ParameterDirection.Input);
-                p.Add("@ballotId", notice.BallotId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@ballotid", notice.BallotId, DbType.Guid, ParameterDirection.Input);
 
                 SignatureNotice ans = await context.QuerySingleAsync<SignatureNotice>(sql: "SignatureNotice_Insert", param: p, commandType: System.Data.CommandType.StoredProcedure);
                 return ans;

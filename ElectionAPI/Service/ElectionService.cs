@@ -4,6 +4,7 @@ using ElectionModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,10 +12,10 @@ namespace ElectionAPI.Service
 {
     public interface IElectionService
     {
-        Task<Election> Delete(IDbConnection context, Guid id);
-        Task<Election> Insert(IDbConnection context, Election Host);
-        Task<Election> SaveAllElection(IDbConnection context, Election election);
-        Task<Election> Update(IDbConnection context, Election Host);
+        Task<Election> Delete(IUnitOfWork uow, Guid id);
+        Task<Election> Insert(IUnitOfWork uow, Election Host);
+        Task<Election> SaveAllElection(IUnitOfWork uow, Election election);
+        Task<Election> Update(IUnitOfWork uow, Election Host);
         Task<IEnumerable<Election>> GetAll(IDbConnection context);
         Task<Election> GetByID(IDbConnection context, Guid id);
         Task<Election> GetFullElection(IDbConnection context, Guid id);
@@ -42,7 +43,7 @@ namespace ElectionAPI.Service
             try
             {
                 var p = new DynamicParameters();
-                p.Add("@date", DateTime.UtcNow, System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
+                p.Add("@date", DateTime.Today, System.Data.DbType.Date, System.Data.ParameterDirection.Input);
 
                 result = await context.QueryAsync<Election>(sql: "Election_Get", param: p, commandType: System.Data.CommandType.StoredProcedure);
             }
@@ -103,8 +104,9 @@ namespace ElectionAPI.Service
                     result.CategoryList = categories;
                 }
             }
-            catch 
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 throw;
             }
 
@@ -120,22 +122,22 @@ namespace ElectionAPI.Service
             }
             var p = new DynamicParameters();
             p.Add("@id", election.Id, DbType.Guid, ParameterDirection.Input);
-            p.Add("@date", election.Date, DbType.DateTime, ParameterDirection.Input);
+            p.Add("@date", election.Date, DbType.Date, ParameterDirection.Input);
             p.Add("@startdate", election.StartDateLocal, DbType.DateTime, ParameterDirection.Input);
             p.Add("@enddate", election.EndDateLocal, DbType.DateTime, ParameterDirection.Input);
             p.Add("@description", election.Description, DbType.String, ParameterDirection.Input);
             p.Add("@version", election.Version, DbType.String, ParameterDirection.Input);
-            p.Add("@allowUpdates", election.AllowUpdates, DbType.Boolean, ParameterDirection.Input);
+            p.Add("@allowupdates", election.AllowUpdates, DbType.Boolean, ParameterDirection.Input);
             return p;
         }
 
-        public async Task<Election> SaveAllElection(IDbConnection context, Election election)
+        public async Task<Election> SaveAllElection(IUnitOfWork uow, Election election)
         {
             try
             {
                 //await SaveParty(context, election.PartyList);
-                await SaveElectionTable(context, election);
-                await SaveCategorys(context, election.CategoryList);
+                await SaveElectionTable(uow.Context, election);
+                await SaveCategorys(uow, election.CategoryList);
                 return election;
             }
             catch (Exception ex)
@@ -144,13 +146,13 @@ namespace ElectionAPI.Service
             }
         }
         
-        public async Task<Election> Insert(IDbConnection context, Election election) 
+        public async Task<Election> Insert(IUnitOfWork uow, Election election) 
         {
             Election result = null;
             try
             {
-                result = await context.QuerySingleAsync<Election>(sql: "Election_Insert", param: SetParam(election), 
-                    commandType: System.Data.CommandType.StoredProcedure);      
+                result = await uow.Context.QuerySingleAsync<Election>(sql: "Election_Insert", param: SetParam(election), 
+                    commandType: System.Data.CommandType.StoredProcedure, transaction:uow.Trans);      
             }
             catch (Exception ex)
             {
@@ -160,24 +162,25 @@ namespace ElectionAPI.Service
             return result;
         }
 
-        public async Task<Election> Update(IDbConnection context, Election election) 
+        public async Task<Election> Update(IUnitOfWork uow, Election election) 
         {
             try
             {
-                Election foundElection = await GetByID(context, election.Id);
+                Election foundElection = await GetByID(uow.Context, election.Id);
                 if (foundElection != null)
                 {
                     this.Changes = changeLogService.GetChanges(election, foundElection);
                     if (Changes.Count > 0)
                     {
-                        List<Election> result = (await context.QueryAsync<Election>(sql: "Election_Update", param: SetParam(election),
-                                commandType: System.Data.CommandType.StoredProcedure)).ToList();
+                        List<Election> result = (await uow.Context.QueryAsync<Election>(sql: "Election_Update", param: SetParam(election),
+                                commandType: System.Data.CommandType.StoredProcedure, transaction:uow.Trans)).ToList();
                         return result.FirstOrDefault();
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 throw;
             }
 
@@ -187,7 +190,7 @@ namespace ElectionAPI.Service
         /// <summary>
         /// This will delete all categorys and tickets associated with the election!
         /// </summary>
-        public async Task<Election> Delete(IDbConnection context, Guid id)
+        public async Task<Election> Delete(IUnitOfWork uow, Guid id)
         {
             Election result = null;
             try
@@ -195,10 +198,10 @@ namespace ElectionAPI.Service
                 var p = new DynamicParameters();
                 p.Add("@id", id, DbType.Guid, ParameterDirection.Input);
 
-                await context.QueryAsync<Election>(sql: "Election_Delete", param: p, commandType: System.Data.CommandType.StoredProcedure);
-                result = await this.GetByID(context, id);
+                await uow.Context.QueryAsync<Election>(sql: "Election_Delete", param: p, commandType: System.Data.CommandType.StoredProcedure, transaction:uow.Trans);
+                result = await this.GetByID(uow.Context, id);
             }
-            catch 
+            catch (Exception ex)
             {
                 throw;
             }
@@ -229,51 +232,51 @@ namespace ElectionAPI.Service
             }
         }
 
-        private async Task SaveParty(IDbConnection context, List<Party> partyList)
+        private async Task SaveParty(IUnitOfWork uow, List<Party> partyList)
         {
             if (partyList == null)
                 return;
 
             foreach (Party party in partyList)
             {
-                Party foundParty = await partyService.GetByID(context, party.Id);
+                Party foundParty = await partyService.GetByID(uow.Context, party.Id);
                 if (foundParty == null)
                 {
-                    await partyService.Insert(context, party);
+                    await partyService.Insert(uow, party);
                 }
                 else
                 {
-                    await partyService.Update(context, party);
+                    await partyService.Update(uow, party);
                 }
             }
         }
 
-        private async Task SaveCategorys(IDbConnection context, List<Category> categorys)
+        private async Task SaveCategorys(IUnitOfWork uow, List<Category> categorys)
         {
             foreach(Category cat in categorys)
             {
                 Category foundCategory = null;
-                foundCategory = await categoryService.GetByID(context, cat.Id);
+                foundCategory = await categoryService.GetByID(uow.Context, cat.Id);
                 if (foundCategory == null)
                 {
-                    Category result = await this.categoryService.Insert(context, cat);
+                    Category result = await this.categoryService.Insert(uow, cat);
                 }
                 else
                 {
-                    await this.categoryService.Update(context, cat);
+                    await this.categoryService.Update(uow, cat);
                 }
 
                 foreach (Ticket ticket in cat.Tickets)
                 {
                     Ticket foundTicket = null;
-                    foundTicket = await ticketService.GetByID(context, ticket.Id);
+                    foundTicket = await ticketService.GetByID(uow.Context, ticket.Id);
                     if (foundTicket == null)
                     {
-                        await ticketService.Insert(context, ticket);
+                        await ticketService.Insert(uow, ticket);
                     }
                     else
                     {
-                        await ticketService.Update(context, ticket);
+                        await ticketService.Update(uow, ticket);
                     }
                 }
             }

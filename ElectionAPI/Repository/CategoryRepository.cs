@@ -13,15 +13,13 @@ namespace ElectionAPI.Repository
 {
     public interface ICategoryRepository
     {
-        Task<Category> Delete(IDbConnection context, Guid id);
-        Task<Category> Insert(IDbConnection context, Category host);
-        Task<Category> Update(IDbConnection context, Category host);
-        Task<List<Category>> GetAll(IDbConnection context);
+        Task<Category> Delete(IUnitOfWork uow, Guid id);
+        Task<Category> Insert(IUnitOfWork uow, Category host);
+        Task<Category> Update(IUnitOfWork uow, Category host);
+
         Task<Category> GetByID(IDbConnection context, Guid id);
         Task<List<Category>> GetByElection(IDbConnection context, Guid electionId);
         Task<List<Category>> GetByType(IDbConnection context, Guid electionId, int type);
-        //Task<List<Category>> GetBySlate(IDbConnection context, Guid electionId, Guid slateId);
-        //Task<List<Category>> GetBySlateType(IDbConnection context, Guid electionId, Guid slateId, int type);
     }
 
     public class CategoryRepository : BaseRepository, ICategoryRepository
@@ -32,21 +30,7 @@ namespace ElectionAPI.Repository
         {
             this._logger = logger;
             this.categoryService = categoryService;
-        }
-
-        public async Task<List<Category>> GetAll(IDbConnection context)
-        {
-            List<Category> result = null;
-            try
-            {
-                result = (await this.categoryService.GetAll(context))?.ToList();
-            }
-            catch 
-            {
-                throw;
-            }
-
-            return result;
+            
         }
 
         public async Task<Category> GetByID(IDbConnection context, Guid id)
@@ -95,19 +79,19 @@ namespace ElectionAPI.Repository
             return result;
         }
 
-        public async Task<Category> Insert(IDbConnection context, Category category)
+        public async Task<Category> Insert(IUnitOfWork uow, Category category)
         {
             Category result = null;
             try
             {
-                Category foundCategory = await this.categoryService.GetByID(context, category.Id);
+                Category foundCategory = await this.categoryService.GetByID(uow.Context, category.Id);
                 if (foundCategory != null)
                 {
-                    result = await this.categoryService.Update(context, category);
+                    result = await this.categoryService.Update(uow, category);
                 }
                 else
                 {
-                    result = await this.categoryService.Insert(context, category);
+                    result = await this.categoryService.Insert(uow, category);
                 }
             }
             catch
@@ -118,12 +102,12 @@ namespace ElectionAPI.Repository
             return result;
         }
 
-        public async Task<Category> Update(IDbConnection context, Category election)
+        public async Task<Category> Update(IUnitOfWork uow, Category election)
         {
             Category result = null;
             try
             {
-                result = await this.categoryService.Update(context, election);
+                result = await this.categoryService.Update(uow, election);
             }
             catch
             {
@@ -133,11 +117,11 @@ namespace ElectionAPI.Repository
             return result;
         }
 
-        public async Task<Category> Delete(IDbConnection context, Guid id)
+        public async Task<Category> Delete(IUnitOfWork uow, Guid id)
         {
-            _logger.LogInformation(string.Format("CategoryRepository: Delete {0}", id));
+            _logger?.LogInformation(string.Format("CategoryRepository: Delete {0}", id));
 
-            Category result = await this.categoryService.Delete(context, id);
+            Category result = await this.categoryService.Delete(uow, id);
             return result;
         }
     }

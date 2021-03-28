@@ -3,6 +3,7 @@ using ElectionModels;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Data;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace ElectionAPI.Repository
@@ -63,8 +64,9 @@ namespace ElectionAPI.Repository
             {
                 result = await this.ballotService.Insert(context, ballot);
             }
-            catch
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 throw;
             }
 

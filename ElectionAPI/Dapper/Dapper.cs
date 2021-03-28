@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,6 +19,7 @@ namespace ElectionAPI.Dapper
         {
             _config = config;
         }
+
         public void Dispose()
         {
 
@@ -30,25 +32,26 @@ namespace ElectionAPI.Dapper
 
         public T Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.Text)
         {
-            using IDbConnection db = new SqlConnection(_config.GetConnectionString(Connectionstring));
+            using IDbConnection db = this.GetDbconnection();
             return db.Query<T>(sp, parms, commandType: commandType).FirstOrDefault();
         }
 
         public List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
-            using IDbConnection db = new SqlConnection(_config.GetConnectionString(Connectionstring));
+            using IDbConnection db = this.GetDbconnection();
             return db.Query<T>(sp, parms, commandType: commandType).ToList();
         }
 
         public DbConnection GetDbconnection()
         {
-            return new SqlConnection(_config.GetConnectionString(Connectionstring));
+            //return new SqlConnection(_config.GetConnectionString(Connectionstring));
+            return new NpgsqlConnection(_config.GetConnectionString(Connectionstring));
         }
 
         public T Insert<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             T result;
-            using IDbConnection db = new SqlConnection(_config.GetConnectionString(Connectionstring));
+            using IDbConnection db = this.GetDbconnection();
             try
             {
                 if (db.State == ConnectionState.Closed)
@@ -82,7 +85,7 @@ namespace ElectionAPI.Dapper
         public T Update<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
         {
             T result;
-            using IDbConnection db = new SqlConnection(_config.GetConnectionString(Connectionstring));
+            using IDbConnection db = this.GetDbconnection();
             try
             {
                 if (db.State == ConnectionState.Closed)

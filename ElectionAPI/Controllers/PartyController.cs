@@ -27,7 +27,7 @@ namespace ElectionAPI.Controllers
         [HttpPost]
         public async Task<Party> Create([FromBody] Party electionObj)
         {
-            return await this.partyRepository.Insert(Context, electionObj);
+            return await this.partyRepository.Insert(UOW, electionObj);
         }
 
 
@@ -42,14 +42,14 @@ namespace ElectionAPI.Controllers
         [HttpDelete("{Id}")]
         public async Task<bool> Delete(int Id)
         {
-            Party result = await this.partyRepository.Delete(Context, Id);
+            Party result = await this.partyRepository.Delete(UOW, Id);
             return true;
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<Party> Update([FromBody] Party categoryType)
         {
-            Party result = await this.partyRepository.Update(Context, categoryType);
+            Party result = await this.partyRepository.Update(UOW, categoryType);
             return result;
         }
     }

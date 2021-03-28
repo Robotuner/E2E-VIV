@@ -12,9 +12,9 @@ namespace ElectionAPI.Repository
 {
     public interface IPartyRepository
     {
-        Task<Party> Delete(IDbConnection context, int id);
-        Task<Party> Insert(IDbConnection context, Party host);
-        Task<Party> Update(IDbConnection context, Party host);
+        Task<Party> Delete(IUnitOfWork uow, int id);
+        Task<Party> Insert(IUnitOfWork uow, Party host);
+        Task<Party> Update(IUnitOfWork uow, Party host);
         Task<List<Party>> GetAll(IDbConnection context);
         Task<Party> GetByID(IDbConnection context, int id);
     }
@@ -60,12 +60,12 @@ namespace ElectionAPI.Repository
             return result;
         }
 
-        public async Task<Party> Insert(IDbConnection context, Party election)
+        public async Task<Party> Insert(IUnitOfWork uow, Party election)
         {
             Party result = null;
             try
             {
-                result = await this.categoryService.Insert(context, election);
+                result = await this.categoryService.Insert(uow, election);
             }
             catch 
             {
@@ -75,12 +75,12 @@ namespace ElectionAPI.Repository
             return result;
         }
 
-        public async Task<Party> Update(IDbConnection context, Party election)
+        public async Task<Party> Update(IUnitOfWork uow, Party election)
         {
             Party result = null;
             try
             {
-                result = await this.categoryService.Update(context, election);
+                result = await this.categoryService.Update(uow, election);
             }
             catch
             {
@@ -90,11 +90,11 @@ namespace ElectionAPI.Repository
             return result;
         }
 
-        public async Task<Party> Delete(IDbConnection context, int id)
+        public async Task<Party> Delete(IUnitOfWork uow, int id)
         {
-            _logger.LogInformation(string.Format("CategoryRepository: Delete {0}", id));
+            _logger?.LogInformation(string.Format("CategoryRepository: Delete {0}", id));
 
-            Party result = await this.categoryService.Delete(context, id);
+            Party result = await this.categoryService.Delete(uow, id);
             return result;
         }
     }

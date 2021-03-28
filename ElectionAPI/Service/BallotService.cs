@@ -37,11 +37,10 @@ namespace ElectionAPI.Service
 
         public async Task<Ballot> GetByElection(IDbConnection context, Guid Id)
         {
-            Ballot result = null;
             try
             {
                 var p = new DynamicParameters();
-                p.Add("@electionId", Id, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
+                p.Add("@electionid", Id, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
 
                 var ans = await context.QueryAsync<Ballot>(sql: "Ballot_GetByElection", param: p,  commandType: System.Data.CommandType.StoredProcedure);
                 return ans.FirstOrDefault();
@@ -50,8 +49,6 @@ namespace ElectionAPI.Service
             {
                 throw;
             }
-
-            return result;
         }
 
         public async Task<Ballot> Insert(IDbConnection context, Ballot ballot)
@@ -60,9 +57,9 @@ namespace ElectionAPI.Service
             {
                 var p = new DynamicParameters();
                 p.Add("@id", Guid.NewGuid(), DbType.Guid, ParameterDirection.Input);
-                p.Add("@electionId", ballot.ElectionId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@electionid", ballot.ElectionId, DbType.Guid, ParameterDirection.Input);
                 p.Add("@nonce", ballot.Nonce, DbType.Int32, ParameterDirection.Input);
-                p.Add("@ballotChain", ballot.BallotChain, DbType.String, ParameterDirection.Input);
+                p.Add("@ballotchain", ballot.BallotChain, DbType.String, ParameterDirection.Input);
     
                 Ballot ans = await context.QuerySingleAsync<Ballot>(sql: "Ballot_Insert", param: p,  commandType: System.Data.CommandType.StoredProcedure);
                 return ans;

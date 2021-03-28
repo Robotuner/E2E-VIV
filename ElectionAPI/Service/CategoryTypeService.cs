@@ -33,9 +33,9 @@ namespace ElectionAPI.Service
                 var p = new DynamicParameters();
                 p.Add("@active", true, System.Data.DbType.Boolean, System.Data.ParameterDirection.Input);
 
-                result = await context.QueryAsync<CategoryType>(sql: "CategoryType_Get", commandType: System.Data.CommandType.StoredProcedure);
+                result = await context.QueryAsync<CategoryType>(sql: "CategoryType_Get", param: p, commandType: System.Data.CommandType.StoredProcedure);
             }
-            catch
+            catch (Exception ex)
             {
                 throw;
             }
@@ -55,7 +55,7 @@ namespace ElectionAPI.Service
 
                 return result.FirstOrDefault();
             }
-            catch
+            catch (Exception ex)
             {
                 throw;
             }
@@ -73,15 +73,16 @@ namespace ElectionAPI.Service
             return p;
         }
 
-        public async Task<CategoryType> Insert(IUnitOfWork uow, CategoryType election)
+        public async Task<CategoryType> Insert(IUnitOfWork uow, CategoryType cattype)
         {
             CategoryType result = null;
             try
             {
                 var p = new DynamicParameters();      
-                p.Add("@description", election.Description, DbType.String, ParameterDirection.Input);
+                p.Add("@description", cattype.Description, DbType.String, ParameterDirection.Input);
 
-                result = await uow.Context.QuerySingleAsync<CategoryType>(sql: "CategoryType_Insert", param: p, commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans);
+                result = await uow.Context.QuerySingleAsync<CategoryType>(sql: "CategoryType_Insert", param: p, 
+                    commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans);
             }
             catch (Exception ex)
             {

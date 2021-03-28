@@ -72,7 +72,7 @@ namespace ElectionAPI.Controllers
         {
             if (election.Delete)
             {
-                await electionRepository.Delete(Context, election.Id);
+                await electionRepository.Delete(UOW, election.Id);
             }
             else
             {
@@ -80,7 +80,7 @@ namespace ElectionAPI.Controllers
                 {
                     if (cat.Delete)
                     {
-                        await categoryRepository.Delete(Context, cat.Id);
+                        await categoryRepository.Delete(UOW, cat.Id);
                     }
                     else
                     {
@@ -88,7 +88,7 @@ namespace ElectionAPI.Controllers
                         {
                             if (ticket.Delete)
                             {
-                                await ticketRepository.Delete(Context, ticket.Id);
+                                await ticketRepository.Delete(UOW, ticket.Id);
                             }
                         }
                     }
@@ -101,7 +101,7 @@ namespace ElectionAPI.Controllers
             Election foundElection = await this.electionRepository.GetByID(Context, election.Id);
             if (foundElection == null)
             {
-                await this.electionRepository.Insert(Context, election);
+                await this.electionRepository.Insert(UOW, election);
                 election.HasBeenCreated = true;                
             }
             await AddNewCategories(election);
@@ -115,7 +115,7 @@ namespace ElectionAPI.Controllers
                 Category foundCategory = await this.categoryRepository.GetByID(Context, cat.Id);
                 if (foundCategory == null)
                 {
-                    await this.categoryRepository.Insert(Context, cat);
+                    await this.categoryRepository.Insert(UOW, cat);
                     cat.HasBeenCreated = true;
                 }                 
                 foreach(Ticket ticket in cat.Tickets)
@@ -123,7 +123,7 @@ namespace ElectionAPI.Controllers
                     Ticket foundTicket = await ticketRepository.GetByID(Context, ticket.Id);
                     if (foundTicket == null)
                     {
-                        await this.ticketRepository.Insert(Context, ticket);
+                        await this.ticketRepository.Insert(UOW, ticket);
                         ticket.HasBeenCreated = true;
                     }
                 }
@@ -142,13 +142,13 @@ namespace ElectionAPI.Controllers
                 if (cat.Delete || cat.HasBeenCreated)
                     continue;
 
-                await categoryRepository.Update(Context, cat);
+                await categoryRepository.Update(UOW, cat);
                 foreach (Ticket ticket in cat.Tickets)
                 {
                     if (ticket.Delete || ticket.HasBeenCreated)
                         continue;
 
-                    await ticketRepository.Update(Context, ticket);
+                    await ticketRepository.Update(UOW, ticket);
                 }
             }
             return election;
@@ -195,7 +195,7 @@ namespace ElectionAPI.Controllers
         public async Task<bool> Delete(Guid Id)
         {
             // deletes all categorys and tickets too!
-            Election result = await this.electionRepository.Delete(Context, Id);
+            Election result = await this.electionRepository.Delete(UOW, Id);
             return true;
         }
 
@@ -203,7 +203,7 @@ namespace ElectionAPI.Controllers
         public async Task<Election> Update([FromBody] Election electionObj)
         {
             // updates only election table
-            Election result = await this.electionRepository.Update(Context, electionObj);
+            Election result = await this.electionRepository.Update(UOW, electionObj);
             
             return result;
         }

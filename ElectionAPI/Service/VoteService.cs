@@ -15,6 +15,8 @@ namespace ElectionAPI.Service
         Task<Vote> Insert(IUnitOfWork uow, Vote Host);
         Task<List<Vote>> InsertElection(IUnitOfWork uow, List<Vote> votes);
         Task<IEnumerable<Vote>> GetAll(IDbConnection context, Guid electionId, Guid categoryId, int offset = 0, int take = 1000, bool confirmed = true);
+        Task<IEnumerable<Vote>> GetAllByElectionId(IDbConnection context, Guid electionId, int offset = 0, int take = 1000, bool confirmed = true);
+        Task<IEnumerable<Vote>> GetAllByCategoryType(IDbConnection context, Guid electionId, int categorytype, int offset = 0, int take = 1000, bool confirmed = true);
         Task<IEnumerable<Vote>> GetByBallotID(IDbConnection context, Guid id);
         Task<IEnumerable<Vote>> GetByBallotID(IUnitOfWork uow, Guid id);
         Task<Vote> Update(IUnitOfWork uow, Vote vote);
@@ -28,40 +30,77 @@ namespace ElectionAPI.Service
 
         }
 
-        public async Task<IEnumerable<Vote>> GetAll(IDbConnection context, Guid electionId, Guid categoryId, int offset = 0, int take = 1000, bool confirmed = true) 
+        /// <summary>
+        /// This only counts votes that are confirmed by a signature record!
+        /// </summary>
+        public async Task<IEnumerable<Vote>> GetAllByElectionId(IDbConnection context, Guid electionId, int offset = 0, int take = 1000, bool confirmed = true)
         {
             IEnumerable<Vote> result = new List<Vote>();
             try
             {
                 var p = new DynamicParameters();
-                p.Add("@offset", offset, DbType.Int32, ParameterDirection.Input);
-                p.Add("@take", take, DbType.Int32, ParameterDirection.Input);
                 p.Add("@electionid", electionId, DbType.Guid, ParameterDirection.Input);
-                p.Add("@categoryid", categoryId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@oset", offset, DbType.Int32, ParameterDirection.Input);
+                p.Add("@take", take, DbType.Int32, ParameterDirection.Input);
                 p.Add("@confirmed", confirmed, DbType.Boolean, ParameterDirection.Input);
 
-                result = await context.QueryAsync<Vote>(sql: "Vote_GetAll", param: p, commandType: System.Data.CommandType.StoredProcedure);
+                result = await context.QueryAsync<Vote>(sql: "Vote_GetAllByElectionId", param: p, commandType: System.Data.CommandType.StoredProcedure);
             }
-            catch 
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 throw;
             }
 
             return result;
         }
 
-        private async Task<Vote> GetByID(IDbConnection context, Guid id)
+        /// <summary>
+        /// This only counts votes that are confirmed by a signature record!
+        /// </summary>
+        public async Task<IEnumerable<Vote>> GetAllByCategoryType(IDbConnection context, Guid electionId, int categorytype, int offset = 0, int take = 1000, bool confirmed = true)
         {
-            Vote result = null;
+            IEnumerable<Vote> result = new List<Vote>();
             try
             {
                 var p = new DynamicParameters();
-                p.Add("@id", id, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
+                p.Add("@electionid", electionId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@categorytype", categorytype, DbType.Int32, ParameterDirection.Input);
+                p.Add("@oset", offset, DbType.Int32, ParameterDirection.Input);
+                p.Add("@take", take, DbType.Int32, ParameterDirection.Input);
+                p.Add("@confirmed", confirmed, DbType.Boolean, ParameterDirection.Input);
 
-                result = await context.QuerySingleAsync<Vote>(sql: "Vote_GetById", param: p, commandType: System.Data.CommandType.StoredProcedure);
+                result = await context.QueryAsync<Vote>(sql: "Vote_GetAllByCategoryType", param: p, commandType: System.Data.CommandType.StoredProcedure);
             }
-            catch 
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// This only counts votes that are confirmed by a signature record!
+        /// </summary>
+        public async Task<IEnumerable<Vote>> GetAll(IDbConnection context, Guid electionId, Guid categoryId, int offset = 0, int take = 1000, bool confirmed = true) 
+        {
+            IEnumerable<Vote> result = new List<Vote>();
+            try
+            {
+                var p = new DynamicParameters();
+                p.Add("@electionid", electionId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@categoryid", categoryId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@oset", offset, DbType.Int32, ParameterDirection.Input);
+                p.Add("@take", take, DbType.Int32, ParameterDirection.Input); 
+                p.Add("@confirmed", confirmed, DbType.Boolean, ParameterDirection.Input);
+
+                result = await context.QueryAsync<Vote>(sql: "Vote_GetAll", param: p, commandType: System.Data.CommandType.StoredProcedure);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
                 throw;
             }
 
@@ -74,7 +113,7 @@ namespace ElectionAPI.Service
             try
             {
                 var p = new DynamicParameters();
-                p.Add("@ballotId", id, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
+                p.Add("@ballotid", id, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
 
                 result = await context.QueryAsync<Vote>(sql: "Vote_GetByBallotId", param: p, commandType: System.Data.CommandType.StoredProcedure);
             }
@@ -92,7 +131,7 @@ namespace ElectionAPI.Service
             try
             {
                 var p = new DynamicParameters();
-                p.Add("@ballotId", id, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
+                p.Add("@ballotid", id, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
 
                 result = await uow.Context.QueryAsync<Vote>(sql: "Vote_GetByBallotId", param: p, 
                     commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans);
@@ -111,7 +150,7 @@ namespace ElectionAPI.Service
             try
             {
                 var p = new DynamicParameters();
-                p.Add("@electionId", electionId, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
+                p.Add("@electionid", electionId, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
 
                 result = await context.QueryAsync<VoteResult>(sql: "VoteResult_GetByElectionId", param: p,
                     commandType: System.Data.CommandType.StoredProcedure);
@@ -133,13 +172,13 @@ namespace ElectionAPI.Service
                 Guid newId = Guid.NewGuid();
                 var p = new DynamicParameters();   
                 p.Add("@id", newId, DbType.Guid, ParameterDirection.Input);
-                p.Add("@electionId", vote.ElectionId, DbType.Guid, ParameterDirection.Input);
-                p.Add("@ballotId", vote.BallotId, DbType.Guid, ParameterDirection.Input);
-                p.Add("@categoryId", vote.CategoryId, DbType.Guid, ParameterDirection.Input);
-                p.Add("@categoryTypeId", vote.CategoryTypeId, DbType.Boolean, ParameterDirection.Input);
-                p.Add("@selectionId", vote.SelectionId, DbType.Guid, ParameterDirection.Input);
-                p.Add("@voteStatus", vote.VoteStatus, DbType.Int32, ParameterDirection.Input);
-                p.Add("@approvalDate", vote.ApprovalDate, DbType.Date, ParameterDirection.Input);
+                p.Add("@electionid", vote.ElectionId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@ballotid", vote.BallotId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@categoryid", vote.CategoryId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@categorytypeid", vote.CategoryTypeId, DbType.Int32, ParameterDirection.Input);
+                p.Add("@selectionid", vote.SelectionId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@votestatus", vote.VoteStatus, DbType.Int32, ParameterDirection.Input);
+                p.Add("@approvaldate", vote.ApprovalDate, DbType.Date, ParameterDirection.Input);
                 // vote_Insert uses newId() to set Id field.
                 result = await uow.Context.QuerySingleAsync<Vote>(sql: "Vote_Insert", param: p, commandType: System.Data.CommandType.StoredProcedure, 
                     transaction: uow.Trans);    
@@ -158,15 +197,14 @@ namespace ElectionAPI.Service
             Vote result = null;
             try
             {
-                Guid newId = Guid.NewGuid();
                 var p = new DynamicParameters();
                 p.Add("@id", vote.Id, DbType.Guid, ParameterDirection.Input);
-                p.Add("@electionId", vote.ElectionId, DbType.Guid, ParameterDirection.Input);
-                p.Add("@ballotId", vote.BallotId, DbType.Guid, ParameterDirection.Input);
-                p.Add("@categoryId", vote.CategoryId, DbType.Guid, ParameterDirection.Input);
-                p.Add("@categoryTypeId", vote.CategoryTypeId, DbType.Boolean, ParameterDirection.Input);
-                p.Add("@selectionId", vote.SelectionId, DbType.Guid, ParameterDirection.Input);
-                p.Add("@voteStatus", vote.VoteStatus, DbType.Int32, ParameterDirection.Input);
+                p.Add("@electionid", vote.ElectionId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@ballotid", vote.BallotId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@categoryid", vote.CategoryId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@categorytypeid", vote.CategoryTypeId, DbType.Int32, ParameterDirection.Input);
+                p.Add("@selectionid", vote.SelectionId, DbType.Guid, ParameterDirection.Input);
+                p.Add("@votestatus", vote.VoteStatus, DbType.Int32, ParameterDirection.Input);
                 // vote_Insert uses newId() to set Id field.
                 result = await uow.Context.QuerySingleAsync<Vote>(sql: "Vote_Update", param: p, commandType: System.Data.CommandType.StoredProcedure,
                     transaction: uow.Trans);

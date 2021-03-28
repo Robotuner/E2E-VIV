@@ -25,9 +25,10 @@ namespace ElectionAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<DataContext.AppContext>(options =>
-                      options.UseSqlServer(
-                          Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<DataContext.AppContext>(options =>
+            //          options.UseSqlServer(Configuration.GetConnectionString("SQLDefaultConnection")));
+            //services.AddDbContext<DataContext.AppContext>(options =>
+            //          options.UseNpgsql(Configuration.GetConnectionString("PostgresConnection")));
             //Register dapper in scope    
             services.AddScoped<IDapper, Dapperr>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

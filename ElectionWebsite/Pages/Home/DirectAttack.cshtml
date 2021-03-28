@@ -1,0 +1,50 @@
+﻿@page
+@model ElectionWebsite.Pages.Home.DirectAttackModel
+@{
+}
+
+<div class="text-left">
+    <h1>Direct Attack</h1> 
+    <p>There are numerous strategies in defense of attacks attempting to alter votes cast from registered voter devices.</p> 
+    <p>In an attack that bypass the registered voter:</p> 
+    <ul>
+        <li>
+            The attacker manages to compromise the State Registration System and obtain the encrypted ballot authorization code.
+            The attack vector could either of:
+            <ul>
+                <li>
+                    If the State chooses to send the encrypted ballot authorization code to each registered user, it
+                    would be to intercept the email transmission or intercept the physical mail containing their assigned QR Code.
+                </li>
+                <li>
+                    If the attacker compromised the registration website and intercepted the QR Code that is
+                    created when an encrypted ballot authorization code is allocated to the registered user.
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            In such a scenario, the attacker could bypass the voting app itself, and spoof the entire ballot and signature.
+            <ul>
+                <li>
+                    To achieve this, the attacker must not only harvest the encrypted ballot authorization code but must
+                    also know the registered voters SSN to decrypt it before submitting (Basically the entire State
+                    Registration Database is compromised).
+                </li>
+                <li>
+                    If he were able to do that, then the attack could send a notification to submit a signature ballot
+                    providing the expected Nonce, then send the signature in triplicate once confirmation is received.
+                    The ballot would be counted undetected.
+                </li>
+                <li>
+                    This could be defeated by encrypting the registered voters ballot id based on a user
+                    defined pin that is not recoverable and maintained separate from the Registered Voters SSN info.
+                </li>
+            </ul>
+        </li>
+        <li>
+            Forcing the attacker to penetrate the State Servers (undetected) to retrieve ballot authorization codes for
+            this attack makes mass harvesting of Ballots much more difficult than just harvesting mail-in ballots and submitting them.
+        </li>
+    </ul>
+</div>
