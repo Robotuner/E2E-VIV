@@ -61,7 +61,7 @@ namespace ElectionAPITest.Services
                 Election result = await electionService.GetFullElection(Context, DefaultElectionId);
                 Assert.IsNotNull(result, "Expect to find the default Election");
                 Assert.IsTrue(result.CategoryList.Count == 142, "Expect default dataset to have 142 categories, found " + result.CategoryList.Count);
-                Assert.IsTrue(result.PartyList.Count > 6, "Expect default dataset to have 6 parties");
+                Assert.IsTrue(result.PartyList.Count >= 6, "Expect default dataset to have 6 parties has " + result.PartyList.Count);
                 int totaltickets = 0;
                 foreach (Category cat in result.CategoryList)
                 {
