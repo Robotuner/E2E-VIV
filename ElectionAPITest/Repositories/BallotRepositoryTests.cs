@@ -60,7 +60,9 @@ namespace ElectionAPITest.Repositories
                     Nonce = 525,
                     BallotChain = "Something"
                 };
+                UOW.BeginTransaction();
                 Ballot inserted = await ballotRepository.Insert(Context, ans);
+                UOW.CloseTransaction();
                 Assert.IsNotNull(inserted, "Expected inserted ballot");
                 Assert.IsTrue(ans.Nonce == 525, "Expect Nonce to be 525");
             }

@@ -109,8 +109,8 @@ namespace OneVote.Views
             if (signature != null && signature.Id != Guid.Empty)
             {
                 msg = string.Format(Resource.ItemsPageSubmittalConfirmation,signature.Name, signature.Id);
-                bool allowUpdates = Models.Utils.BallotHasBeenSubmitted(ballotGuid: signature.BallotId, allowUpdates: DataService.Election.AllowUpdates, save: true);
-                if (!allowUpdates)
+
+                if (Models.Utils.BallotHasBeenSubmitted(ballotGuid: signature.BallotId, save: true) && !DataService.Election.AllowUpdates)
                 {
                     DataService.ClearVotes();
                 }

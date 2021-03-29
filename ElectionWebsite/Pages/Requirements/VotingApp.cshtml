@@ -3,13 +3,142 @@
 @{
 }
 
-<div class="text-center">
-    <h1 class="display-4">Audit</h1>
+<div class="text-left">
+    <h1 class="display-4">Voting App Requirements/Mitigations</h1>
     <p>
-        In Construction
+        The preponderance of E2E-VIV security effort is focused on the ability of the voting app to ensure integrity in
+        both the retrieval of the ballot and the submittal of the completed ballot.  How the registered voter actually
+        completes the ballot is of lesser concern.  It assumes that the voting app is retrieved from either the Apple or
+        Google store in a secure manner.  There is a concern that malware on the voting app can alter the voting app after
+        it is installed.  We think that is probably possible (we don't know), we also don't know how realistic that is because
+        the voting app will cast votes based on the configuration of the slate on the ballot.  The malware would need to
+        know the ballot configuration before hand to know how to affect the candidate choices.  For each election, there are
+        fifty different ballots, one for each state.
     </p>
     <p>
-        This page will list requirements to the voting app middle-ware.  It is not really required to prove that E2E-VIV is possible.  It is a 
-        UI spec for what would be expected from the voting app.
+        All server URL's will use the SSL protocol.  The prospect of any attack that involves transmission over the internet
+        assumes that SSL has been defeated.
     </p>
+    <h2>Getting the Ballot to the Voting App</h2>
+    <p>
+        The first point of attack is to somehow alter the ballot as it is being retrieved by the voting app. We have discussed
+        a solution for this in the <a href='../Home/InternetVoting'>architecture</a> discussion.
+    </p>
+    <h2>Completing the Ballot</h2>
+    <p>
+        This is really a UI thing that is not related to the integrity of the votes that are cast.  Nevertheless, it is include
+        here because in setting up the prototype site, we needed something.  Requirements are:
+        <ul>
+            <li>Display the correct election.</li>
+            <li>Allows separation of ballot into Measures, Federal Races, State Races, Legislative seats, and Judicial seats.</li>
+            <li>Choice of candidates for each race.</li>
+            <li>Ability to vote straight ticket (all one party).</li>
+            <li>Accessibility option.</li>
+            <li>Ability to review candidates prior to submittal.</li>
+            <li>Ability to re-submit the ballot at a later date up to poll closing.</li>
+            <li>Ability to prevent submittal after poll closing date/time.</li>
+            <li>Ability to prevent submittal before poll opening date/time.</li>
+            <li>Ability to change selections easily.</li>
+            <li>Ability to get detailed information about candidate or measure.</li>
+            <li>Ability to associate party affiliation with each candidate.</li>
+            <li>Some type of progress counter to let voter know how many races have no candidate selection.</li>
+        </ul>
+    </p>
+    <h2>Ballot Signature</h2>
+    <p>
+        This too has been discussed briefly in the <a href='../Home/InternetVoting'>architecture</a> discussion, repeated here.
+        <ul>
+            <li>Decrypted ballot id</li>
+            <li>Head shot</li>
+            <li>Device Id</li>
+            <li>Platform (iOS/Android)</li>
+            <li>Submittal DateTime</li>
+            <li>Longitude/Latitude</li>
+            <li>Completed Ballot wrapped in a blockchain</li>
+            <li>Birth year</li>
+            <li>Count of candidates</li>
+            <li>Expected Nonce</li>
+        </ul>
+    </p>
+    <p>
+        The decrypted ballot id proves they are the registered voter.  The head shot is used in auditing to verify that face only
+        submitted a single ballot. The device Id is used in auditing to determine if a device was used for more than one ballot.
+        The submittal datetime is used to determine if the ballot should be counted if it were received by the vote counting
+        server after polls close. The longitude/latitude is used in auditing to detect unusual clusters of ballots that were cast.
+        The completed ballot is used to count votes for each candidate. The birth year is used as a visual aid if head shots must
+        be visually inspected. The count of candidates is used to detect if the ballot was tampered with in an undetected manner.
+        The expected nonce is used to ensure integrity of the submittal transmission.
+    </p>
+    <h2>Ballot Submittal</h2>
+    <p>
+        The general process was also discussed in the <a href='../Home/InternetVoting'>architecture</a> discussion. Submittal of the
+        completed ballot is the obvious choice to affect changes in the ballot. We discussed the strategy to mitigate an attack
+        during the transmission of the completed ballot to the vote counting server.  It is a <a href='../home/mitm'>multi-step submittal</a>
+        process that relies first on SSL, then a computed Nonce to detect changes.
+    </p>
+    <p>
+        Once the registered voter submits a ballot, the app should be designed to keep attempting to submit it in the background until 
+        a confirmation is received. This defeats a DoS attack on the server, simply delays when the submittal is received.  
+    </p>
+    <p>
+        By including the completed ballot wrapped in a blockchain in the signature, we have multiple way to detect changes.
+        <ul>
+            <li>The first is the verification of the blockchain itself based on the computed hash.</li>
+            <li>The second is the verification of the expected nonce by the vote counting server.</li>
+            <li>
+                The third is the two step process of telling the vote counting server to expect a signature with a specific nonce,
+                then sending the signature in a separate transmission.  This has interesting benefits.
+                <ul>
+                    <li>It prevents an attack that replaces one candidate for another.</li>
+                    <li>
+                        It prevents an attack to eliminate a ballot entirely by purposely altering anything.  The reason is
+                        because if it signature is invalid, the response back to the client would be a failure, causing the voting app
+                        to resend.
+                    </li>
+                    <li>
+                        Even an attack that swallow the entire transmission would fail because the voting app would not receive a
+                        confirmation.
+                    </li>
+                    <li>
+                        Is it possible for an attack to swallow a transmission and still return a confirmation response? This could be
+                        detected in the audit process because the signature is sent to multiple servers.  It would also be detected in
+                        the audit because the vote counting server would have an expected nonce that never received the actual
+                        signature transmission.
+                    </li>
+                    <li>
+                        If the notification of submittal is intercepted and swallowed, then the voter app will not receive a confirmation,
+                        and will not send the signature.  If the Signature is intercepted and swallowed, the vote counting server will
+                        be able to detect a missing signature, and the voting app will just resend until a confirmation is received.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </p>
+    <p>
+        There is the possibility that an attack would just inject ballots into the vote counting server.
+        <a href='../home/directattack'>We have already discussed this.</a>  Such a scenario would mean that the State Registration
+        process has been compromised.  This would be bad for internet voting.  It would be equally bad for mail-in voting.  In either case,
+        one would expect the State Registration database security to detect intrusion.
+    </p>
+    <p>
+        Unlike mail-in voting, with internet voting, the
+        auditing process could be set up in two ways, to allow revised votes or not.  If revised votes are not allowed, then assuming that
+        the registration database was compromised to the point of knowing enough to create the ballot ids and associating them to
+        registered users, the attack could go directly to creation of a fraudulent signature. In this scenario, voters would find out
+        the ballot has already been submitted when they attempt to submit their vote. The defense here is to allow the registered voter
+        to indicate raise an anomally flag.  A legitimate registered voter would raise the flag, fraudulent injection would have to capture
+        the "already submitted" response in order to raise the flag.  Fraudulently injected ballots that raise a flag without detecting a conflict
+        would be detected as fraudulent.
+    </p>
+    <p>
+        If the scenario is that registered voter can revise their vote up until polls close, then the injection must be at the last minute,
+        otherwise the legitimate registered voter will overwrite the fraudulent vote.  The defense for this is to require that revised votes
+        are submitted from the original device.
+    </p>
+
+    <p>
+        At the end of the day, signatures with an anomaly flag raised that cannot be detected as fraudulently injected signatures will need further
+        scrutiny.  Perhaps the anomally flag will need to be accompanied with a contact phone number.
+    </p>
+
 </div>

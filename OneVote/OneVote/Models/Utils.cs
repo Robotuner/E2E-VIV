@@ -90,7 +90,7 @@ namespace OneVote.Models
         /// <param name="ballotGuid"></param>
         /// <param name="save"></param>
         /// <returns></returns>
-        public static bool BallotHasBeenSubmitted(Guid ballotGuid, bool allowUpdates = false, bool save = false)
+        public static bool BallotHasBeenSubmitted(Guid ballotGuid, bool save = false)
         {
             string ballotsName = "Ballots";
             string allballots = Preferences.Get(ballotsName, string.Empty);
@@ -116,7 +116,7 @@ namespace OneVote.Models
                 return false;
             }
 
-            return allowUpdates ? false : true;   //the ballot has already been submitted;
+            return true;
         }
 
         static void EncryptAesManaged(string raw)
