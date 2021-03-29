@@ -202,7 +202,7 @@ namespace OneVote.ViewModels
                 MessagingCenter.Send<ItemsViewModel>(this, MessagingEvents.BadSSN);
                 return;
             }
-            if (Models.Utils.BallotHasBeenSubmitted(ballotId, allowUpdates: DataService.Election.AllowUpdates))
+            if (Models.Utils.BallotHasBeenSubmitted(ballotId, false))
             {
                 ErrorMessage?.Invoke(Resource.BallotAlreadySubmitted);
                 return;
@@ -333,10 +333,10 @@ namespace OneVote.ViewModels
                 this.SSN = null;
                 SetApprovedState(false);
 
-                if (!DataService.Election.AllowUpdates)
-                {
-                    DataService.ClearVotes();
-                }
+                //if (!DataService.Election.AllowUpdates)
+                //{
+                //    DataService.ClearVotes();
+                //}
             }
         }
 

@@ -296,7 +296,7 @@ namespace OneVote.ViewModels
             this.electionId = electionId;
             await DataService.InitElection(electionId);
 
-            if (Utils.BallotHasBeenSubmitted(ballotId, DataService.Election.AllowUpdates, false))
+            if (Utils.BallotHasBeenSubmitted(ballotId, false))
             {
                 this.DisplayAlert?.Invoke(Resource.Warning, Resource.AboutBallotHasBeeSubmitted);
                 this.electionId = Guid.Empty;

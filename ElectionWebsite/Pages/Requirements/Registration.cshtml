@@ -4,11 +4,59 @@
 }
 
 <div class="text-left">
-    <h1 class="display-4">Getting Ballots to voting app</h1>
+    <h1 class="display-4">Making Ballot available to voting app</h1>
     <p>
-        In Construction
+        Internet voting starts with letting the voting app know how to get the ballot.  
+        It is the responsibility of each State
+        to develop the ballot. Typically in an in-person voting scenario, the ballot is printed and handed
+        to the registered voter at the polling location.  In the mail-in voting scenario, the ballot is mailed to
+        registered voters.  In the internet voting scenario, a ballot is not mailed to the registered voter, instead, 
+        a QRScan Code is mailed (delivered somehow) that enables to voting app to retrieve it.  There are multiple options:
+        <ul>
+            <li>Mail each registered voter a QR Scan Code</li>
+            <li>Require registered voters to access the Registration Website to obtain a QRScan Code</li>
+            <li>Combination of both.</li>
+        </ul>
     </p>
     <p>
-        This page will list requirements to get the ballot to the voting app.
+        The QRScan Code contains the following information:
+        <ul>
+            <li>Election Id</li>
+            <li>Year of Birth</li>
+            <li>Encrypted Ballot Id</li>
+            <li>App Download URL</li>
+        </ul>
+        The App download URL is used to direct the app to the correct download location from which to get the voting app. 
+        This prevents registered users from using a fraudulent app to cast votes.
     </p>
+    <p>
+        The Election Id is used to tell that voting app what election ballot to download.  The voting app will scan the code, 
+        retrieve the ballot and allow the registered voter to complete the ballot.  Implicit in this process is that 
+        only registered voters will be able to complete the ballot.  The reality is that if the scan codes are mailed, then
+        they can be harvested.  This would allow a fraudulent user to retrieve a ballot of a registered voter.  They will 
+        run into the problem of the encrypted ballot Id.  It is encrypted in a way that only the registered voter
+        will know how to decrypt.  Something like their SSN must be known in order to decrypt the ballot id.  If the encrypted
+        ballot cannot be decrypted, the completed ballot cannot be submitted.
+    </p>
+    <p>
+        The encrypted Ballot Id is used to link a ballot to a unique registered voter.  This can be done in two ways:
+        <ol>
+            <li>
+                The State can choose to assign a unique ballot id to each registered user. This is the preferred
+                option and allows inclusion of the encrypted ballot id in the QRScan Code.
+            </li>
+            <li>  
+                The State can allocate a unique ballot id to registered voters as they are requested. To prevent a registered
+                voter from requesting multiple ballots, the registered vote record will simply record that a ballot id has
+                already been created for the user.  There is not an option to create a replacement unique ballot id for a registered user.
+                This is not as onerous as it sounds, the voting app can be designed to ask for the unique ballot id just 
+                before submittal of the completed ballot, so that retrieval and submittal are essentially the same action.
+            </li>
+        </ol>        
+    </p>
+    <p>
+        The requirements to get the ballot to the registered voter is fairly straight forward.  It comes down to delivery
+        of the QRScan code.
+    </p>
+
 </div>
