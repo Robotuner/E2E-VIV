@@ -7,11 +7,11 @@
     <h1 class="display-4">Making Ballot available to voting app</h1>
     <p>
         Internet voting starts with letting the voting app know how to get the ballot.  
-        It is the responsibility of each State
-        to develop the ballot. Typically in an in-person voting scenario, the ballot is printed and handed
-        to the registered voter at the polling location.  In the mail-in voting scenario, the ballot is mailed to
-        registered voters.  In the internet voting scenario, a ballot is not mailed to the registered voter, instead, 
-        a QRScan Code is mailed (delivered somehow) that enables to voting app to retrieve it.  There are multiple options:
+        It is the responsibility of each State to develop the ballot. Typically in an in-person voting scenario, 
+        the ballot is printed and handed to the registered voter at the polling location.  In the mail-in voting 
+        scenario, the ballot is mailed to registered voters.  In the internet voting scenario, a ballot is not mailed 
+        to the registered voter, instead, a QRScan Code is mailed (delivered somehow) that enables to voting app 
+        to retrieve it.  There are multiple options:
         <ul>
             <li>Mail each registered voter a QR Scan Code</li>
             <li>Require registered voters to access the Registration Website to obtain a QRScan Code</li>
@@ -39,10 +39,17 @@
         ballot cannot be decrypted, the completed ballot cannot be submitted.
     </p>
     <p>
-        The encrypted Ballot Id is used to link a ballot to a unique registered voter.  This can be done in two ways:
+        As an added feature, the request by voting app to download the ballot could include the device id that is making the 
+        request.  This device id can be saved and use to verify that the device did indeed request a ballot.  This is useful as a 
+        defense against a direct attack strategy in which the registration database is fully compromised and the attack is to 
+        bypass the voting app and directly inject signatures into the vote counting database.  Since the Signature includes a 
+        device id, direct injection would result in a signature with a device Id that did not request a ballot.
+    </p>
+    <p>
+        The encrypted Ballot Id is used to link a ballot to a unique registered voter.  This can be done in several ways:
         <ol>
             <li>
-                The State can choose to assign a unique ballot id to each registered user. This is the preferred
+                The State can choose to assign a unique ballot id to each registered user. This is the simplist
                 option and allows inclusion of the encrypted ballot id in the QRScan Code.
             </li>
             <li>  
@@ -51,6 +58,13 @@
                 already been created for the user.  There is not an option to create a replacement unique ballot id for a registered user.
                 This is not as onerous as it sounds, the voting app can be designed to ask for the unique ballot id just 
                 before submittal of the completed ballot, so that retrieval and submittal are essentially the same action.
+            </li>
+            <li>
+                The third option is a combination of both.  The State creates two tables in addition to the Registration
+                database.  The first table is a table that saves allocated ballot ids. The second table contains the registered
+                voter and the encrypted ballot id.  This allows the state to reissue the encrypted ballot id to the registered 
+                user.  It allows the state to send all registered voters a QRScan code without a direct link back to the
+                registered voter.
             </li>
         </ol>        
     </p>

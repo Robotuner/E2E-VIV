@@ -81,7 +81,7 @@
         a confirmation is received. This defeats a DoS attack on the server, simply delays when the submittal is received.  
     </p>
     <p>
-        By including the completed ballot wrapped in a blockchain in the signature, we have multiple way to detect changes.
+        By including the completed ballot wrapped in a blockchain as part of the signature, we have multiple way to detect changes.
         <ul>
             <li>The first is the verification of the blockchain itself based on the computed hash.</li>
             <li>The second is the verification of the expected nonce by the vote counting server.</li>
@@ -89,9 +89,9 @@
                 The third is the two step process of telling the vote counting server to expect a signature with a specific nonce,
                 then sending the signature in a separate transmission.  This has interesting benefits.
                 <ul>
-                    <li>It prevents an attack that replaces one candidate for another.</li>
+                    <li>It defeats an attack that replaces one candidate for another.</li>
                     <li>
-                        It prevents an attack to eliminate a ballot entirely by purposely altering anything.  The reason is
+                        It defeats an attack to eliminate a ballot entirely by purposely altering anything.  The reason is
                         because if it signature is invalid, the response back to the client would be a failure, causing the voting app
                         to resend.
                     </li>
@@ -100,7 +100,7 @@
                         confirmation.
                     </li>
                     <li>
-                        Is it possible for an attack to swallow a transmission and still return a confirmation response? This could be
+                        Is it possible for an attack to swallow a transmission and also inject a confirmation response? This could be
                         detected in the audit process because the signature is sent to multiple servers.  It would also be detected in
                         the audit because the vote counting server would have an expected nonce that never received the actual
                         signature transmission.
@@ -117,18 +117,19 @@
     <p>
         There is the possibility that an attack would just inject ballots into the vote counting server.
         <a href='../home/directattack'>We have already discussed this.</a>  Such a scenario would mean that the State Registration
-        process has been compromised.  This would be bad for internet voting.  It would be equally bad for mail-in voting.  In either case,
+        process has been completely compromised.  This would be bad for internet voting.  It would be equally bad for mail-in voting.  In either case,
         one would expect the State Registration database security to detect intrusion.
     </p>
     <p>
         Unlike mail-in voting, with internet voting, the
-        auditing process could be set up in two ways, to allow revised votes or not.  If revised votes are not allowed, then assuming that
+        auditing process could be set up in two ways, to allow revised votes or not.  If revised votes are not allowed, then, assuming that
         the registration database was compromised to the point of knowing enough to create the ballot ids and associating them to
         registered users, the attack could go directly to creation of a fraudulent signature. In this scenario, voters would find out
-        the ballot has already been submitted when they attempt to submit their vote. The defense here is to allow the registered voter
-        to indicate raise an anomally flag.  A legitimate registered voter would raise the flag, fraudulent injection would have to capture
-        the "already submitted" response in order to raise the flag.  Fraudulently injected ballots that raise a flag without detecting a conflict
-        would be detected as fraudulent.
+        the ballot has already been submitted when they attempt to submit their vote. One defense against this has already been discussed.  The 
+        voting app needed to make a request for a ballot in exchange for the device id.  In this scenario, there would be not device id associated 
+        with the ballot.  A second defense is to allow the registered voter to raise an anomally flag.  A legitimate registered voter would 
+        raise the flag, fraudulent injection would have to capture the "already submitted" response in order to raise the flag.  Fraudulently 
+        injected ballots that raise a flag without detecting a conflict would be detected as fraudulent.
     </p>
     <p>
         If the scenario is that registered voter can revise their vote up until polls close, then the injection must be at the last minute,
