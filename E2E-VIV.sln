@@ -35,7 +35,19 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenCvSharpExtern", "OpenCv
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenCvSharpExternDroid", "OpenCvSharp-master3.2\src\OpenCvSharpExternDroid\OpenCvSharpExternDroid.vcxproj", "{707296F9-6AEF-4548-A66D-4CF3E5795B1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectionWebsite", "ElectionWebsite\ElectionWebsite.csproj", "{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectionWebsite", "ElectionWebsite\ElectionWebsite.csproj", "{8EEF4EB7-B4D6-48BB-A05A-09B94D1C0CB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PostgresDB", "PostgresDB", "{8F574656-547C-4070-8A12-DCD56CF33A7B}"
+	ProjectSection(SolutionItems) = preProject
+		PostgresDB\CreateDBAndTables.sql = PostgresDB\CreateDBAndTables.sql
+		PostgresDB\CreateRoles.sql = PostgresDB\CreateRoles.sql
+		PostgresDB\DropTables.sql = PostgresDB\DropTables.sql
+		PostgresDB\StoredProcedures.sql = PostgresDB\StoredProcedures.sql
+		PostgresDB\StoredProcedures2.sql = PostgresDB\StoredProcedures2.sql
+		PostgresDB\Triggers.sql = PostgresDB\Triggers.sql
+		PostgresDB\WashingtonStateSeed1.sql = PostgresDB\WashingtonStateSeed1.sql
+		PostgresDB\WashintonStateSeed2.sql = PostgresDB\WashintonStateSeed2.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
