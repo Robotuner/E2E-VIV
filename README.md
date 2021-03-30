@@ -27,16 +27,16 @@ QR Scan Code requirements:
 
 **Face Detection** is a view that looks at/tests the OpenCV Library to see how it could be used for Face detection and Face Landmarks.
 
-## PostgresDB
-Development has been based on the SQL server DB project.  Decided that this is open source, so it would be better to go with PostgresDB.  Never used Postgres 
-before, so it probably could be implemented better.  The script names are self explanatory.  It includes two scripts that will seed the database with
-the 2020 Washington State ballot slate.
-
 **Election Ballot** is a view that Gets a Ballot or allows the creation of a ballot.  It is modeled after the Washington State 2020 Ballot information.  The view is not something that would be required by the E2E-VIV source code.  It is more like what would be needed by each state to create ballots.
 
 **Election Summary** View is just a simple UI to look at the distribution of votes among the candidates.  Basically to see what current totals are for each candidate in the test database.
 
 **Election Signature** View looks at signatures for the purpose of comparing head shots.
+
+## PostgresDB
+Development has been based on the SQL server DB project.  Decided that this is open source, so it would be better to go with PostgresDB.  Never used Postgres 
+before, so it probably could be implemented better.  The script names are self explanatory.  It includes two scripts that will seed the database with
+the 2020 Washington State ballot slate.
 
 ## Election API Project
 This is a .net core api project that exposes the endpoints used by the **Election** and **One Vote** Projects.
