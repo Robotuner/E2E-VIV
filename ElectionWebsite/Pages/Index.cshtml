@@ -10,107 +10,110 @@
         Because legislation has been passed to normalize mail-in voting to remove barriers to voting.
     </p>
     <p>
-    10 years ago,
-    the consensus was that internet voting was insecure. Today we have 10 years more experience, SSL and Blockchain.
-    The question is no longer if internet voting is more secure that in person voting, it is
-    whether internet voting is <strong>more secure than mail-in voting</strong>.
+        10 years ago, the consensus was that internet voting was insecure. Unfortunately, today, the
+        <a href="https://verifiedvoting.org/election-security-experts-say-limiting-options-for-voting-and-expanding-internet-voting-is-not-election-security/">consensus has not changed</a>.
+        However, the question has changed. The consensus does not appear to be backed up anywhere with code 
+        identifying the insecure parts. It is time to re-evaluate internet voting relative to the shadow of mail-in 
+        voting. The question is no longer if internet voting is more secure than <strong>in-person voting</strong>, 
+        it is whether internet voting is more secure than <strong>mail-in voting</strong>.
     </p>
     <p>
-    The adoption of mail-in ballots is a solution at the cost of election integrity. I would argue that a minor
-    cost is acceptable, but it isn’t.  It is a catastrophic cost because it is not possible to distinguish between
-    voter submitting two ballots or 100,000 ballots.
+        The adoption of mail-in ballots is a solution at the cost of election integrity. I would argue that a minor
+        cost is acceptable, but it isn’t.  It is a catastrophic cost because it is not possible to distinguish between
+        voter submitting two ballots or 100,000 ballots.
     </p><p>
-    Ballots are mailed to registered voters without any association to whom it was mailed.  This allows ballots
-    to be harvested or even manufactured and returned by mail with signatures that cannot be verified as
-    to a registered voter.  There is no credible infrastructure to prevent the voter from also voting in person.
-    If there were only a handful of mail-in ballots, they could be validated by the poll worker with effort.  When
-    the number of mail-in ballots are in the thousands, there is no effective validation.  While each polling
-    must have a paper ledger listing registered voters in their precinct.  Mail-in ballots is the backdoor around
-    the ledger verification process.
+        Ballots are mailed to registered voters without any association to whom it was mailed. This allows ballots
+        to be harvested or even manufactured and returned by mail with signatures that cannot be verified
+        to a registered voter.  There is no credible infrastructure to prevent the voter from also voting in person.
+        If there were only a handful of mail-in ballots, they could be validated by the poll worker with effort.  When
+        the number of mail-in ballots are in the thousands, there is no effective validation. Each polling location 
+        must have a paper ledger listing registered voters in their precinct for use in voter verification.  Introduction
+        of legislation to permit voting cross poll location defeats the voter verification.  Introduction of legislation to
+        not require photo id, defeats voter verification, Introduction of legislation in support of mass mailing of 
+        ballots, defeats voter verification. Mail-in ballots is the backdoor around an inherently manual 
+        the ledger verification process.
     </p><p>
-    Those who assert that there is no proof of any wrongdoing resulting from mail-in votes can certainly make that
-    argument.  Americans know that no proof does not mean there wasn’t any wrongdoing, it only means there is no
-    remedy.  There isn’t the political will to address the numerous points of attack that are exposed by mail-in
-    ballots because it is simply too porous with ballots passing through too many unsupervised hands.  There is
-    no solution for the inherent insecurity of the mail-in voting process.  Mail-in ballots is a solution for the
-    few at the expense of the many.  It is a solution that drives a wedge between political parties that advocate
-    two sides of election integrity.
+        Those who assert that there is no proof of any wrongdoing resulting from mail-in votes can certainly make that
+        argument. Americans know that no proof does not mean there wasn’t any wrongdoing, it only means there is no
+        remedy. There isn’t the political will to address the numerous points of attack that are exposed by mail-in
+        ballots because it is simply too porous with ballots passing through too many unsupervised hands. There is
+        no solution for the inherent insecurity of the mail-in voting process. Mail-in ballots is a solution for the
+        few at the expense of the many. It is a solution that drives a wedge between political parties that advocate
+        two sides of election integrity.
     </p><p>
-    Internet voting is not just getting an app, loading a ballot, selecting choices for various contests and submitting
-    it.  Internet voting is an End 2 End Verifiable Internet Voting (E2E VIV) solution that resists fraud every step of
-    the way in a manner that limits registered voters to a single ballot and can detect fraud in the auditing process
-    with the ability to remove those fraudulent votes.
+        Internet voting is not just getting an app, loading a ballot, selecting choices for various contests and submitting
+        it.  Internet voting is an End 2 End Verifiable Internet Voting (E2E VIV) solution that resists fraud every step of
+        the way in a manner that limits registered voters to a single ballot and can detect fraud in the auditing process
+        with the ability to remove those fraudulent votes.
     </p><p>
-    If executed correctly, it has all the security of in person voting with accessibility exceeding mail-in voting.  It
-    is not mail-in voting with its numerous attack surfaces and inherent chain of custody requirements.  While internet
-    voting exposes numerous points of attack, a well implemented plan enables detection and removal of fraudulent votes,
-    something not possible with mail-in voting.
+        If executed correctly, it has all the security of in-person voting with accessibility exceeding mail-in voting.  It
+        is not mail-in voting with its numerous attack surfaces and inherent chain of custody requirements.  While internet
+        voting exposes numerous points of attack, a well implemented plan enables detection and removal of fraudulent votes,
+        something not possible with mail-in voting.
     </p><p>
-    E2E-VIV starts with States doing what they have been doing, registering voters.  They can then send ballots to all
-    users with an authorization code (QR Scan code) used to authorize submittal of the ballot.  To defeat digital
-    harvesting, the authorization code is encrypted with something known only by the register voter.  The obvious choice
-    is the SSN, however it could be a street address or PIN.  The authorization code can be assigned to each user or
-    allocated based on the total number of registered voters.  This prevents bad players from simply manufacturing
-    codes, which is roughly equivalent to running a single ballot through a copy machine and mailing all of them.
+        E2E-VIV starts with States doing what they have been doing, registering voters.  They can then send ballots to all
+        users with an authorization code (QR code) used to authorize submittal of the ballot.  To defeat digital
+        harvesting, the authorization code is encrypted with something known only by the register voter.  The obvious choice
+        is the SSN, however it could be a street address or PIN.  The authorization code can be assigned to each user or
+        allocated based on the total number of registered voters.  This prevents bad players from simply manufacturing
+        codes, which is roughly equivalent to running a single ballot through a copy machine and mailing all of them.
     </p><p>
-    Voting with an app isn’t just installing the app and making selections, it is installing the app, obtaining a ballot,
-    making selections and finally returning the completed ballot.  This introduces three potential points of attack.
-    The app that voters use to cast vote could itself be compromised.  One scenario is to get the voter to install a
-    modified clone app instead.  This can be overcome by embedding the app download location in the QR Scan code.
-    Even if the correct app is installed, the second issue is how to ensure that the ballot representing the slate
-    of contests is not tampered.  This can be addressed by a multi-step request process.  The app would inform the
-    ballot server that a ballot will be requested, the ballot server would provide an acknowledgement along with a
-    code (Nonce) that the app should match against.  The app would then make the request, and the ballot server
-    would then send the ballot.  The app can then verify the ballot matches the expected code.
+        Voting with an app isn’t just installing the app and making selections, it is installing the app, obtaining a ballot,
+        making selections and finally returning the completed ballot.  This introduces three potential points of attack.
+        The app that voters use to cast votes could itself be compromised.  One scenario is to get the voter to install a
+        modified clone app instead.  This can be overcome by embedding the app download location in the QR code.
+        Even if the correct app is installed, the second issue is how to ensure that the ballot representing the slate
+        of contests is not tampered.  This can be addressed by a multi-step request process.  The app would inform the
+        ballot server that a ballot will be requested, the ballot server would provide an acknowledgement along with a
+        code (Nonce) that the app should match against.  The app would then make the request, and the ballot server
+        would then send the ballot.  The app can then verify the ballot matches the expected code.
     </p><p>
-    The submittal of the completed ballot to the vote counting server (VCS) would follow a similar multi-step process
-    of notifying the VCS to expect a submittal with a code, the VCS acknowledges the notification, then the voting app
-    submits the completed ballot.
+        The submittal of the completed ballot to the vote counting server (VCS) would follow a similar multi-step process
+        of notifying the VCS to expect a submittal with a code, the VCS acknowledges the notification, then the voting app
+        submits the completed ballot.
     </p><p>
-    To enable a robust audit, the voting app would not send just the completed ballot.  It would send a Signature
-    that includes the ballot. The signature would include the decrypted authorization code, a head shot (taken by the
-    voting app, actuated by a blink or some other movement), a device Id, geographic location, voter birth year, and
-    submittal date and time.  This data does not reveal the identity of the voter. It provides a digital trail that
-    enables an audit to detect anomalies in the VCS.
+        To enable a robust audit, the voting app would not send just the completed ballot.  It would send a Signature
+        that includes the ballot. The signature would include the decrypted authorization code, a head shot (taken by the
+        voting app, actuated by a blink or some other movement), a device Id, geographic location, voter birth year, and
+        submittal date and time.  This data does not reveal the identity of the voter. It provides a digital trail that
+        enables an audit to detect anomalies in the VCS.
     </p><p>
-    Unlike in physical mail-in voting with a porous ballot chain of custody, the electronic digital trail doesn’t rely
-    on countless un-named and unsupervised poll workers scattered throughout the United States.  The digital trail is
-    unbroken and enables prevention of rogue vote counts as well as the ability to discover anomalies that can then
-    be digitally examined and if deemed fraudulent, removed from the vote count totals.  A physical mail-in voting
-    has no corollary to this.  The reality is that if a mail-in ballot arrives at the vote counting location, it
-    will be counted. Even if it is later determined that there were more ballots than registered voters, there is no
-    way to identify the fraudulent mail-in ballots and remove them.  It is an unresolvable dilemma that basically says
-    there are no repercussions to cheating.
+        Unlike in physical mail-in voting with a porous ballot chain of custody, the electronic digital trail doesn’t rely
+        on countless un-named and unsupervised poll workers scattered throughout the United States.  The digital trail is
+        unbroken and enables prevention of rogue vote counts as well as the ability to discover anomalies that can
+        be digitally examined and if deemed fraudulent, removed from the vote count totals. A physical mail-in voting
+        has no corollary to this. The reality is that if a mail-in ballot arrives at the vote counting location, 
+        <strong>it will be counted</strong>. Even if it is later determined that there were more ballots than 
+        registered voters, there is no way to identify the fraudulent mail-in ballots and remove them.  It is an 
+        unresolvable dilemma that basically says there are no repercussions to cheating.
     </p><p>
-    Inclusion of a head shot with the Signature is the equivalent of in-person voter showing their photo id to prove
-    their identity.  It is the States responsibility to decide who can register.   With E2E-VIV, each completed ballot
-    is accompanied by a unique head shot that is validated digitally by looking for the same face in every signature.
-    The technology to capture facial landmarks is available, the computer power required to do this is available.
-    This effectively ensures one ballot one vote.
+        Inclusion of a head shot with the Signature is the equivalent of in-person voter showing their photo id to prove
+        their identity. It is the States responsibility to decide who can register. With E2E-VIV, each completed ballot
+        is accompanied by a unique head shot that is validated digitally by looking for the same face in every signature.
+        The technology to capture facial landmarks is available, the computer power required to do this is available.
+        This effectively ensures one ballot one vote.
     </p><p>
-    E2E-VIV provides the reliability of in-person voting with all the benefits of mail-in voting without the need for
-    specialized scanning hardware and the vagaries and contentiousness of poll watching.  It offers the ability to
-    do a real audit, not just a recount of what was previously counted.  It is a solution that is more secure
-    than mail-in voting whose time has come. To be accepted and validated the solution must be open source.
+        E2E-VIV provides the reliability of in-person voting with all the benefits of mail-in voting without the need for
+        specialized scanning hardware and the vagaries and contentiousness of poll watching.  It offers the ability to
+        <strong>do a real audit</strong>, not just a recount of what was previously counted.  It is a solution that is more secure
+        than mail-in voting whose time has come. To be accepted and validated the solution must be open source.
+    </p>
 
     <h2>Objective of the E2E-VIV Initiative</h2> 
+    <p>
+        The objective is to be a vehicle for States to be proactive in the inevitable march towards internet voting.
+        Developing a durable E2E VIV system is both a discovery process (hasn’t been done yet) and a race to keep up with
+        or anticipate new technology.  Since it hasn’t been done yet, part of the objective
+        is to develop the experience necessary to help the <a href="https://www.eac.gov">Election Assistance Commission</a> 
+        (US EAC) develop standards that define what an acceptable E2E VIV means. It is necessary to convince States 
+        that the technology available today can be implemented in an auditable manner to detect inconsistencies in the 
+        digital trail of each ballot. The end product is a set of procedures and standards based on 
+        <strong>open source software</strong> that is both testable and verifiable.
     </p><p>
-    The objective is to be a vehicle for States to be proactive in the inevitable march towards internet voting.
-    Developing a durable E2E VIV system is both a discovery process (hasn’t been done yet) and a race to keep up with
-    or anticipate new technology.  Since it hasn’t been done yet, part of the objective
-    is to develop the experience necessary to help the Election Assistance Commission (US EAC) develop standards that
-    define what an acceptable E2E VIV means. It is necessary to convince States that the technology available today
-    can be implemented in an auditable manner to detect inconsistencies in the digital trail of each ballot. The end product
-    is a set of procedures and standards based on open source software that is both testable and verifiable that
-    can be adopted by States.
-    </p><p>
-    Implementation of E2E VIV is the benchmark that will signify fulfillment of the primary objective.
-    Having said that, there are numerous steps to that end.  E2E VIV isn’t simply ensuring that votes can be cast
-    without hacking between the internet voting device and the server counting the votes.  It is a system or
-    process that considers and fortifies the integrity of ballots from their origin, through the auditing process.
-    </p><p>
-    It is an unrealistic objective to prevent all attacks that would alter votes or insert votes during the
-    transmission to the vote counting server.  Technology waits for no one and what was not doable yesterday is
-    routine today. What can be done is to create a process with enough roadblocks at each stage in the ballot
-    lifecycle to detect and prevent fraud on a mass scale.
+        It is an unrealistic objective to prevent all attacks that would alter votes or insert votes during the
+        transmission to the vote counting server.  Technology waits for no one and what was not doable yesterday is
+        routine today. What can be done is to create a process with enough roadblocks at each stage in the ballot
+        lifecycle to detect and prevent fraud on a mass scale.
+    </p>
+    <a href="./Home/InPerson">Next ></a>
 </div>
