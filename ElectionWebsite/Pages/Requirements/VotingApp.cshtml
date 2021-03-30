@@ -16,8 +16,16 @@
         fifty different ballots, one for each state.
     </p>
     <p>
-        All server URL's will use the SSL protocol.  The prospect of any attack that involves transmission over the internet
-        assumes that SSL has been defeated.
+        If direct modification of the voting app is not plausible because the apps behavior is based on the downloaded ballot, 
+        another voting app attack could be interception of the Https submittal between the point where the app submits the request and
+        when the device transmits the request.  Theoretically malware could intercept the request before the transmission 
+        from the device.  Since the app will use a multi-step process (discussed below) and will contain a blockchain, the malware 
+        need to intercept the request, extract the blockchain, modify the ballot, recreate the blockchain then send the 
+        notification request.  The two step submittal process makes this highly unlikely.
+    </p>
+    <p>
+        All server URL's will use the HTTPS protocol.  The prospect of any attack that involves transmission over the internet
+        assumes that HTTPS has been defeated.
     </p>
     <h2>Getting the Ballot to the Voting App</h2>
     <p>

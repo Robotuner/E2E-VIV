@@ -204,8 +204,11 @@ namespace OneVote.ViewModels
             }
             if (Models.Utils.BallotHasBeenSubmitted(ballotId, false))
             {
-                ErrorMessage?.Invoke(Resource.BallotAlreadySubmitted);
-                return;
+                if (!DataService.Election.AllowUpdates)
+                {
+                    ErrorMessage?.Invoke(Resource.BallotAlreadySubmitted);
+                    return;
+                }
             }
 
             // We already did a check isBallotFilled() so we know there are votes.
