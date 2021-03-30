@@ -57,7 +57,7 @@
         <li>Signature verification</li>
     </ul>
     <p>
-        Internet voting hinges on the being able to convince the reader that internet voting is more
+        Internet voting hinges on being able to convince the reader that internet voting is more
         secure than mail-in voting and offers the ability to detect fraud and remove illegitimate votes
         in a manner that is not possible with mail-in voting.  It is a proposal describing a system of
         procedures and processes designed to defeat Man in the Middle (MitM) attacks, implements roadblocks
@@ -69,12 +69,12 @@
         As with any process there must be a starting point.  The starting point for E2E-VIV is delivery of the ballot to the
         Registered Voter.  It is not voter registration.  That is left to each State to decide how to derive a list
         of registered voters who are allowed to vote in an election.  In an internet voting scenario, ballots are
-        made available to registered voters in the form of a QR Scan Code.  QR Scan Codes can only be read by devices, offering
+        made available to registered voters in the form of a QR Code.  QR Codes can only be read by devices, offering
         a minor level of security, but more importantly it can convey instructions and codes that can be used to automate
         retrieval of data, alleviating the requirement of manually entering password or pin numbers.
     </p>
     <ul>
-        Ballot QR Scan codes will contain:
+        Ballot QR codes will contain:
         <li>
             An encryted Ballot authorization code (can be registered users SSN or Pin).
         </li>
@@ -98,7 +98,7 @@
             The voting app will notify the ballot server that a ballot for the election will be requested.
         </li>
         <li>
-            the ballot server will reply with an expected Nonce for the ballot that will be sent.
+            The ballot server will reply with an expected Nonce for the ballot that will be sent.
         </li>
         <li>
             The voting app will then request the ballot.
@@ -118,9 +118,10 @@
     </p>
     <ul>
         <li>
-            The decryped ballot authorization to be included with the signature.   Only the registered voter will be able to decrypt the ballot.
+            The decrypted ballot authorization to be included with the signature.   Only the registered voter will be able to decrypt the ballot.
         </li>
-        <li>A head shot
+        <li>
+            A head shot
             <ul>
                 <li>
                     The head shot will be restricted to an image taken by the cell phone that only contains a single face.
@@ -176,9 +177,20 @@
     <p>
         The votes recorded for each ballot will be saved to a vote database.  The individual votes will also be saved to a result
         database that simply increments a counter for each candidate.  This maintains a running total for each candidate vote count
-        and is muc more efficient that quering the vote database periodically.
+        and is much more efficient that quering the vote database periodically.
     </p>
     <p>
         Once polls close, the audit process will begin.
     </p>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <a href="./MailIn">< Prev</a>
+            </div>
+            <div class="col">
+                <a href="./Audit">Next ></a>
+            </div>
+        </div>
+    </div>
+   
 </div>

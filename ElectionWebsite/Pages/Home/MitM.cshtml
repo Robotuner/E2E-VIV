@@ -12,11 +12,11 @@
         perspective, one has to consider what the exposure is and where it can happen.  Classically,
         it would happen after the completed ballot is submitted from the voting app and before it
         is received at the vote counting server.  For security, all websites and servers will be setup to
-        require SSL technology.  That is the security technology that the financial world uses for
+        require HTTPS.  That is the security technology that the financial world uses for
         secure connections.
     </p>
     <p>
-        For E2E-VIV we are assuming that SSL is hackable by state level actors such as the opposing
+        For E2E-VIV we are assuming that HTTPS is hackable by state level actors such as the opposing
         party.  For that reason, Blockchain is used to ensure ballots are not tampered.
     </p>
     <p>
@@ -35,15 +35,15 @@
     <h3>What is Blockchain and how can it be used</h3>
     <p>
         Blockchain is a chain of blocks. Each bloc contains information specific to the block and the data
-        that one want to protect from modification.  The way it is protected is by creating a SHA-256 cryptographic
+        that one wants to protect from modification.  The way it is protected is by creating a SHA-256 cryptographic
         hash based on the entire block (containing the data).  When a cryptographic hash is created on a block,
         the hash is unique to the block.  If anything changes (like the data was tampered), a recompute of the block will
         give a different value.  This is how we can verify if the data has been tampered!
     </p>
     <p>
         On the surface, simply employing SHA-256 hash would be enough to be able to discern if the vote has
-        been altered.  It isn't.  Because a successful MitM attack would intercept the entire block
-        alter the data, the alter the hash.  When the voting server gets the transmission and recomputes the hash,
+        been altered.  It isn't.  Because a successful MitM attack would intercept the entire block,
+        alter the data, then alter the hash.  When the voting server gets the transmission and recomputes the hash,
         it will be compared to the altered hash.
     </p>
     <h3>How can we defend against that?</h3>
@@ -64,14 +64,14 @@
     </p>
     <p>
         In a bitcoin scenario, where there is a chain of data, the Nonce is not just recomputed for the block where
-        the data was altered, it must also update for all subsequent blocks attached to the chain after the block
+        the data was altered, it must also update all subsequent blocks attached to the chain after the block
         is changed.  On top of that, since Bitcoin is peer-to-peer, the chains on all the peers must also be altered.
         A bitcoin attack is impossible.
     </p>
     <p>
         However, for the voting scenario presented in this proposal, there is only one block.  The proposal also
         does not employ a peer-to-peer network.  Computers are fast and getting faster, it is possible to launch a
-        MitM attack, defeat the SSL modify the block and escape detention.  There are two strategies to counter this.
+        MitM attack, defeat the HTTPS, modify the block and escape detention.  There are two strategies to counter this.
     </p>
     <h3>Multi-step submittal</h3>
     <ul>
@@ -85,16 +85,16 @@
         <li> Then it verifies the Nonce matches the expected Nonce.</li>
     </ul>
     <p>
-        This multi-step process present several additional challenges for the attacker after defeating SSL.  The notification message
+        This multi-step process present several additional challenges for the attacker after defeating HTTPS.  The notification message
         must be intercepted, because any change in the ballot will require a different Nonce.  However, the voting server
         must receive the notification message in order to acknowledge receipt and reply.  The voting app will not
         send the Signature without an acknowledgment.  If the attacker could trick the voting app to send the signature, then the attacker
-        must successfully intercept the signature, defeat the SSL again, then modify the data, compute a new Nonce, insert that
+        must successfully intercept the signature, defeat the HTTPS again, then modify the data, compute a new Nonce, insert that
         Nonce into the notification message send the notification message to the voting server, wait for the response, intercept the
         response, then send the altered signature.
     </p>
     <p>
-        The attack must intercept at least 4 separate transmssions, hold them and to update the Nonce, then continue the
+        The attack must intercept at least 4 separate transmIssions, hold them and to update the Nonce, then continue the
         transmission of each in the correct order.  It will need to do this when there are thousands of other signatures being
         submitted at the same time.
     </p>
@@ -104,7 +104,18 @@
         duplicate servers hosted by the State, Democrat and Republican parties, in order to escape detection, the attack would need to
         simultaneously intercept the same transmissions in the same sequence at the same time for all three endpoint.  They would need to
         alter the Nonce in one location and substitute in all three transmission paths.  The reason is because the Nonce is
-        dependent on a time stamp, hence it is not possible to compute the using separate computations for the three transmission and arrive
+        dependent on a time stamp, hence it is not possible to compute the Nonce using separate computations for the three transmission and arrive
         at the same Nonce for each.
     </p>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <a href="./Audit">< Prev</a>
+            </div>
+            <div class="col">
+                <a href="./DirectAttack">Next ></a>
+            </div>
+        </div>
+    </div>
+   
 </div>

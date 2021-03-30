@@ -7,44 +7,47 @@
 <div class="text-left">
     <h1 class="display-4">Vote Counting Server</h1>
     <p>
-        The vote counting server is the third piece of the ballot chain of custody that started with the delivery of the 
-        QRScan Code.  In the actual implementation of the E2E-VIV system, the vote counting server is a standalone server.  One
+        The vote counting server is the third piece of the ballot chain of custody started with the delivery of the 
+        QR Code. In a production implementation of a E2E-VIV system, the vote counting server is a standalone server. One
         specifically created for the sole purpose of distributing ballots, accepting signature submittals and retrieving 
         election result updates.  
     </p>
     <p>
-        Having said that, the requirements are exactly that.  The server or the machine hosting the server should serve no other purpose 
-        than distribute ballots, accept signatures and retrive election result updates.  All ports not necessary for those two actions 
-        would be closed.  There should be no other applications installed on the server.  It should not support FTP.
+        Having said that, the requirements are exactly that. The server or the machine hosting the server should serve no other purpose 
+        than distribute ballots, accept signatures and retrieve election result updates. All ports not necessary for those two actions 
+        would be closed. There should be no other applications installed on the server. It should not support FTP. The server
+        should be the OS, voting API, and database.
     </p>
     <p>
-        The server should be stood up at the last minute before polling starts.  It would actually be safer to separate the distribution 
-        of Ballots from the signature submittals into two separate servers.  That would enable early access to ballots, and keep the signature 
+        The server should be stood up at the last minute before polling starts. It would actually be safer to separate the distribution 
+        of Ballots from the signature submittals into two separate servers. That would enable early access to ballots, and keep the signature 
         server locked down until polling starts.  This prevents hackers from snooping in preparation for polls opening.
     </p>
     <p>
-        The servers themselves do not need to be the most current.  The idea is to develop deployment scripts that will standup the server with the 
-        exact thoroughly tested security configuration.  The script would be implemented at all three mirror locations, the server hosted by the State,
-        Democrat and Republican parties.
+        The servers themselves do not need to be the most current. The idea is to develop deployment scripts that will standup the server with the 
+        exact thoroughly tested security configuration. The script would be implemented at all three mirror locations, the server hosted by the State,
+        Democrat and Republican parties. Since the API would need to point to the database, the only thing that might need to be adjusted is 
+        the DB connection string.
     </p>
     <h2>Reporting / Audit</h2>
     <p>
-        We have already discussed the <a href='../Home/Audit'>audit</a> process.  Changes to the signature and/or process outlined thus far
-        is most likely driven by the audit.  As outlined, it is already anticipated to be much more robust and verifiable than possible 
-        with mail-in voting.  Anticipated tools associated with reporting and auditing capabilities are:
+        We have already discussed the <a href='../Home/Audit'>audit</a> process. Changes to the signature and/or process outlined thus far
+        is most likely driven by the audit. As outlined, it is already anticipated to be much more robust and verifiable than possible 
+        with mail-in voting. Anticipated tools associated with reporting and auditing capabilities are:
         <ul>
             <li>Result Summary tool - current votes for each candidate.</li>
             <li>Tool to compare signatures (head shots) based on audit thresholds such as:
                 <ul>
                     <li>Same device used for multiple signatures.</li>
                     <li>Hi density of signatures at a single location.</li>
-                    <li>Anomally flags that are raised - when ballots are re-vised.</li>
+                    <li>Anomally flags that are raised - when ballots are revised.</li>
                 </ul>
             </li>
             <li>GIS mapping tool to see where ballots are being submitted.</li>
             <li>Signature submittal vs time trends to visualize vote submission rate by Geographic area.  One would think in a 24 hour period, the submission rate
-             would be in the shape of a bell curve.  If there is a spike, we can investigate the signatures during that period to try detect some 
-            type of injection.  With internet voting we know which ballots arrived during the spike, something not possible with mail-in voting.</li>
+             would be in the shape of a bell curve. If there is a spike, we can investigate the signatures during that period to try detect some 
+            type of injection. With internet voting we know which ballots arrived during the spike, something not possible with mail-in voting.</li>
         </ul>
+        Ballots that are identified as fraudulent could have the votes removed from the totals. Something also not possible with mail-in voting.
     </p>
 </div>
