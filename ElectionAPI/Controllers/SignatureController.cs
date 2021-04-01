@@ -70,9 +70,11 @@ namespace ElectionAPI.Controllers
                 UOW.BeginTransaction();
                 Signature signature = this.GetSignatureFromBlockChain(electionChain);
                 // now check to make sure the nonce matches the expected nonce
-                int expectedNonce = await this.signatureRepository.GetExpectedNonce(UOW, signature.BallotId);
+                (int expectedNonce, string deviceId) = await this.signatureRepository.GetExpectedNonce(UOW, signature.BallotId);
 
-                if (signature == null || expectedNonce != electionChain.GetLatestBlock().Nonce)
+                // make sure the nonce and device id are correct
+                if (signature == null || expectedNonce != electionChain.GetLatestBlock().Nonce ||
+                    signature.DeviceId != deviceId)
                     return null;
 
                 Signature existingSignature = await this.GetByBallotId(signature.BallotId);

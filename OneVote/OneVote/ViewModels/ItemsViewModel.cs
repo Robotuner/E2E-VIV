@@ -327,7 +327,7 @@ namespace OneVote.ViewModels
 
             BlockChain electionChain = await this.ConvertToBlockChain(sig);
             int nonce = electionChain.GetLatestBlock().Nonce;
-            var ans = await DataService.NotifyPendingSubmittal(nonce, model.BallotId);
+            var ans = await DataService.NotifyPendingSubmittal(nonce, model.BallotId, Models.Utils.GetId());
             if (ans.Id != Guid.Empty)
             {
                 Signature result = await DataService.PutSignature(electionChain);

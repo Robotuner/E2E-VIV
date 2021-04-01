@@ -218,12 +218,13 @@ namespace OneVote.Services
             return null;
         }
 
-        public static async Task<SignatureNotice> NotifyPendingSubmittal(int nonce, Guid ballotId)
+        public static async Task<SignatureNotice> NotifyPendingSubmittal(int nonce, Guid ballotId, string deviceId)
         {
             SignatureNotice notice = new SignatureNotice()
             {
                 BallotId = ballotId,
-                Nonce = nonce
+                Nonce = nonce,
+                DeviceId = deviceId
             };
             try
             {
