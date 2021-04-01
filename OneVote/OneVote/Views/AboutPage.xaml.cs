@@ -26,6 +26,8 @@ namespace OneVote.Views
                 QRCodePage qrPage = new QRCodePage();
                 qrPage.OnSubmitBallot = vm.OnQRScanned;
                 await Navigation.PushModalAsync(qrPage);
+                //string qrtext = "a13acd4a-d415-4b27-afe6-e2310ac71bc6|Test Voter|2003|17LrItgenFpBeX0bpz8eodcorgCnsNWNb3r/2j74WYpR2eYptVmAVhaNLG22bv1Q";
+                //await vm.OnQRScanned(qrtext);
             }
         }
 
