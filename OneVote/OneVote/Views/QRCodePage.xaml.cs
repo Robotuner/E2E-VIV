@@ -1,4 +1,5 @@
-﻿using OneVote.Models;
+﻿using ElectionModels.Misc;
+using OneVote.Models;
 using OneVote.Services;
 using System;
 using System.Diagnostics;
@@ -27,9 +28,10 @@ namespace OneVote.Views
             Device.BeginInvokeOnMainThread(async () =>
             {                
                 QRText = result.Text;
-                (Guid electionId, string registration, int birthYear, Guid ballotId) = Utils.DisectQR(QRText, SSN);
-                string msg = string.Format(@"{0}\n{1}\n{2}", electionId, registration, birthYear);
-                scanView.IsScanning = electionId == Guid.Empty;
+                QRModel model = Models.Utils.DisectQR(QRText, SSN);
+                //(Guid electionId, string registration, int birthYear, Guid ballotId) = Utils.DisectQR(QRText, SSN);
+                string msg = string.Format(@"{0}\n{1}\n{2}", model.ElectionId, model.Registration, model.BirthYear);
+                scanView.IsScanning = model.ElectionId == Guid.Empty;
                 if (!scanView.IsScanning)
                 {
                     DataService.QRText = result.Text;

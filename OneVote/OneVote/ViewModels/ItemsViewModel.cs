@@ -194,15 +194,17 @@ namespace OneVote.ViewModels
                 return;
 
             this.EncryptionMessage = Resource.ItemsViewModelEncryptionMessage;
-            (Guid electionId, string registration, int birthYear, Guid ballotId) = Models.Utils.DisectQR(DataService.QRText, this.SSN);
+            QRModel model = Models.Utils.DisectQR(DataService.QRText, this.SSN);
 
-            if (electionId == Guid.Empty)
+            //(Guid electionId, string registration, int birthYear, Guid ballotId) = Models.Utils.DisectQR(DataService.QRText, this.SSN);
+
+            if (model.ElectionId == Guid.Empty)
             {
                 this.SSN = null;
                 MessagingCenter.Send<ItemsViewModel>(this, MessagingEvents.BadSSN);
                 return;
             }
-            if (Models.Utils.BallotHasBeenSubmitted(ballotId, false))
+            if (Models.Utils.BallotHasBeenSubmitted(model.BallotId, false))
             {
                 if (!DataService.Election.AllowUpdates)
                 {
@@ -212,7 +214,7 @@ namespace OneVote.ViewModels
             }
 
             // We already did a check isBallotFilled() so we know there are votes.
-            List<Vote> votes = DataService.Validate(ballotId: ballotId);
+            List<Vote> votes = DataService.Validate(ballotId: model.BallotId);
 
             // check count just in case.
             if (votes.Count == 0)
@@ -227,7 +229,7 @@ namespace OneVote.ViewModels
                 FileResult photo = await GetHeadShot();    
                 if (await IsValidFace(photo))
                 {
-                    await this.SubmitBallot(photo, ballotId, registration, birthYear, votes);
+                    await this.SubmitBallot(photo, model, votes);
                 }
                 else
                 {
@@ -287,7 +289,7 @@ namespace OneVote.ViewModels
             return photo;
         }
  
-        private async Task SubmitBallot(FileResult photo, Guid ballotId, string registration, int birthYear, List<Vote> votes)
+        private async Task SubmitBallot(FileResult photo, QRModel model, List<Vote> votes)
         { 
             byte[] imageArray = await AsByteArray(photo);
 
@@ -307,12 +309,12 @@ namespace OneVote.ViewModels
             //save signature;
             Signature sig = new Signature()
             {
-                BallotId = ballotId,
+                BallotId = model.BallotId,
                 ElectionId = DataService.Election.Id,
                 DeviceId = Models.Utils.GetId(),
-                Name = registration,
+                Name = model.Registration,
                 PhoneNumber = phoneNumber,
-                BirthYear = birthYear,
+                BirthYear = model.BirthYear,
                 ImageArray = imageArray,
                 Longitude = location.Longitude,
                 Latitude = location.Latitude,
@@ -325,7 +327,7 @@ namespace OneVote.ViewModels
 
             BlockChain electionChain = await this.ConvertToBlockChain(sig);
             int nonce = electionChain.GetLatestBlock().Nonce;
-            var ans = await DataService.NotifyPendingSubmittal(nonce, ballotId);
+            var ans = await DataService.NotifyPendingSubmittal(nonce, model.BallotId);
             if (ans.Id != Guid.Empty)
             {
                 Signature result = await DataService.PutSignature(electionChain);

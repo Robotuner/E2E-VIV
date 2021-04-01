@@ -1,4 +1,6 @@
 ﻿using Election.Models;
+using ElectionModels.Misc;
+using Newtonsoft.Json;
 using QRCoder;
 using System;
 using System.Collections.Generic;
@@ -151,9 +153,17 @@ namespace Election.ViewModels
                 return;
 
             string encryptedstring = ElectionModels.Misc.Utils.Encrypt(this.BallotId.ToString("n"), this.SSN);
-            string decryptedBallotId = ElectionModels.Misc.Utils.Decrypt(encryptedstring, this.SSN);
+            //string decryptedBallotId = ElectionModels.Misc.Utils.Decrypt(encryptedstring, this.SSN);
+            QRModel qrModel = new QRModel()
+            {
+                ElectionId = this.SelectedElection.Id,
+                Registration = Registration,
+                BirthYear = BirthYear,
+                EncryptedBallotId = encryptedstring
+            };
+            //string code = string.Format("{0}|{1}|{2}|{3}", this.SelectedElection.Id, Registration, BirthYear, encryptedstring);
+            string code = JsonConvert.SerializeObject(qrModel);
 
-            string code = string.Format("{0}|{1}|{2}|{3}", this.SelectedElection.Id, Registration, BirthYear, encryptedstring);
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(code, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
