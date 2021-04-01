@@ -11,7 +11,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">ElectionWebsite</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="./images/e2e-viv-24x24-1.png" height="24"/>E2E-VIV</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -24,12 +24,15 @@
                                 Home
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a asp-area="" asp-page="/Home/InPerson">In Person</a></br>
-                                <a asp-area="" asp-page="/Home/MailIn">Mail In</a></br>
-                                <a asp-area="" asp-page="/Home/InternetVoting">Internet Voting</a></br>
-                                <a asp-area="" asp-page="/Home/Audit">Audit</a></br>
-                                <a asp-area="" asp-page="/Home/MitM">Man in the Middle</a></br>
-                                <a asp-area="" asp-page="/Home/DirectAttack">Direct Attack</a>
+                                <ul>
+                                    <li><a asp-area="" asp-page="/Home/InPerson">In Person</a></li>
+                                    <li><a asp-area="" asp-page="/Home/MailIn">Mail In</a></li>
+                                    <li><a asp-area="" asp-page="/Home/InternetVoting">Internet Voting</a></li>
+                                    <li><a asp-area="" asp-page="/Home/Audit">Audit</a></li>
+                                    <li><a asp-area="" asp-page="/Home/MitM">Man in the Middle</a></li>
+                                    <li><a asp-area="" asp-page="/Home/DirectAttack">Direct Attack</a></li>
+                                    <li><a asp-area="" asp-page="/Home/LessonsLearned">Lessons Learned</a></li>
+                                </ul>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -38,14 +41,16 @@
                                 Requirements
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a href="https://github.com/Robotuner/E2E-VIV">GitHub Site</a></br>
-                                <a asp-area="" asp-page="/Requirements/Registration">Ballot</a></br>
-                                <a asp-area="" asp-page="/Requirements/VotingApp">Voting App</a></br>
-                                <a asp-area="" asp-page="/Requirements/Audit">Vote Counting Server</a>
+                                <ul>
+                                    <li><a href="https://github.com/Robotuner/E2E-VIV">GitHub Site</a></li>
+                                    <li><a asp-area="" asp-page="/Requirements/Registration">Ballot</a></li>
+                                    <li><a asp-area="" asp-page="/Requirements/VotingApp">Voting App</a></li>
+                                    <li><a asp-area="" asp-page="/Requirements/Audit">Vote Counting Server</a></li>
+                                </ul>                                            
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-page="/Misc/About">Misc</a>
+                            <a class="nav-link" asp-page="/Misc/About">About</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-page="/Misc/Donation">Donate</a>
@@ -63,7 +68,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - ElectionWebsite - <a asp-page="/Index">Home</a>
+            <img src="./images/e2e-viv-24x24-1.png" height="18" />&copy; 2021 - E2E-VIV.org <a asp-page="/Index">Home</a>
         </div>
     </footer>
 

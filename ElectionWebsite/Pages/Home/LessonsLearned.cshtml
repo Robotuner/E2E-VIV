@@ -1,0 +1,165 @@
+﻿@page
+@model ElectionWebsite.Pages.Home.LessonsLearnedModel
+@{
+}
+
+<div class="text-left">
+    <h1><img src="../../images/e2e-viv-70x70-1.png" />Lessons Learned</h1>
+    <h2>Report on 2020 Election Analysis</h2>
+    <p>
+        This section evaulates the auditing capabilities offered by E2E-VIV against contrast outliers found in the
+        <a href="https://www.scribd.com/document/498454585/2020-Presidential-Election-Contrast-Report#from_embed">
+            2020 Presidential Election Contrast Analysis
+        </a> report.  Page 2 of the report lists the potential causes of contrast outliers found in the report.  The
+        remainder of this page looks at each and attempts to relate the vulnerability to a properly constructed
+        internet voting framework.
+    </p>
+    <h2>Potential Causes of Contrast Outliers </h2>
+    <h3>Keep ineligible people on the voting roles.</h3>
+    <p>
+        <em>This would disguise actual voter participation rates, allow fabricated votes to be submitted in their names, etc.</em></br>
+        The process defined, using ballot id's that are assigned to registered voters, will eliminate dead people, voters still
+        on the rolls that have moved to another state are another problem.  If the State sends them a QR code. They will be able to vote.
+    </p>
+    <h3>Get legislation passed that did not require in-person identification.</h3>
+    <p>
+        <em>This would make it easier for non-citizens, felons, etc to vote.</em></br>
+        Inclusion of a head shot with the signature as a requirement enforces the one person one vote.
+    </p>
+    <h3>Encourage a much higer percentage of voting by mail.</h3>
+    <p>
+        <em>
+            This would make it much easier to manipulate, as in-person checking is a more secure
+            way to keep track of actual registered citizens, etc.
+        </em></br>
+        Internet voting would be able to handle any increase in voter turnout with the same level of assurance that
+        the voters are legitimate. The possibility of innundating the system is significantly diminished compared
+        with manual voter registration verification.
+    </p>
+    <h3>Discard envelopes and other identifying materials from mail-in votes.</h3>
+    <p>
+        <em>This makes it very hard to check for duplications.</em></br>
+        Not a problem with use of a ballot id and a secure digital chain of custody.  There are no envelopes.
+    </p>
+    <h3>Count mail-in votes without careful signature or registration verification.</h3>
+    <p>
+        <em>This makes mail-in an easier choice for manipulation.</em></br>
+        Not a vulnerability with internet voting. All signatures are validated.
+    </p>
+    <h3>Allow votes to count that are received after Election Day.</h3>
+    <p>
+        <em>This can direct where mail-in votes need to go.</em></br>
+        Allowing signatured to be counted after the polls close is an issue.  Because of the internet delay and
+        even a possible Denial of Service attack, the vote counting server really can't simply be turned off
+        or website api turned off.  The app should be designed to keep sending the completed ballot in the background
+        until a confirmation is received.  For legitimate signature submittals, this isn't a problem, it is the
+        correct behavior, the issue is that a direct injection injection of signatures bypassing the mobile device could
+        back date the submittal date/time stamp.  As discussed elsewhere, such an attack could only occur if the
+        State Registration database is completely compromised.  Even if that were the case, the architecture will make it
+        difficult.  For each injected ballot, the process would be multi-step.  The steps are:
+        <ul>
+            <li>Make a request for ballot with a fake device id</li>
+            <li>Intercept/wait the response</li>
+            <li>Create a completed ballot</li>
+            <li>
+                Create a signature (head shot that is only used once, the fake device id, location data that is not the same for each
+                injected ballot, but represents a real location, etc.
+            </li>
+            <li>
+                Compute a Nonce for the completed ballot, it should be different, if there are clusters of signatures with the
+                same nonce, it will be caught in the audit.
+            </li>
+            <li>Send a notification of pending Submittal to the vote counting server</li>
+            <li>Intercept/wait for the confirmation response.</li>
+            <li>Send the Signature</li>
+            <li>Wait for the response.</li>
+        </ul>
+    </p>
+    <h3>Stop vote counting for several hours before final tabulation.</h3>
+    <p>
+        <em>This allows for an assessment of how many votes are "needed" etc.</em></br>
+        Not an issue with internet voting.  Polls close at predetermined time.  If the server is busy, the
+        mobile device with keep sending signature until a confirmation is received.  The Submittal date/time
+        on the signature will determine if the ballot is included in the count.
+    </p>
+    <h3>Do not allow genuine oversight of voting tabulation.</h3>
+    <p>
+        <em>This would make it easier to lose or miscalculate actual votes.</em></br>
+        Not an issue with internet voting.
+    </p>
+    <h3>Connect voting machines or precincts to the internet.</h3>
+    <p>
+        <em>This makes it quiet easy for third arties to access and change votes.</em></br>
+        Any internet voting scheme that is implemented and certified will be designed to protect against this.
+        This should not be an issue once the servers are certified.
+    </p>
+    <h3>Distribute vote manipulations over multiple precincts and/or counties.</h3>
+    <p>
+        <em>This makes the adjustments more difficult to find.</em></br>
+        The auditing capability available with internet voting makes this moot. We will know when and where the votes are arriving.
+    </p>
+    <h3>Make most of the manipulations un inexpected districts.</h3>
+    <p>
+        <em>In other words, don't do as much manipulation where it is expected.</em></br>
+        With internet voting, every signature is audited equally.
+    </p>
+    <h3>Use multiple methodologies to change vote results.</h3>
+    <p>
+        <em>It requires a much longer investigation to find all adjustments.</em></br>
+        Every signature is audited equally.  Also, there is only a single way to submit a ballot, and
+        it must be accompanied with a signature.
+    </p>
+
+    <h2>Synopsis</h2>
+    <p>
+        Not to bad.  Internet voting neutralized most of the above issues.  The issue of injected signatures
+        after poll close is a vulnerability that we need to look at closer.
+    </p>
+    <h2>Voatz Internet Voting  App</h2>
+    <p>
+        Findings from a security analysis of Voatz
+        <a href="https://internetpolicy.mit.edu/wp-content/uploads/2020/02/SecurityAnalysisOfVoatz_Public.pdf">
+            The Ballot is Busted
+            Before the Blockchain
+        </a>. The analysis focused on the three obvious points of attack. If the mobile device were infiltrated
+        with malware, the vote counting server were compromised and a Man in the Middle Attack.
+    </p>
+    <p>
+        Any mobile device can be infected with malware.  The question is if the malware could alter the code of the
+        downloaded voting app.  Since the voting app is open source, it is a possibility, but as discussed elsewhere, it
+        probably is not scaleable.  It would change one or two submittals, but unlikely to be able to scale to even 100 from a
+        single device.  This type of attack would essentially be to download an app from the Apple store, but when the user attempts to run
+        it, another app is run in its place.  I think Apple or Android would need to address this issue.  For this to be scalable
+        the number of devices infected must be large and the malware must know before hand what the ballot looks like.
+    </p>
+    <p>
+        An attack on the vote counting server is certainly a vulnerability, we hear about server being hacked every day.  In the
+        case of an election server, this can be mitigated by standing up a new server that is totally locked down specifically
+        for the election.  It would only have ports necessary for the API and database calls.
+    </p>
+    <p>
+        The man in the middle attack found in the analysis wasn't really in the middle. The analysis didn't say they were able to
+        defeat the HTTPS protocal, instead, it was a design/architecture issue that exposed votes before insertion into a
+        blockchain.  As noted elsewhere, we found it hard to imagine that blockchain could be employed without every device being
+        a peer.  My guess is that Voatz thought the same, so the problem was the transmission from the device to a peer where the votes
+        could be inserted into the blockchain.  In an open source architecture, the devise will make a HTTPS request to the vote
+        counting server.  That means for a MitM attack to succeed at any intermediate router, HTTPS must be defeated.
+    </p>
+    <p>
+        At the end of the day, it appears that with internet voting there are only three points of attack.  All three can be
+        defended against.  We know where the attack will occur.  With mail-in voting, there are a lot more possible attack vectors
+        many of which cannot be monitored or addressed.  How do you defend against a renegade mail man in NY sending ballots to
+        California with fake signatures of anyone on the California voting list?
+    </p>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <a href="./DirectAttack">< Prev</a>
+            </div>
+            <div class="col">
+                <a href="../Index">Next ></a>
+            </div>
+        </div>
+    </div>
+</div>

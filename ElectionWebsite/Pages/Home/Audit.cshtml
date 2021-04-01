@@ -4,7 +4,7 @@
 }
 
 <div class="text-left">
-    <h1>E2E Audit</h1>
+    <h1><img src="../../images/e2e-viv-70x70-1.png" />E2E Audit</h1>
     <p>
         The audit of the internet election results is a significant improvement over auditing of in-person and
         mail-in processes.  Where in-person auditing requirements are minimal, mail-in requirements are complex
@@ -44,6 +44,12 @@
                 Verify that the expected number of signatures match the actual number of signatures that were received.  If expected
                 exceeded actual, it means ballots were not set or lost in transmission, this potentially represents an attack of omission (altering
                 votes by never counting them).  If expected were less than actual, this means ballots those extra signatures are fraudulent ballots.
+            </li>
+            <li>
+                Look at the Nonce for each signature, Signatures with the same Nonce might have been directly injected.
+            </li>
+            <li>
+                Verify that the device id for every signature requested a ballot.
             </li>
             <li>Verify all votes counted has a signature submittal date within the allowed voting period.</li>
             <li>Compare result totals on State, Democrat and Republican servers.  Investigate differences by comparing vote tallies on each server.</li>
