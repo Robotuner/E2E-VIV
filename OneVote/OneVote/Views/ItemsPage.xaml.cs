@@ -110,7 +110,7 @@ namespace OneVote.Views
             {
                 msg = string.Format(Resource.ItemsPageSubmittalConfirmation,signature.Name, signature.Id);
 
-                if (Models.Utils.BallotHasBeenSubmitted(ballotGuid: signature.BallotId, save: true) && !DataService.Election.AllowUpdates)
+                if (Models.Utils.BallotHasBeenSubmitted(ballotId: signature.BallotId, save: true) && !DataService.Election.AllowUpdates)
                 {
                     DataService.ClearVotes();
                 }

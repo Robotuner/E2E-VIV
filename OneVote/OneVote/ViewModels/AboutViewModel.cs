@@ -1,4 +1,6 @@
 ﻿using ElectionModels;
+using ElectionModels.Misc;
+using Newtonsoft.Json;
 using OneVote.Models;
 using OneVote.Services;
 using OneVote.Views;
@@ -287,16 +289,17 @@ namespace OneVote.ViewModels
             if (string.IsNullOrEmpty(qrText))
                 return;
 
-            (Guid electionId, string registration, int birthYear, Guid ballotId) = Utils.DisectQR(qrText);            
-            if (electionId == Guid.Empty)
+            //(Guid electionId, string registration, int birthYear, Guid ballotId) = Utils.DisectQR(qrText);       
+            QRModel model = Models.Utils.DisectQR(qrText, null);
+            if (model.ElectionId == Guid.Empty)
                 return;
 
             AboutStatus = AboutStatusEnum.loading;
 
-            this.electionId = electionId;
-            await DataService.InitElection(electionId);
+            this.electionId = model.ElectionId;
+            await DataService.InitElection(model.ElectionId);
 
-            if (Utils.BallotHasBeenSubmitted(ballotId, false))
+            if (Models.Utils.BallotHasBeenSubmitted(model.BallotId, false))
             {
                 this.DisplayAlert?.Invoke(Resource.Warning, Resource.AboutBallotHasBeeSubmitted);
                 this.electionId = Guid.Empty;

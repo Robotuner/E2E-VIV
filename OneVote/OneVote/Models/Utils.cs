@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using ElectionModels;
+using ElectionModels.Misc;
+using Newtonsoft.Json;
 using OneVote.Services;
 using OneVote.ViewModels;
 using System;
@@ -38,29 +40,19 @@ namespace OneVote.Models
             return mapperConfiguration.CreateMapper();
         }
 
-        public static (Guid electionId, string registration, int birthYear, Guid ballotId) DisectQR(string qrtext, string ssn = null)
+        public static QRModel DisectQR(string qrtext, string ssn = null)
         {
             try
             {
                 if (!string.IsNullOrEmpty(qrtext))
                 {
-                    string[] s = qrtext.Split('|');
-                    if (s.Length == 4)
+                    QRModel model = JsonConvert.DeserializeObject<QRModel>(qrtext);
+                    if (model != null && !string.IsNullOrEmpty(ssn))
                     {
-                        string registration = s[1];
-                        if (Guid.TryParse(s[0], out Guid eid))
-                        {
-                            if (int.TryParse(s[2], out int birthYear))
-                            {
-                                if (!string.IsNullOrEmpty(s[3]))
-                                {
-                                    string ans = ElectionModels.Misc.Utils.Decrypt(s[3], ssn);
-                                    Guid bid = string.IsNullOrEmpty(ans) ? Guid.Empty : Guid.Parse(ans);
-                                    return (eid, registration, birthYear, bid);
-                                }
-                            }
-                        }
+                        string ans = ElectionModels.Misc.Utils.Decrypt(model.EncryptedBallotId, ssn);
+                        model.BallotId = string.IsNullOrEmpty(ans) ? Guid.Empty : Guid.Parse(ans);
                     }
+                    return model;
                 }
             }
             catch (Exception ex)
@@ -68,8 +60,41 @@ namespace OneVote.Models
                 Debug.WriteLine(ex.Message);
             }
 
-            return (Guid.Empty, null, DateTime.Today.Year, Guid.Empty);
+            return new QRModel();
         }
+
+        //public static (Guid electionId, string registration, int birthYear, Guid ballotId) DisectQR(string qrtext, string ssn = null)
+        //{
+        //    try
+        //    {
+        //        if (!string.IsNullOrEmpty(qrtext))
+        //        {
+        //            string[] s = qrtext.Split('|');
+        //            if (s.Length == 4)
+        //            {
+        //                string registration = s[1];
+        //                if (Guid.TryParse(s[0], out Guid eid))
+        //                {
+        //                    if (int.TryParse(s[2], out int birthYear))
+        //                    {
+        //                        if (!string.IsNullOrEmpty(s[3]))
+        //                        {
+        //                            string ans = ElectionModels.Misc.Utils.Decrypt(s[3], ssn);
+        //                            Guid bid = string.IsNullOrEmpty(ans) ? Guid.Empty : Guid.Parse(ans);
+        //                            return (eid, registration, birthYear, bid);
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.WriteLine(ex.Message);
+        //    }
+
+        //    return (Guid.Empty, null, DateTime.Today.Year, Guid.Empty);
+        //}
 
         public static string GetId()
         {
@@ -90,7 +115,7 @@ namespace OneVote.Models
         /// <param name="ballotGuid"></param>
         /// <param name="save"></param>
         /// <returns></returns>
-        public static bool BallotHasBeenSubmitted(Guid ballotGuid, bool save = false)
+        public static bool BallotHasBeenSubmitted(Guid ballotId, bool save = false)
         {
             string ballotsName = "Ballots";
             string allballots = Preferences.Get(ballotsName, string.Empty);
@@ -98,7 +123,7 @@ namespace OneVote.Models
             {
                 if (save)
                 {
-                    Preferences.Set(ballotsName, ballotGuid.ToString("n"));
+                    Preferences.Set(ballotsName, ballotId.ToString("n"));
                 }
                 // true means the ballot has not been submitted from this device.
                 return false;
@@ -106,11 +131,11 @@ namespace OneVote.Models
 
             string[] ballots = allballots.Split(',');
             List<string> lst = new List<string>(ballots);
-            if (!lst.Any(n => n == ballotGuid.ToString("n")))
+            if (!lst.Any(n => n == ballotId.ToString("n")))
             {
                 if (save)
                 {
-                    Preferences.Set(ballotsName, ballotGuid.ToString("n"));
+                    Preferences.Set(ballotsName, ballotId.ToString("n"));
                 }
                 // true means the ballot has not been submitted from this device
                 return false;
