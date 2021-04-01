@@ -1,5 +1,6 @@
 # E2E-VIV Initiative
 **Visual Studio 2019 Community Version 16.8.5**
+E2E-VIV is released under GPL, you are free to use, modify and redistribute the code.
 
 The E2E-VIV Initiative is born from the uncertainty of the 2020 Election.  The projects in this initiative represent source code used to mimic the End 2 End process as envisioned during the feasibility investigation.  If inclined, I would like help on all aspects of this initiative, Architect, DB, Testing, or any other input/feedback.  The goal is to fortify what I have to a point where the hacking community can be invited to test and find weaknesses and points of attack.  States will not implement internet voting without certification.  It is doubtful that the US EAC (US Election Assistance Commission) would even know how or what aspects should be certified for a reliable E2E VIV system.  The experience gained in this initiative would probably be of great value when that day arrives.  
 
