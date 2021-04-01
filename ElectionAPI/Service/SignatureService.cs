@@ -19,7 +19,7 @@ namespace ElectionAPI.Service
         Task<Signature> GetByBallotId(IUnitOfWork uow, Guid id);
         Task<Signature> UpdateBallotVotes(IUnitOfWork uow, Signature previousSignature, Signature signature);
         Task<SignatureNotice> NotifyPendingSubmittal(IDbConnection context, SignatureNotice notice);
-        Task<int> GetExpectedNonce(IUnitOfWork uow, Guid ballotId);
+        Task<(int,string)> GetExpectedNonce(IUnitOfWork uow, Guid ballotId);
     }
 
     public class SignatureService : ISignatureService
@@ -114,9 +114,8 @@ namespace ElectionAPI.Service
             return null;
         }
 
-        public async Task<int> GetExpectedNonce(IUnitOfWork uow, Guid ballotId)
+        public async Task<(int, string)> GetExpectedNonce(IUnitOfWork uow, Guid ballotId)
         {
-            int result = 0;
             try
             {
                 var p = new DynamicParameters(); 
@@ -124,14 +123,12 @@ namespace ElectionAPI.Service
 
                 var ans = await uow.Context.QuerySingleAsync<SignatureNotice>(sql: "SignatureNotice_GetExpectedNonce", param: p,
                     commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans);
-                return ans == null ? 0 : ans.Nonce;
+                return ans == null ? (0,null) : (ans.Nonce, ans.DeviceId);
             }
             catch (Exception ex)
             {
                 throw;
             }
-
-            return result;
         }
 
         public async Task<SignatureNotice> NotifyPendingSubmittal(IDbConnection context, SignatureNotice notice)
@@ -143,6 +140,7 @@ namespace ElectionAPI.Service
                 p.Add("@id", Guid.NewGuid(), DbType.Guid, ParameterDirection.Input);
                 p.Add("@ballotid", notice.BallotId, DbType.Guid, ParameterDirection.Input);
                 p.Add("@nonce", notice.Nonce, DbType.Int32, ParameterDirection.Input);
+                p.Add("@deviceid", notice.DeviceId, DbType.String, ParameterDirection.Input);
 
                 result = await context.QuerySingleAsync<SignatureNotice>(sql: "SignatureNotice_Insert", param: p,
                     commandType: System.Data.CommandType.StoredProcedure);

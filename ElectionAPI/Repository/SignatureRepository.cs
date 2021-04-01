@@ -19,7 +19,7 @@ namespace ElectionAPI.Repository
         Task<Signature> GetByBallotId(IUnitOfWork uow, Guid id);
         Task<Signature> UpdateBallotVotes(IUnitOfWork uow, Signature previousSignature, Signature signature);
         Task<SignatureNotice> NotifyPendingSubmittal(IDbConnection context, SignatureNotice notice);
-        Task<int> GetExpectedNonce(IUnitOfWork uow, Guid ballotId);
+        Task<(int, string)> GetExpectedNonce(IUnitOfWork uow, Guid ballotId);
     }
 
     public class SignatureRepository : BaseRepository, ISignatureRepository
@@ -92,9 +92,9 @@ namespace ElectionAPI.Repository
             return result;
         }
 
-        public async Task<int> GetExpectedNonce(IUnitOfWork uow, Guid ballotId)
+        public async Task<(int,string)> GetExpectedNonce(IUnitOfWork uow, Guid ballotId)
         {
-            int result = 0;
+            (int,string) result = (0, null);
             try
             {
                 result = await this.signatureService.GetExpectedNonce(uow, ballotId);

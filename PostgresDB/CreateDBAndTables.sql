@@ -124,6 +124,7 @@ CREATE TABLE public.SignatureNotice
     Id uuid NOT NULL,
     Nonce integer NOT NULL,
     BallotId uuid NOT NULL,
+    DeviceId text,
     CreateDate timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 TABLESPACE pg_default;
