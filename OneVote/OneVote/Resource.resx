@@ -201,6 +201,9 @@
   <data name="ReviewBallotSection" xml:space="preserve">
     <value>Section: </value>
   </data>
+  <data name="SubmitAuthMessage" xml:space="preserve">
+    <value>Enter your authorization code here.  Only you know what the code is.  It was a code that you agreed to when registering to vote.  It might be your SSN, or the answer to one of your security questions, or your street address.</value>
+  </data>
   <data name="Warning" xml:space="preserve">
     <value>Warning!</value>
   </data>

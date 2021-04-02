@@ -313,6 +313,15 @@ namespace OneVote {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter your authorization code here.  Only you know what the code is.  It was a code that you agreed to when registering to vote.  It might be your SSN, or the answer to one of your security questions, or your street address..
+        /// </summary>
+        public static string SubmitAuthMessage {
+            get {
+                return ResourceManager.GetString("SubmitAuthMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Warning!.
         /// </summary>
         public static string Warning {

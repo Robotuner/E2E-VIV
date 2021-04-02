@@ -53,8 +53,27 @@
                 if (string.IsNullOrEmpty(SSN1) || string.IsNullOrEmpty(SSN2))
                     return null;
 
-                return SSN1?.Trim() == SSN2?.Trim() ? SSN1?.Trim() : null;
+                return StripSpaces(SSN1)?.Trim() == StripSpaces(SSN2)?.Trim() ? StripSpaces(SSN1)?.Trim() : null;
             }
+        }
+
+        private string authorizationMsg;
+        public string AuthorizationMsg
+        {
+            get { return authorizationMsg; }
+            set
+            {
+                if (authorizationMsg != value)
+                {
+                    authorizationMsg = value;
+                    OnPropertyChanged("AuthorizationMsg");
+                }
+            }
+        }
+
+        public SubmitAuthorizationPageViewModel()
+        {
+            AuthorizationMsg = Resource.SubmitAuthMessage;
         }
 
         public void UpdateVisibility()
@@ -63,6 +82,15 @@
                 this.OKButtonEnabled = false;
             else
                 this.OKButtonEnabled = SSN1?.Trim() == SSN2?.Trim() ? true : false;
+        }
+
+        private string StripSpaces(string value)
+        {
+            string ans = value.Replace(" ", null);
+            ans = ans.Replace(".", null);
+            ans = ans.Replace("-", null);
+            ans = ans.Replace("'", null);
+            return ans;
         }
     }
 }
