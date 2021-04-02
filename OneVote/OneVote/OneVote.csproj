@@ -8,11 +8,13 @@
   <ItemGroup>
     <Compile Remove="Services\DataStore.cs" />
     <Compile Remove="Services\IDataStore.cs" />
+    <Compile Remove="SSNView.xaml.cs" />
     <Compile Remove="Views\BlinkIDPage.xaml.cs" />
     <Compile Remove="Views\QRCodeView.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="SSNView.xaml" />
     <EmbeddedResource Remove="Views\BlinkIDPage.xaml" />
     <EmbeddedResource Remove="Views\QRCodeView.xaml" />
   </ItemGroup>
@@ -68,9 +70,6 @@
     <EmbeddedResource Update="Resource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="SSNView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\CategoryTypeTemplate.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

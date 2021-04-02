@@ -149,5 +149,16 @@ namespace ElectionModels.Misc
             }
             return blockChain;
         }
+
+        public static string StripSpaces(string value)
+        {
+            string ans = value.Replace(" ", null);
+            ans = ans.Replace(".", null);
+            ans = ans.Replace("-", null);
+            ans = ans.Replace("'", null);
+            ans = ans.Replace(",", null);
+            return ans;
+        }
+
     }
 }

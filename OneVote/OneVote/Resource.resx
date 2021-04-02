@@ -124,10 +124,10 @@
     <value>Camera not found!  The camera is needed for your signature.  This device cannot be used for voting.</value>
   </data>
   <data name="AboutDescription" xml:space="preserve">
-    <value>Vote for your candidates in the 2020 Presidential Election</value>
+    <value>Get the correct ballot based on your QR Code here.</value>
   </data>
   <data name="AboutHeading1" xml:space="preserve">
-    <value>Election Voting App.</value>
+    <value>E2E-VIV Voting App</value>
   </data>
   <data name="AboutLearnMore" xml:space="preserve">
     <value>Learn More</value>
@@ -136,10 +136,10 @@
     <value>https://www.e2e-viv.org</value>
   </data>
   <data name="AboutLoadingElectionMessage" xml:space="preserve">
-    <value>Loading Election . . . </value>
+    <value>Loading Ballot . . . </value>
   </data>
   <data name="AboutNeedsSSN" xml:space="preserve">
-    <value>Please Enter your SSN!</value>
+    <value>Please Enter your Authorization Code!</value>
   </data>
   <data name="AboutPollsNotOpen" xml:space="preserve">
     <value>Voting has not started yet or have already closed.</value>
@@ -151,7 +151,7 @@
     <value>Scan Election QR Code</value>
   </data>
   <data name="AboutTitle" xml:space="preserve">
-    <value>About</value>
+    <value>Get Ballot</value>
   </data>
   <data name="AboutTryAgain" xml:space="preserve">
     <value>Try connect again</value>

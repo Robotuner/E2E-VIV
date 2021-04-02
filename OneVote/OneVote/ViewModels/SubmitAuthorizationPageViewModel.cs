@@ -53,7 +53,7 @@
                 if (string.IsNullOrEmpty(SSN1) || string.IsNullOrEmpty(SSN2))
                     return null;
 
-                return StripSpaces(SSN1)?.Trim() == StripSpaces(SSN2)?.Trim() ? StripSpaces(SSN1)?.Trim() : null;
+                return ElectionModels.Misc.Utils.StripSpaces(SSN1)?.Trim() == ElectionModels.Misc.Utils.StripSpaces(SSN2)?.Trim() ? ElectionModels.Misc.Utils.StripSpaces(SSN1)?.Trim() : null;
             }
         }
 
@@ -84,14 +84,5 @@
                 this.OKButtonEnabled = SSN1?.Trim() == SSN2?.Trim() ? true : false;
         }
 
-        private string StripSpaces(string value)
-        {
-            string ans = value.Replace(" ", null);
-            ans = ans.Replace(".", null);
-            ans = ans.Replace("-", null);
-            ans = ans.Replace("'", null);
-            ans = ans.Replace(",", null);
-            return ans;
-        }
     }
 }

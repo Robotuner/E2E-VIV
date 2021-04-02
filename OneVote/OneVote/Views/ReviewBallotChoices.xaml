@@ -15,7 +15,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <StackLayout Orientation="Horizontal" Margin="10,0">
+            <StackLayout Orientation="Horizontal" Margin="10">
                 <Label Text="Section: " FontSize="Medium" VerticalOptions="Center"/>
                 <Picker ItemsSource="{Binding CategoryTypes}" SelectedIndexChanged="CategoryTypes_SelectedIndexChanged" 
                         SelectedItem="{Binding SelectedCategoryType}" HorizontalOptions="FillAndExpand"/>

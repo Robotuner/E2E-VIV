@@ -3,12 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ctrls="clr-namespace:OneVote.Controls"
              xmlns:vm="clr-namespace:OneVote.ViewModels"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
              x:Class="OneVote.Views.SubmitAuthorizationPage">
     <ContentPage.BindingContext>
         <vm:SubmitAuthorizationPageViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout Margin="10,0" VerticalOptions="Start">
+        <StackLayout Margin="10" VerticalOptions="Start">
             <Label Text="{Binding AuthorizationMsg}"  LineBreakMode="WordWrap" Margin="0,0,0,10"
                    TextColor="Blue"/>
             <ctrls:GenericEntryField FieldLabel="Enter SSN" PlaceHolder="Authorization Code" 

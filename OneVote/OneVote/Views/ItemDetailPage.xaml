@@ -5,6 +5,8 @@
              xmlns:local="clr-namespace:OneVote.Views"
              xmlns:converter="clr-namespace:OneVote.Converters"
              xmlns:template="clr-namespace:OneVote.DataTemplateSelectors"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
              xmlns:vm="clr-namespace:OneVote.ViewModels"
              xmlns:model="clr-namespace:OneVote.Models"  
              Title="{Binding Title}">
@@ -29,7 +31,7 @@
         <template:CategoryTemplateSelector x:Key="CategoryTemplateSelector" MeasureTemplate="{StaticResource MeasureView}" 
                FederalTemplate="{StaticResource FederalView}" JudicialTemplate="{StaticResource JudicialView}"/>        
     </ContentPage.Resources>
-    <CollectionView x:Name="ItemsListView" ItemsSource="{Binding CategoryList}"  SelectionMode="None"
+    <CollectionView x:Name="ItemsListView" ItemsSource="{Binding CategoryList}" SelectionMode="None" Margin="10"
                     ItemSizingStrategy="MeasureAllItems" ItemTemplate="{StaticResource CategoryTemplateSelector}" />
     <!--<ListView x:Name="ItemsListView" ItemsSource="{Binding CategoryList}"  SelectionMode="None"
               ItemTemplate="{StaticResource CategoryTemplateSelector}" HasUnevenRows="True"/>-->
