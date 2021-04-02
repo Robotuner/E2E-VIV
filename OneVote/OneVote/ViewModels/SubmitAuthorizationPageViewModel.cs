@@ -90,6 +90,7 @@
             ans = ans.Replace(".", null);
             ans = ans.Replace("-", null);
             ans = ans.Replace("'", null);
+            ans = ans.Replace(",", null);
             return ans;
         }
     }
