@@ -365,30 +365,30 @@ namespace OneVote.Services
             return (selected, cvmList.Count);
         }
 
-        //public async static Task<List<VoteResult>> GetElectionSummary(Guid electionId)
-        //{
-        //    try
-        //    {
-        //        client = new HttpClient();
-        //        string url = string.Format(@"{0}/Vote/ElectionSummary/{1}", electionId);
-        //        HttpResponseMessage response = await client.GetAsync(url);
-        //        if (response.StatusCode == System.Net.HttpStatusCode.OK)
-        //        {
-        //            string ans = await response.Content.ReadAsStringAsync();
-        //            List<VoteResult> vrList = JsonConvert.DeserializeObject<List<VoteResult>>(ans);
-        //            return vrList == null ? new List<VoteResult>() : vrList;
-        //        }
-        //        else
-        //        {
-        //            MessagingCenter.Send<BlankClass, string>(new BlankClass(), MessagingEvents.ErrorLoadingElection, response.StatusCode.ToString());
-        //            Debug.WriteLine(response.StatusCode);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.WriteLine(ex.Message);
-        //    }
-        //    return new List<VoteResult>();
-        //}
+        public async static Task<List<VRecord>> GetVRecords(Guid ballotid)
+        {
+            try
+            {
+                client = new HttpClient();
+                string url = string.Format(@"{0}/Vote/ByBallot/{1}", electionResultUrl,ballotid);
+                HttpResponseMessage response = await client.GetAsync(url);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string ans = await response.Content.ReadAsStringAsync();
+                    List<VRecord> vrList = JsonConvert.DeserializeObject<List<VRecord>>(ans);
+                    return vrList == null ? new List<VRecord>() : vrList;
+                }
+                else
+                {
+                    MessagingCenter.Send<BlankClass, string>(new BlankClass(), MessagingEvents.ErrorLoadingElection, response.StatusCode.ToString());
+                    Debug.WriteLine(response.StatusCode);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            return new List<VRecord>();
+        }
     }
 }

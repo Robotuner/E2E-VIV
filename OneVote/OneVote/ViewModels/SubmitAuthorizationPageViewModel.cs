@@ -57,6 +57,20 @@
             }
         }
 
+        private string keyboard;
+        public string Keyboard
+        {
+            get { return keyboard; }
+            set
+            {
+                if (keyboard != value)
+                {
+                    keyboard = value;
+                    OnPropertyChanged("Keyboard");
+                }
+            }
+        }
+
         private string authorizationMsg;
         public string AuthorizationMsg
         {
@@ -74,6 +88,7 @@
         public SubmitAuthorizationPageViewModel()
         {
             AuthorizationMsg = Resource.SubmitAuthMessage;
+            Keyboard = "Numeric";
         }
 
         public void UpdateVisibility()

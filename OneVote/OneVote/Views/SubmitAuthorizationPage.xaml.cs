@@ -9,6 +9,8 @@ namespace OneVote.Views
     public partial class SubmitAuthorizationPage : ContentPage
     {
         public Action<string> OnSubmitOKClicked { get; set; }
+
+
         public SubmitAuthorizationPage()
         {
             InitializeComponent();
@@ -29,6 +31,14 @@ namespace OneVote.Views
         private async void CancelButtonClicked(object sender, EventArgs e)
         {
             await Navigation.PopModalAsync();
+        }
+
+        private async void KeyboardButtonClicked(object sender, EventArgs e)
+        {
+            if (BindingContext is SubmitAuthorizationPageViewModel vm)
+            {
+                vm.Keyboard = vm.Keyboard == "Numeric" ? "Default" : "Numeric";                
+            }
         }
     }
 }

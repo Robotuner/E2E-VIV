@@ -170,6 +170,18 @@
   <ItemGroup>
     <BundleResource Include="Resources\e2e_viv_70x70_1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ballot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\database.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\questionMark.png" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties TriggeredFromHotReload="False" />

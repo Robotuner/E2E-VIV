@@ -19,6 +19,7 @@ namespace ElectionAPI.Repository
         Task<List<Vote>> GetAllByElectionId(IDbConnection context, Guid electionid, int offset = 0, int take = 1000, bool confirmed = true);
         Task<List<Vote>> GetAllByCategoryType(IDbConnection context, Guid electionid, int categorytype, int offset = 0, int take = 1000, bool confirmed = true);
         Task<List<VoteResult>> GetVoteSummary(IDbConnection context, Guid electionId);
+        Task<List<VRecord>> GetVoteByBallot(IDbConnection context, Guid ballotId);
     }
 
     public class VoteRepository : BaseRepository, IVoteRepository
@@ -52,6 +53,21 @@ namespace ElectionAPI.Repository
             try
             {
                 result = (await this.voteService.GetAllByCategoryType(context, electionid, categorytype, offset, take, confirmed))?.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return result;
+        }
+        
+        public async Task<List<VRecord>> GetVoteByBallot(IDbConnection context, Guid ballotId)
+        {
+            List<VRecord> result = new List<VRecord>();
+            try
+            {
+                result = (await this.voteService.GetVoteByBallot(context, ballotId))?.ToList();
             }
             catch (Exception ex)
             {

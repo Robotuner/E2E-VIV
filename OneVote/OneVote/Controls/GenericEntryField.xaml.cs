@@ -85,7 +85,7 @@ namespace OneVote.Controls
             target.SetValue(PlaceHolderProperty, value);
         }
         #endregion
-        public string PlaceKeyboardTypeHolder
+        public string KeyboardType
         {
             get { return GetKeyboardType(this); }
             set { SetKeyboardType(this, value); }

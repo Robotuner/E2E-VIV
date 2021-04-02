@@ -46,6 +46,13 @@ namespace ElectionAPI.Controllers
             return result;
         }
 
+        [HttpGet("ByBallot/{Id}")]
+        public async Task<List<VRecord>> GetVoteByBallot(Guid id)
+        {
+            List<VRecord> result = await this.voteRepository.GetVoteByBallot(Context, id);
+            return result;
+        }
+
         [HttpPost]
         public async Task<Vote> Create([FromBody] Vote vote)
         {
