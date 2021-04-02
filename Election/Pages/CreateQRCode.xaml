@@ -36,7 +36,7 @@
         <Label Grid.Row="2" Target="{Binding ElementName=tb2}" Content="Registration DOB" FontSize="14" HorizontalAlignment="Right" />
 
         <!--SSN-->
-        <Label Grid.Row="3" Grid.Column="0"  Content="SSN" FontSize="14" HorizontalAlignment="Right" />
+        <Label Grid.Row="3" Grid.Column="0"  Content="Authorization Code" FontSize="14" HorizontalAlignment="Right" />
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SSN}" FontSize="14" Width="300" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
         <!-- Election -->

@@ -167,7 +167,9 @@
   <ItemGroup>
     <LinkDescription Include="Linker.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\e2e_viv_70x70_1.png" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties TriggeredFromHotReload="False" />

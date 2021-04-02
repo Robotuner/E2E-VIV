@@ -149,10 +149,10 @@ namespace Election.ViewModels
 
         private void OnCreateQR(object p)
         {
-            if (this.SelectedElection == null || BallotId == Guid.Empty || string.IsNullOrEmpty(SSN))
+            if (this.SelectedElection == null || BallotId == Guid.Empty || string.IsNullOrEmpty(ElectionModels.Misc.Utils.StripSpaces(SSN)))
                 return;
 
-            string encryptedstring = ElectionModels.Misc.Utils.Encrypt(this.BallotId.ToString("n"), this.SSN);
+            string encryptedstring = ElectionModels.Misc.Utils.Encrypt(this.BallotId.ToString("n"), ElectionModels.Misc.Utils.StripSpaces(this.SSN));
             //string decryptedBallotId = ElectionModels.Misc.Utils.Decrypt(encryptedstring, this.SSN);
             QRModel qrModel = new QRModel()
             {

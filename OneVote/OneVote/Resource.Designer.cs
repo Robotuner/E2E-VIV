@@ -79,7 +79,7 @@ namespace OneVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vote for your candidates in the 2020 Presidential Election.
+        ///   Looks up a localized string similar to Get the correct ballot based on your QR Code here..
         /// </summary>
         public static string AboutDescription {
             get {
@@ -88,7 +88,7 @@ namespace OneVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Election Voting App..
+        ///   Looks up a localized string similar to E2E-VIV Voting App.
         /// </summary>
         public static string AboutHeading1 {
             get {
@@ -115,7 +115,7 @@ namespace OneVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loading Election . . . .
+        ///   Looks up a localized string similar to Loading Ballot . . . .
         /// </summary>
         public static string AboutLoadingElectionMessage {
             get {
@@ -124,7 +124,7 @@ namespace OneVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please Enter your SSN!.
+        ///   Looks up a localized string similar to Please Enter your Authorization Code!.
         /// </summary>
         public static string AboutNeedsSSN {
             get {
@@ -160,7 +160,7 @@ namespace OneVote {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to About.
+        ///   Looks up a localized string similar to Get Ballot.
         /// </summary>
         public static string AboutTitle {
             get {
@@ -309,6 +309,15 @@ namespace OneVote {
         public static string ReviewBallotSection {
             get {
                 return ResourceManager.GetString("ReviewBallotSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your authorization code here.  Only you know what the code is.  It was a code that you agreed to when registering to vote.  It might be your SSN, or the answer to one of your security questions, or your street address..
+        /// </summary>
+        public static string SubmitAuthMessage {
+            get {
+                return ResourceManager.GetString("SubmitAuthMessage", resourceCulture);
             }
         }
         

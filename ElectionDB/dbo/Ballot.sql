@@ -4,5 +4,5 @@
     [BallotChain] NVARCHAR(MAX) NOT NULL, 
     [Nonce] INT NOT NULL, 
     [ElectionId] UNIQUEIDENTIFIER NOT NULL, 
-    [CreateDate] DATETIME NOT NULL DEFAULT sysutcdatetime
+    [CreateDate] DATETIME NOT NULL DEFAULT sysutcdatetime()
 )
