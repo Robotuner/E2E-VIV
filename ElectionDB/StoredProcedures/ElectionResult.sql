@@ -197,3 +197,15 @@ AS
 	SELECT * FROM [dbo].[VoteResult] WHERE Electionid=@electionid;
 RETURN 0
 GO
+
+
+CREATE PROCEDURE [dbo].[Vote_GetVRecordBallotId]
+	@ballotid UNIQUEIDENTIFIER
+AS
+	SELECT c.heading, c.title, c.judgeposition, c.categorytypeid, t.description, p.description from vote v
+	JOIN category c ON c.id = v.categoryid
+	JOIN ticket t ON t.id=v.selectionid
+	JOIN party p ON p.id=t.partyid
+	WHERE v.ballotid = @ballotid AND v.VoteStatus=0
+RETURN 0
+GO

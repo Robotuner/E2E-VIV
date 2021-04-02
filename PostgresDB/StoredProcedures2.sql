@@ -176,4 +176,17 @@ BEGIN
 END;
 $func$ Language plpgsql;
 
-
+CREATE OR REPLACE FUNCTION Vote_GetByBallot(ballotid uuid)
+RETURNS TABLE (heading text, title text, judgeposition int, catatorytypeid int, candidate text, party text)
+AS 
+$$
+DECLARE
+   sql text = 'SELECT c.heading, c.title, c.judgeposition, c.categorytypeid, t.description, p.description from vote v
+	join category c on c.id = v.categoryid
+	join ticket t on t.id=v.selectionid
+	join party p on p.id=t.partyid
+	where v.ballotid = $1 and v.VoteStatus=0';
+BEGIN
+	RETURN QUERY EXECUTE sql USING ballotid;
+END;
+$$ Language plpgsql;

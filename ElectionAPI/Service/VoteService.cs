@@ -21,6 +21,7 @@ namespace ElectionAPI.Service
         Task<IEnumerable<Vote>> GetByBallotID(IUnitOfWork uow, Guid id);
         Task<Vote> Update(IUnitOfWork uow, Vote vote);
         Task<IEnumerable<VoteResult>> GetVoteSummary(IDbConnection context, Guid electionId);
+        Task<IEnumerable<VRecord>> GetVoteByBallot(IDbConnection context, Guid ballotId);
     }
 
     public class VoteService : IVoteService
@@ -137,6 +138,25 @@ namespace ElectionAPI.Service
                     commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans);
             }
             catch
+            {
+                throw;
+            }
+
+            return result;
+        }
+
+        public async Task<IEnumerable<VRecord>> GetVoteByBallot(IDbConnection context, Guid ballotId)
+        {
+            IEnumerable<VRecord> result = null;
+            try
+            {
+                var p = new DynamicParameters();
+                p.Add("@ballotid", ballotId, System.Data.DbType.Guid, System.Data.ParameterDirection.Input);
+
+                result = await context.QueryAsync<VRecord>(sql: "Vote_GetByBallot", param: p,
+                    commandType: System.Data.CommandType.StoredProcedure);
+            }
+            catch (Exception ex)
             {
                 throw;
             }
