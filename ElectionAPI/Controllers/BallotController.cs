@@ -16,7 +16,7 @@ namespace ElectionAPI.Controllers
 
         public BallotController(IConfiguration config, IBallotRepository ballotRepository) : base(config)
         {
-
+            this.ballotRepository = ballotRepository;
         }
 
         [HttpGet("ByElection/{Id}")]
@@ -45,5 +45,30 @@ namespace ElectionAPI.Controllers
             return result;
         }
 
+        [HttpPost("Request")]
+        public async Task<BallotRequest> Insert([FromBody] BallotRequest ballotRequest)
+        {
+            BallotRequest result = null;
+            try
+            {
+                result = await this.ballotRepository.BallotRequestInsert(Context, ballotRequest);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
+            finally
+            {
+            }
+            return result;
+        }
+
+        [HttpGet("Request/{Id}")]
+        public async Task<BallotRequest> BallotRequestGetById(Guid Id)
+        {
+            BallotRequest result = await this.ballotRepository.BallotRequestGetById(Context, Id);
+            return result;
+        }
     }
 }

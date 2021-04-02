@@ -79,6 +79,7 @@
     <Build Include="dbo\SignatureNotice.sql" />
     <Build Include="StoredProcedures\Election.sql" />
     <Build Include="StoredProcedures\ElectionResult.sql" />
+    <Build Include="dbo\BallotRequest.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="ElectionDB.refactorlog" />

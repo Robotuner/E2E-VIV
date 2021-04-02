@@ -151,50 +151,7 @@ namespace OneVote.ViewModels
             }
         }
 
-        //private bool needsSSN;
-        //public bool NeedsSSN
-        //{
-        //    get { return needsSSN; }
-        //    set
-        //    {
-        //        if (needsSSN != value)
-        //        {
-        //            needsSSN = value;
-        //            OnPropertyChanged("NeedsSSN");
-        //        }
-        //    }
-        //}
-
-        //private string ssn1;
-        //public string SSN1
-        //{
-        //    get { return ssn1; }
-        //    set
-        //    {
-        //        if (ssn1 != value)
-        //        {
-        //            ssn1 = value;
-        //            OnPropertyChanged("SSN1");
-        //            this.UpdateStatus();
-        //        }
-        //    }
-        //}
-
-        //private string ssn2;
-        //public string SSN2
-        //{
-        //    get { return ssn2; }
-        //    set
-        //    {
-        //        if (ssn2 != value)
-        //        {
-        //            ssn2 = value;
-        //            OnPropertyChanged("SSN2");
-        //            this.UpdateStatus();
-        //        }
-        //    }
-        //}
-
+  
         public AboutViewModel()
         {
             Title = Resource.AboutTitle;
@@ -276,11 +233,6 @@ namespace OneVote.ViewModels
                 case AboutStatusEnum.noCameraSupport:
                     Warning = Resource.AppInternetMessage;
                     break;
-                //case AboutStatusEnum.needsSSN:
-                //    ButtonTitle = Resource.AboutNeedsSSN;
-                //    this.NeedsSSN = true;
-                //    break;
-
             }
         }
 
@@ -288,8 +240,7 @@ namespace OneVote.ViewModels
         {
             if (string.IsNullOrEmpty(qrText))
                 return;
-
-            //(Guid electionId, string registration, int birthYear, Guid ballotId) = Utils.DisectQR(qrText);       
+     
             QRModel model = Models.Utils.DisectQR(qrText, null);
             if (model.ElectionId == Guid.Empty)
                 return;

@@ -13,6 +13,8 @@ namespace ElectionAPI.Repository
         Task<Ballot> GetByElection(IDbConnection context, Guid Id);
         Task<int> GetLastNonce(IDbConnection context, Guid Id);
         Task<Ballot> Insert(IDbConnection context, Ballot ballot);
+        Task<BallotRequest> BallotRequestInsert(IDbConnection context, BallotRequest ballot);
+        Task<BallotRequest> BallotRequestGetById(IDbConnection context, Guid Id);
     }
 
 
@@ -67,6 +69,37 @@ namespace ElectionAPI.Repository
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+                throw;
+            }
+
+            return result;
+        }
+
+        public async Task<BallotRequest> BallotRequestInsert(IDbConnection context, BallotRequest ballotRequest)
+        {
+            BallotRequest result = null;
+            try
+            {
+                result = await this.ballotService.BallotRequestInsert(context, ballotRequest);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                throw;
+            }
+
+            return result;
+        }
+
+        public async Task<BallotRequest> BallotRequestGetById(IDbConnection context, Guid Id)
+        {
+            BallotRequest result = null;
+            try
+            {
+                result = await this.ballotService.BallotRequestGetById(context, Id);
+            }
+            catch
+            {
                 throw;
             }
 

@@ -53,13 +53,13 @@ END;
 $func$ Language plpgsql;
 
 
-CREATE OR REPLACE FUNCTION SignatureNotice_Insert(id uuid, ballotid uuid, nonce int, deviceid text)
+CREATE OR REPLACE FUNCTION SignatureNotice_Insert(id uuid, ballotid uuid, nonce int, ballotRequestId uuid)
 RETURNS SETOF SignatureNotice AS $func$
 DECLARE
-	sql text = 'INSERT INTO SignatureNotice (id, ballotid, nonce, deviceid, createdate) VALUES 
+	sql text = 'INSERT INTO SignatureNotice (id, ballotid, nonce, ballotrequestid, createdate) VALUES 
 	($1, $2, $3, $4, current_timestamp) RETURNING *';
 BEGIN	
-	RETURN QUERY EXECUTE sql USING id, ballotid, nonce, deviceid;
+	RETURN QUERY EXECUTE sql USING id, ballotid, nonce, ballotRequestId;
 END;
 $func$ Language plpgsql;
 

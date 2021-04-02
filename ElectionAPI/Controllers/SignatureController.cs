@@ -17,9 +17,12 @@ namespace ElectionAPI.Controllers
     public class SignatureController : BaseController
     {
         private readonly ISignatureRepository signatureRepository;
-        public SignatureController(IConfiguration config, ISignatureRepository signatureRepository) : base(config)
+        private readonly IBallotRepository ballotRepository;
+        public SignatureController(IConfiguration config, ISignatureRepository signatureRepository,
+           IBallotRepository ballotRepository) : base(config)
         {
             this.signatureRepository = signatureRepository;
+            this.ballotRepository = ballotRepository;
         }
 
         [HttpGet]
@@ -70,23 +73,27 @@ namespace ElectionAPI.Controllers
                 UOW.BeginTransaction();
                 Signature signature = this.GetSignatureFromBlockChain(electionChain);
                 // now check to make sure the nonce matches the expected nonce
-                (int expectedNonce, string deviceId) = await this.signatureRepository.GetExpectedNonce(UOW, signature.BallotId);
+                (int expectedNonce, Guid ballotRequestId) = await this.signatureRepository.GetExpectedNonce(UOW, signature.BallotId);
 
-                // make sure the nonce and device id are correct
-                if (signature == null || expectedNonce != electionChain.GetLatestBlock().Nonce ||
-                    signature.DeviceId != deviceId)
-                    return null;
+                if (ballotRequestId != Guid.Empty)
+                {
+                    var br = await ballotRepository.BallotRequestGetById(Context, ballotRequestId);
+                    // make sure the nonce and device id are correct
+                    if (signature == null || expectedNonce != electionChain.GetLatestBlock().Nonce ||
+                        (br != null && signature.DeviceId != br.DeviceId))
+                        return null;
 
-                Signature existingSignature = await this.GetByBallotId(signature.BallotId);
-                if (existingSignature != null)
-                {
-                    result =  await signatureRepository.UpdateBallotVotes(UOW, existingSignature, signature);
+                    Signature existingSignature = await this.GetByBallotId(signature.BallotId);
+                    if (existingSignature != null)
+                    {
+                        result =  await signatureRepository.UpdateBallotVotes(UOW, existingSignature, signature);
+                    }
+                    else
+                    {
+                        result = await this.InsertNewSignatureBallot(UOW, signature);
+                    }
+                    UOW.SaveChanges();
                 }
-                else
-                {
-                    result = await this.InsertNewSignatureBallot(UOW, signature);
-                }
-                UOW.SaveChanges();
             }
             catch (Exception ex)
             {

@@ -11,7 +11,7 @@
 CREATE TABLE public.Ballot
 (
     Id uuid NOT NULL,
-    BallotChain text COLLATE pg_catalog.default NOT NULL,
+    BallotChain text NOT NULL,
     Electionid uuid NOT NULL,
 	Nonce int NOT NULL,
     CreateDate timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -22,16 +22,29 @@ TABLESPACE pg_default;
 ALTER TABLE public.Ballot
     OWNER to postgres;
 	
+CREATE TABLE public.BallotRequest
+(
+    Id uuid NOT NULL,
+    ElectionId uuid NOT NULL,
+    DeviceId text,
+    CreateDate timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT BallotRequest_pkey PRIMARY KEY (Id)
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.BallotRequest OWNER to postgres;
+
+
 CREATE TABLE public.Category
 (
     Id uuid NOT NULL,
     ElectionId uuid NOT NULL,
     CategoryTypeId integer NOT NULL,
-    Heading text COLLATE pg_catalog.default NOT NULL,
-    Title text COLLATE pg_catalog.default,
+    Heading text NOT NULL,
+    Title text,
     JudgePosition integer NOT NULL DEFAULT 0,
-    Information text COLLATE pg_catalog.default,
-    SubTitle text COLLATE pg_catalog.default,
+    Information text,
+    SubTitle text,
     CreateDate timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     LastUpdated timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     Sequence integer NOT NULL DEFAULT 0,
@@ -51,7 +64,7 @@ CREATE INDEX fki_FK_Election1
 CREATE TABLE public.CategoryType
 (
     Id INT GENERATED ALWAYS AS IDENTITY,
-    Description text COLLATE pg_catalog.default NOT NULL,
+    Description text NOT NULL,
     CreateDate timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     LastUpdated timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     Active boolean NOT NULL DEFAULT true,
@@ -68,10 +81,10 @@ CREATE TABLE public.Election
     Date date,
     StartDateLocal timestamp without time zone,
     EndDateLocal timestamp without time zone,
-    Description text COLLATE pg_catalog.default,
+    Description text,
     CreateDate timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
     LastUpdated timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
-    Version text COLLATE pg_catalog.default,
+    Version text,
     AllowUpdates boolean DEFAULT false,
     CONSTRAINT Election_pkey PRIMARY KEY (Id)
 )
@@ -83,7 +96,7 @@ ALTER TABLE public.Election
 CREATE TABLE public.Party
 (
     Id int GENERATED ALWAYS AS IDENTITY,
-    Description text COLLATE pg_catalog.default NOT NULL,
+    Description text NOT NULL,
     CreateDate timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     LastUpdated timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     Active boolean NOT NULL DEFAULT true,
@@ -99,11 +112,11 @@ CREATE TABLE public.Signature
     Id uuid NOT NULL,
     BallotId uuid NOT NULL,
     ElectionId uuid NOT NULL,
-    Name text COLLATE pg_catalog.default NOT NULL,
+    Name text NOT NULL,
     Confirmed boolean NOT NULL DEFAULT false,
     BirthYear integer NOT NULL,
     ImageArray bytea NOT NULL,
-    DeviceId text COLLATE pg_catalog.default,
+    DeviceId text,
     Longitude double precision,
     Latitude double precision,
     Platform integer NOT NULL,
@@ -124,7 +137,7 @@ CREATE TABLE public.SignatureNotice
     Id uuid NOT NULL,
     Nonce integer NOT NULL,
     BallotId uuid NOT NULL,
-    DeviceId text,
+    BallotRequestId uuid NOT NULL,
     CreateDate timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
 )
 TABLESPACE pg_default;
@@ -139,7 +152,7 @@ CREATE TABLE public.Ticket
     PartyId integer NULL,
     CreateDate timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     LastUpdated timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	Information text COLLATE pg_catalog.default,
+	Information text,
     CategoryId uuid NOT NULL,
     Sequence integer NOT NULL DEFAULT 0,
     ElectionId uuid NOT NULL,
@@ -217,6 +230,8 @@ ALTER TABLE public.Ticket
 
 GRANT ALL ON TABLE public.ballot TO "Robotuner";
 
+GRANT ALL ON TABLE public.ballotrequest TO "Robotuner";
+
 GRANT ALL ON TABLE public.category TO "Robotuner";
 
 GRANT ALL ON TABLE public.categorytype TO "Robotuner";
@@ -232,5 +247,3 @@ GRANT ALL ON TABLE public.signaturenotice TO "Robotuner";
 GRANT ALL ON TABLE public.ticket TO "Robotuner";
 
 GRANT ALL ON TABLE public.vote TO "Robotuner";
-
-GRANT ALL ON TABLE public.voteresult TO "Robotuner";
