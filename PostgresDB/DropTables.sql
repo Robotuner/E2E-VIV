@@ -8,4 +8,5 @@ drop table ticket cascade;
 drop table vote cascade;
 drop table voteresult  cascade;
 drop table election cascade;
+drop table ballotrequest cascade;
 

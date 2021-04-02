@@ -17,7 +17,7 @@ using Xamarin.Forms;
 
 namespace OneVote.Services
 {
-    public static class DataService 
+    public static class DataService
     {
         private static readonly string electionUrl = ElectionModels.Misc.Utils.ElectionUrl;
         private static readonly string electionResultUrl = ElectionModels.Misc.Utils.ElectionUrl;
@@ -26,6 +26,7 @@ namespace OneVote.Services
 
         public static string QRText { get; set; }
         public static Election Election { get; set; }
+        public static Guid BallotRequestId { get; set; }
         public static List<CategoryType> CategoryTypes { get; set; }
         public static List<CategoryTypeItem> CategoryTypeItems { get; set; }
         public static List<CategoryViewModel> CategoryList = new List<CategoryViewModel>();
@@ -38,6 +39,45 @@ namespace OneVote.Services
             }
 
             return false;
+        }
+
+        public static async Task<BallotRequest> InitBallotRequest(Guid electionId)
+        {
+            try
+            {
+                BallotRequest br = new BallotRequest()
+                {
+                    ElectionId = electionId,
+                    DeviceId = Models.Utils.GetId()
+                };  
+                
+                string url = string.Format(@"{0}/Ballot/Request", electionUrl);
+                var json = JsonConvert.SerializeObject(br);
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
+                using (client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.PostAsync(url, data);
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        br = JsonConvert.DeserializeObject<BallotRequest>(await response.Content.ReadAsStringAsync());
+                        if (br != null)
+                        {
+                            BallotRequestId = br.Id;
+                        }
+                        return br;
+                    }
+                    else
+                    {
+                        MessagingCenter.Send<BlankClass, string>(new BlankClass(), MessagingEvents.ErrorLoadingElection, response.StatusCode.ToString());
+                        Debug.WriteLine(response.StatusCode);
+                    }
+                }   
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            return null;
         }
 
         public static async Task InitElection(Guid electionId)
@@ -66,6 +106,7 @@ namespace OneVote.Services
                                 Election = JsonConvert.DeserializeObject<Election>(electionChain.GetLatestBlock().Data);
                                 InitCategoryViewModel();
                                 MessagingCenter.Send<BlankClass>(new BlankClass(), MessagingEvents.ElectionLoaded);
+                                await InitBallotRequest(electionId);
                             }
                         }
                     }
@@ -218,13 +259,13 @@ namespace OneVote.Services
             return null;
         }
 
-        public static async Task<SignatureNotice> NotifyPendingSubmittal(int nonce, Guid ballotId, string deviceId)
+        public static async Task<SignatureNotice> NotifyPendingSubmittal(int nonce, Guid ballotId, Guid ballotRequestId)
         {
             SignatureNotice notice = new SignatureNotice()
             {
                 BallotId = ballotId,
                 Nonce = nonce,
-                DeviceId = deviceId
+                BallotRequestId = ballotRequestId
             };
             try
             {

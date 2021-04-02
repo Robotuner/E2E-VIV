@@ -196,8 +196,6 @@ namespace OneVote.ViewModels
             this.EncryptionMessage = Resource.ItemsViewModelEncryptionMessage;
             QRModel model = Models.Utils.DisectQR(DataService.QRText, this.SSN);
 
-            //(Guid electionId, string registration, int birthYear, Guid ballotId) = Models.Utils.DisectQR(DataService.QRText, this.SSN);
-
             if (model.ElectionId == Guid.Empty)
             {
                 this.SSN = null;
@@ -327,7 +325,7 @@ namespace OneVote.ViewModels
 
             BlockChain electionChain = await this.ConvertToBlockChain(sig);
             int nonce = electionChain.GetLatestBlock().Nonce;
-            var ans = await DataService.NotifyPendingSubmittal(nonce, model.BallotId, Models.Utils.GetId());
+            var ans = await DataService.NotifyPendingSubmittal(nonce, model.BallotId, DataService.BallotRequestId);
             if (ans.Id != Guid.Empty)
             {
                 Signature result = await DataService.PutSignature(electionChain);

@@ -19,6 +19,25 @@ BEGIN
 END;
 $func$ Language plpgsql;
 
+CREATE OR REPLACE FUNCTION BallotRequest_Insert(id uuid, electionid uuid, deviceid text)
+RETURNS SETOF BallotRequest AS $func$
+DECLARE
+	sql text = 'INSERT INTO BallotRequest (id, ElectionId, DeviceId, CreateDate) VALUES 
+		($1, $2, $3, current_timestamp) RETURNING *';
+BEGIN	
+	RETURN QUERY EXECUTE sql USING id, electionid, deviceid;
+END;
+$func$ Language plpgsql;
+
+CREATE OR REPLACE FUNCTION BallotRequest_GetById(id uuid)
+RETURNS SETOF BallotRequest AS $func$
+DECLARE 
+	sql text = 'SELECT * FROM BallotRequest WHERE Id=$1';
+BEGIN
+	RETURN QUERY EXECUTE sql USING id;
+END;
+$func$ Language plpgsql;
+
 
 CREATE OR REPLACE FUNCTION Category_Insert(id uuid, electionId uuid, categoryTypeId int, heading text,
 										  title text, judgePosition int, information text, subtitle text,

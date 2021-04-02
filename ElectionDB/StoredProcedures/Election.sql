@@ -21,6 +21,33 @@ RETURN 0
 GO
 
 
+CREATE PROCEDURE [dbo].[BallotRequest_Insert]
+	@id UNIQUEIDENTIFIER, 
+	@electionid UNIQUEIDENTIFIER,
+	@deviceid nvarchar(50)
+AS
+	INSERT INTO [dbo].[BallotRequest] (id, ElectionId, DeviceId, CreateDate) VALUES 
+	(@id, @electionid, @deviceid, GetUTCDate())
+
+	SELECT * FROM [dbo].[BallotRequest] WHERE Id = @id
+RETURN 0
+GO
+
+CREATE PROCEDURE [dbo].[BallotRequest_GetById]
+	@id UNIQUEIDENTIFIER
+AS
+	SELECT TOP 1 * FROM [dbo].[ballotRequest] WHERE Id = @id ORDER BY CreateDate DESC
+
+RETURN 0
+GO
+
+
+
+
+
+
+
+
 CREATE PROCEDURE [dbo].[Category_Insert]
 	@id UNIQUEIDENTIFIER, 
 	@electionid UNIQUEIDENTIFIER,

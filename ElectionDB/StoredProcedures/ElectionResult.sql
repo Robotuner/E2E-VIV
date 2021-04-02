@@ -65,10 +65,11 @@ GO
 CREATE PROCEDURE [dbo].[SignatureNotice_Insert]
 	@id UNIQUEIDENTIFIER, 
 	@ballotid UNIQUEIDENTIFIER,
-	@nonce int
+	@nonce int,
+	@ballotrequestid UNIQUEIDENTIFIER
 AS
-	INSERT INTO [dbo].[SignatureNotice] (id, BallotId, Nonce, CreateDate) VALUES 
-	(@id, @ballotid, @nonce, GetUTCDate())
+	INSERT INTO [dbo].[SignatureNotice] (id, BallotId, Nonce, BallotRequestId, CreateDate) VALUES 
+	(@id, @ballotid, @nonce, @ballotrequestid, GetUTCDate())
 
 	SELECT * FROM [dbo].[SignatureNotice] WHERE Id = @id
 RETURN 0
@@ -81,8 +82,6 @@ AS
 
 RETURN 0
 GO
-
-
 
 CREATE PROCEDURE [dbo].[Vote_Insert]
 	@id UNIQUEIDENTIFIER,

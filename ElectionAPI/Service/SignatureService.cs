@@ -19,7 +19,7 @@ namespace ElectionAPI.Service
         Task<Signature> GetByBallotId(IUnitOfWork uow, Guid id);
         Task<Signature> UpdateBallotVotes(IUnitOfWork uow, Signature previousSignature, Signature signature);
         Task<SignatureNotice> NotifyPendingSubmittal(IDbConnection context, SignatureNotice notice);
-        Task<(int,string)> GetExpectedNonce(IUnitOfWork uow, Guid ballotId);
+        Task<(int,Guid)> GetExpectedNonce(IUnitOfWork uow, Guid ballotId);
     }
 
     public class SignatureService : ISignatureService
@@ -114,7 +114,7 @@ namespace ElectionAPI.Service
             return null;
         }
 
-        public async Task<(int, string)> GetExpectedNonce(IUnitOfWork uow, Guid ballotId)
+        public async Task<(int, Guid)> GetExpectedNonce(IUnitOfWork uow, Guid ballotId)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace ElectionAPI.Service
 
                 var ans = await uow.Context.QuerySingleAsync<SignatureNotice>(sql: "SignatureNotice_GetExpectedNonce", param: p,
                     commandType: System.Data.CommandType.StoredProcedure, transaction: uow.Trans);
-                return ans == null ? (0,null) : (ans.Nonce, ans.DeviceId);
+                return ans == null ? (0, Guid.Empty) : (ans.Nonce, ans.BallotRequestId);
             }
             catch (Exception ex)
             {
@@ -140,7 +140,7 @@ namespace ElectionAPI.Service
                 p.Add("@id", Guid.NewGuid(), DbType.Guid, ParameterDirection.Input);
                 p.Add("@ballotid", notice.BallotId, DbType.Guid, ParameterDirection.Input);
                 p.Add("@nonce", notice.Nonce, DbType.Int32, ParameterDirection.Input);
-                p.Add("@deviceid", notice.DeviceId, DbType.String, ParameterDirection.Input);
+                p.Add("@ballotrequestid", notice.BallotRequestId, DbType.Guid, ParameterDirection.Input);
 
                 result = await context.QuerySingleAsync<SignatureNotice>(sql: "SignatureNotice_Insert", param: p,
                     commandType: System.Data.CommandType.StoredProcedure);

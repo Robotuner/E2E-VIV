@@ -55,9 +55,9 @@ namespace ElectionAPI.Controllers
                     ElectionId = election.Id
                 };
                 await this.ballotRepository.Insert(Context, ballot);
-               
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 throw;
@@ -76,7 +76,7 @@ namespace ElectionAPI.Controllers
             }
             else
             {
-                foreach(Category cat in election.CategoryList)
+                foreach (Category cat in election.CategoryList)
                 {
                     if (cat.Delete)
                     {
@@ -84,7 +84,7 @@ namespace ElectionAPI.Controllers
                     }
                     else
                     {
-                        foreach(Ticket ticket in cat.Tickets)
+                        foreach (Ticket ticket in cat.Tickets)
                         {
                             if (ticket.Delete)
                             {
@@ -102,7 +102,7 @@ namespace ElectionAPI.Controllers
             if (foundElection == null)
             {
                 await this.electionRepository.Insert(UOW, election);
-                election.HasBeenCreated = true;                
+                election.HasBeenCreated = true;
             }
             await AddNewCategories(election);
             return election;
@@ -117,8 +117,8 @@ namespace ElectionAPI.Controllers
                 {
                     await this.categoryRepository.Insert(UOW, cat);
                     cat.HasBeenCreated = true;
-                }                 
-                foreach(Ticket ticket in cat.Tickets)
+                }
+                foreach (Ticket ticket in cat.Tickets)
                 {
                     Ticket foundTicket = await ticketRepository.GetByID(Context, ticket.Id);
                     if (foundTicket == null)
@@ -171,6 +171,9 @@ namespace ElectionAPI.Controllers
         [HttpGet("GetFullElection/{Id}")]
         public async Task<BlockChain> GetFullElection(Guid Id)
         {
+            if (Id == Guid.Empty)
+                return null;
+
             Ballot ballot = await this.ballotRepository.GetByElection(Context, Id);
             if (ballot != null)
             {
