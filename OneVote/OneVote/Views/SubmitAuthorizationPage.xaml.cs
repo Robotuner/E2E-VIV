@@ -33,7 +33,7 @@ namespace OneVote.Views
             await Navigation.PopModalAsync();
         }
 
-        private async void KeyboardButtonClicked(object sender, EventArgs e)
+        private void KeyboardButtonClicked(object sender, EventArgs e)
         {
             if (BindingContext is SubmitAuthorizationPageViewModel vm)
             {

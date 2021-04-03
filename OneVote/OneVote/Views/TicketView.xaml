@@ -5,9 +5,9 @@
              xmlns:converter="clr-namespace:OneVote.Converters"
              xmlns:local="clr-namespace:OneVote.Views"
              xmlns:template="clr-namespace:OneVote.DataTemplateSelectors"
-             xmlns:model="clr-namespace:OneVote.Models"  
              x:Class="OneVote.Views.TicketView">
     <ContentView.Resources>
+        <ResourceDictionary Source="../Controls/OneVoteResourceDictionary.xaml" />
         <converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter"/>
         <DataTemplate x:Key="SimpleTicketView">
             <local:SimpleTicketView/>

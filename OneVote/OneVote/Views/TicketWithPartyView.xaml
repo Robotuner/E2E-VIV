@@ -2,6 +2,9 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="OneVote.Views.TicketWithPartyView">
+    <ContentView.Resources>
+        <ResourceDictionary Source="../Controls/OneVoteResourceDictionary.xaml" />
+    </ContentView.Resources>
     <ContentView.Content>
         <StackLayout Orientation="Horizontal" Padding="20, 5" >
             <StackLayout.GestureRecognizers>
@@ -10,8 +13,8 @@
             </StackLayout.GestureRecognizers>            
             
             <Label Text="{Binding Icon}" TextColor="DarkGray" 
-                    HorizontalOptions="Center" VerticalOptions="Center" FontFamily="FontAwesomeSolid"
-                     FontSize="Large" WidthRequest="40" HeightRequest="24">
+                    HorizontalOptions="Center" FontFamily="FontAwesomeSolid"
+                    Style="{StaticResource largeStyle}" WidthRequest="40" HeightRequest="24">
                 <Label.Triggers>
                     <DataTrigger TargetType="Label" Binding="{Binding Selected}" Value="True">
                         <Setter Property="TextColor" Value="DarkGreen"/>
@@ -19,8 +22,8 @@
                 </Label.Triggers>
             </Label>
             <StackLayout Orientation="Vertical">
-                <Label Text="{Binding Description}" VerticalOptions="Center" Margin="10,0"/>
-                <Label Text="{Binding Party}" VerticalOptions="Center" Margin="10,0" FontSize="Micro"/>
+                <Label Text="{Binding Description}" Style="{StaticResource defaultStyle}" Margin="10,0"/>
+                <Label Text="{Binding Party}" Style="{StaticResource microStyle}" Margin="10,0"/>
             </StackLayout>
         </StackLayout>
     </ContentView.Content>

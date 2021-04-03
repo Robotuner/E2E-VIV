@@ -1,15 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="OneVote.Views.AboutPage"             
+             x:Class="OneVote.Views.AboutPage"    
+             xmlns:models="clr-namespace:OneVote.Models"
+             x:DataType="vm:AboutViewModel"
              xmlns:vm="clr-namespace:OneVote.ViewModels"
              Title="{Binding Title}">
     
     <ContentPage.BindingContext>
         <vm:AboutViewModel />
     </ContentPage.BindingContext>
-    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding AccessibilityCommand}"  Order="Primary" Priority="0" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="FontAwesomeSolid"
+                                 Glyph="{x:Static models:FontAwesome.Accessibility}" 
+                                 Color="{StaticResource WhiteBackground}" Size="Medium"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Resources>
+        <ResourceDictionary Source="../Controls/OneVoteResourceDictionary.xaml" />
         <ResourceDictionary>
             <Color x:Key="Accent">#96d1ff</Color>
         </ResourceDictionary>
@@ -25,17 +36,17 @@
                 <ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand">
                     <StackLayout Orientation="Horizontal">
                         <Image Source="e2e_viv_70x70_1.png" VerticalOptions="Center" HeightRequest="70" />
-                        <Label Text="One Vote" FontSize="Large" VerticalOptions="Center" HorizontalOptions="Center"/>
+                        <Label Text="One Vote" Style="{StaticResource largeStyle}" HorizontalOptions="Center"/>
                     </StackLayout>
                 </ContentView>
             </StackLayout>
         </StackLayout>
         <ScrollView Grid.Row="1">
             <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
-                <Label Text="{Binding Heading1}" FontSize="Title"/>
-                <Label Text="{Binding Description}" FontSize="Medium" Padding="0,0,0,0"/>
-                <Label Text="{Binding Warning}" Padding="0,0,0,0" TextColor="Red" FontSize="Medium"/>
-                <Label FontSize="16" Padding="0,24,0,0">
+                <Label Text="{Binding Heading1}" Style="{StaticResource titleStyle}"/>
+                <Label Text="{Binding Description}" Style="{StaticResource mediumStyle}" Padding="0,0,0,0"/>
+                <Label Text="{Binding Warning}" Padding="0,0,0,0" Style="{StaticResource mediumWarningStyle}" TextColor="Red" />
+                <Label Style="{StaticResource smallStyle}" Padding="0,24,0,0">
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>

@@ -5,19 +5,30 @@
              xmlns:local="clr-namespace:OneVote.Views"
              xmlns:converter="clr-namespace:OneVote.Converters"
              xmlns:template="clr-namespace:OneVote.DataTemplateSelectors"
+             xmlns:models="clr-namespace:OneVote.Models"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
-             ios:Page.UseSafeArea="true"
+             ios:Page.UseSafeArea="true" 
              xmlns:vm="clr-namespace:OneVote.ViewModels"
-             xmlns:model="clr-namespace:OneVote.Models"  
+             x:DataType="vm:ItemDetailViewModel"
              Title="{Binding Title}">
     <ContentPage.BindingContext>
         <vm:ItemDetailViewModel />
     </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding AccessibilityCommand}"  Order="Primary" Priority="0" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="FontAwesomeSolid"
+                                 Glyph="{x:Static models:FontAwesome.Accessibility}" 
+                                 Color="{StaticResource WhiteBackground}" Size="Medium"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <!--
       x:DataType enables compiled bindings for better performance and compile time validation of binding expressions.
       https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/data-binding/compiled-bindings
     -->
     <ContentPage.Resources>
+        <ResourceDictionary Source="../Controls/OneVoteResourceDictionary.xaml" />
         <converter:NullOrEmptyToBoolConverter x:Key="NullOrEmptyToBoolConverter"/>
         <DataTemplate x:Key="MeasureView">
             <local:MeasureView/>
@@ -33,6 +44,5 @@
     </ContentPage.Resources>
     <CollectionView x:Name="ItemsListView" ItemsSource="{Binding CategoryList}" SelectionMode="None" Margin="10"
                     ItemSizingStrategy="MeasureAllItems" ItemTemplate="{StaticResource CategoryTemplateSelector}" />
-    <!--<ListView x:Name="ItemsListView" ItemsSource="{Binding CategoryList}"  SelectionMode="None"
-              ItemTemplate="{StaticResource CategoryTemplateSelector}" HasUnevenRows="True"/>-->
+
 </ContentPage>

@@ -35,7 +35,24 @@ namespace OneVote.ViewModels
         public ItemDetailViewModel() : base()
         {
             mapper = Utils.CreateMapper();
-            this.CategoryList = new ObservableCollection<CategoryViewModel>(); 
+            this.CategoryList = new ObservableCollection<CategoryViewModel>();
+            PropertyChanged += ItemDetailViewModel_PropertyChanged;
+        }
+
+        private void ItemDetailViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IsAccessibility")
+            {
+                foreach (CategoryViewModel cvm in CategoryList)
+                {
+                    cvm.IsAccessibility = this.IsAccessibility;
+                    foreach(TicketViewModel ticket in cvm.Tickets)
+                    {
+                        ticket.IsAccessibility = this.IsAccessibility;
+                    }
+                    cvm.SetTicketViewHeight(cvm.CategoryType);
+                }
+            }  
         }
 
         public void LoadItemId(CategoryTypeEnum itemId)

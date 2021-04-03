@@ -8,22 +8,5 @@
         public CategoryTypeEnum CategoryType { get; set; }
         public string Candidate { get; set; }
         public string Party { get; set; }
-
-        public bool IsJudge
-        {
-            get
-            {
-                return JudgePosition > 0;
-            }
-        }
-
-        public bool HasParty
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(Party);
-            }
-        }
-
     }
 }

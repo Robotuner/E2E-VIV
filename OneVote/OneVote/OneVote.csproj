@@ -9,14 +9,21 @@
     <Compile Remove="Services\DataStore.cs" />
     <Compile Remove="Services\IDataStore.cs" />
     <Compile Remove="SSNView.xaml.cs" />
+    <Compile Remove="ViewModels\SignatureViewModel.cs" />
     <Compile Remove="Views\BlinkIDPage.xaml.cs" />
+    <Compile Remove="Views\LoginPage.xaml.cs" />
+    <Compile Remove="Views\NewItemPage.xaml.cs" />
     <Compile Remove="Views\QRCodeView.xaml.cs" />
+    <Compile Remove="Views\SignaturePage.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Remove="SSNView.xaml" />
     <EmbeddedResource Remove="Views\BlinkIDPage.xaml" />
+    <EmbeddedResource Remove="Views\LoginPage.xaml" />
+    <EmbeddedResource Remove="Views\NewItemPage.xaml" />
     <EmbeddedResource Remove="Views\QRCodeView.xaml" />
+    <EmbeddedResource Remove="Views\SignaturePage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,6 +71,9 @@
     <EmbeddedResource Update="Controls\GenericEntryField.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Controls\OneVoteResourceDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resource.en-US.resx">
       <Generator></Generator>
     </EmbeddedResource>
@@ -92,9 +102,6 @@
     <EmbeddedResource Update="Views\ReviewBallotChoices.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\SignaturePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\SimpleTicketView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -102,6 +109,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\SubmitAuthorizationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\TestPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\TicketWithPartyView.xaml">

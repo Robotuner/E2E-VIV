@@ -67,6 +67,7 @@ namespace OneVote.Views
                 {
                     ReviewBallotChoices rbc = new ReviewBallotChoices();
                     (rbc.BindingContext as ReviewBallotChoicesViewModel).SetApprovedState = vm.SetApprovedState;
+                    (rbc.BindingContext as ReviewBallotChoicesViewModel).IsAccessibility = vm.IsAccessibility;
                     await Navigation.PushModalAsync(rbc);
                 }
                 vm.isSubmitting = false;
@@ -142,8 +143,12 @@ namespace OneVote.Views
 
         private async void StraightTicket_Clicked(object sender, EventArgs e)
         {
-            StraightTicketPage stp = new StraightTicketPage();
-            await Navigation.PushModalAsync(stp);
+            if (this.BindingContext is ItemsViewModel vm)
+            {
+                StraightTicketPage stp = new StraightTicketPage();
+                (stp.BindingContext as StraightTicketPageViewModel).IsAccessibility = vm.IsAccessibility;
+                await Navigation.PushModalAsync(stp);
+            }
         }
     }
 }

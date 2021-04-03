@@ -13,8 +13,8 @@ namespace OneVote.ViewModels
     public class VerificationPageViewModel : BaseViewModel
     {
         public INavigation INav { get; set; }
-        private ObservableCollection<VRecord> vrList;
-        public ObservableCollection<VRecord> VRList
+        private ObservableCollection<VRViewModel> vrList;
+        public ObservableCollection<VRViewModel> VRList
         {
             get { return vrList; }
             set
@@ -44,7 +44,18 @@ namespace OneVote.ViewModels
         private bool hasBeenInit;
         public VerificationPageViewModel()
         {
-           
+            PropertyChanged += VerificationPageViewModel_PropertyChanged;
+        }
+
+        private void VerificationPageViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IsAccessibility")
+            {
+                foreach (VRViewModel vr in VRList)
+                {
+                    vr.IsAccessibility = this.IsAccessibility;
+                }
+            }
         }
 
         public async Task Init()
@@ -71,7 +82,11 @@ namespace OneVote.ViewModels
             {
                 //Guid ballotid = Guid.Parse("05799411-335b-45a3-b93f-e075aacdc67c");
                 List<VRecord> result = await DataService.GetVRecords(model.BallotId);
-                VRList = new ObservableCollection<VRecord>(result);
+                VRList = new ObservableCollection<VRViewModel>();
+                foreach(VRecord vr in result)
+                {
+                    VRList.Add(new VRViewModel(vr));
+                }
             }
         }
     }

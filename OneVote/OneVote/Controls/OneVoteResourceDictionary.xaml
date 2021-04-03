@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Style x:Key="baseStyle" TargetType="Label">
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Start"/>
+    </Style>
+    <Style x:Key="defaultStyle" TargetType="Label" BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="Default"/>
+        <Style.Triggers>
+            <DataTrigger TargetType="Label" Binding="{Binding IsAccessibility}" Value="True">
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="TextColor" Value="Navy"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="microStyle" TargetType="Label" BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="Micro"/>
+        <Style.Triggers>
+            <DataTrigger TargetType="Label" Binding="{Binding IsAccessibility}" Value="True">
+                <Setter Property="FontSize" Value="Default"/>
+                <Setter Property="TextColor" Value="Navy"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="smallStyle" TargetType="Label" BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="Small"/>
+        <Style.Triggers>
+            <DataTrigger TargetType="Label" Binding="{Binding IsAccessibility}" Value="True">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="TextColor" Value="Navy"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="smallWarningStyle" TargetType="Label" BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="Small"/>
+        <Style.Triggers>
+            <DataTrigger TargetType="Label" Binding="{Binding IsAccessibility}" Value="True">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="TextColor" Value="DarkRed"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="mediumStyle" TargetType="Label" BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="Medium"/>
+        <Style.Triggers>
+            <DataTrigger TargetType="Label" Binding="{Binding IsAccessibility}" Value="True">
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="TextColor" Value="Navy"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="mediumWarningStyle" TargetType="Label" BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="Medium"/>
+        <Style.Triggers>
+            <DataTrigger TargetType="Label" Binding="{Binding IsAccessibility}" Value="True">
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="TextColor" Value="DarkRed"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="largeStyle" TargetType="Label" BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="Large"/>
+        <Style.Triggers>
+            <DataTrigger TargetType="Label" Binding="{Binding IsAccessibility}" Value="True">
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="bodyStyle" TargetType="Label" BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="Body"/>
+        <Style.Triggers>
+            <DataTrigger TargetType="Label" Binding="{Binding IsAccessibility}" Value="True">
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="TextColor" Value="Navy"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="headerStyle" TargetType="Label" BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="Header"/>
+    </Style>
+    <Style x:Key="titleStyle" TargetType="Label" BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="Title"/>
+        <Style.Triggers>
+            <DataTrigger TargetType="Label" Binding="{Binding IsAccessibility}" Value="True">
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="subTitleStyle" TargetType="Label" BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="Subtitle"/>
+        <Style.Triggers>
+            <DataTrigger TargetType="Label" Binding="{Binding IsAccessibility}" Value="True">
+                <Setter Property="FontSize" Value="Default"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="captionStyle" TargetType="Label" BasedOn="{StaticResource baseStyle}">
+        <Setter Property="FontSize" Value="Caption"/>
+        <Style.Triggers>
+            <DataTrigger TargetType="Label" Binding="{Binding IsAccessibility}" Value="True">
+                <Setter Property="FontSize" Value="Default"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>
+

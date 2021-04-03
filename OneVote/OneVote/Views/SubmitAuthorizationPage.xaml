@@ -5,14 +5,28 @@
              xmlns:vm="clr-namespace:OneVote.ViewModels"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              ios:Page.UseSafeArea="true"
+             xmlns:models="clr-namespace:OneVote.Models"
+             x:DataType="vm:SubmitAuthorizationPageViewModel"
              x:Class="OneVote.Views.SubmitAuthorizationPage">
     <ContentPage.BindingContext>
         <vm:SubmitAuthorizationPageViewModel/>
     </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Controls/OneVoteResourceDictionary.xaml" />
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding AccessibilityCommand}"  Order="Primary" Priority="0" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="FontAwesomeSolid"
+                                 Glyph="{x:Static models:FontAwesome.Accessibility}" 
+                                 Color="{StaticResource WhiteBackground}" Size="Medium"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout Margin="10" VerticalOptions="Start">
             <Label Text="{Binding AuthorizationMsg}"  LineBreakMode="WordWrap" Margin="0,0,0,10"
-                   TextColor="Blue"/>
+                    Style="{StaticResource defaultStyle}" TextColor="Blue"/>
             <ctrls:GenericEntryField FieldLabel="Enter SSN" PlaceHolder="Authorization Code" 
                     KeyboardType="{Binding Keyboard}" FieldValue="{Binding SSN1}" AsPassword="True"/>        
 
@@ -24,7 +38,7 @@
                         Clicked="OKButtonClicked" HorizontalOptions="FillAndExpand" IsEnabled="{Binding OKButtonEnabled}"/>
                 <Button x:Name="Review" Text="Cancel" FontSize="Large" BackgroundColor="CadetBlue" 
                         Clicked="CancelButtonClicked" HorizontalOptions="FillAndExpand"/>
-                <Button Text="{Binding Keyboard}" FontSize="Large" BackgroundColor="CadetBlue"
+                <Button x:Name="kbname" Text="{Binding Keyboard}" FontSize="Large" BackgroundColor="CadetBlue"
                         Clicked="KeyboardButtonClicked" HorizontalOptions="FillAndExpand"/>
             </StackLayout>
 

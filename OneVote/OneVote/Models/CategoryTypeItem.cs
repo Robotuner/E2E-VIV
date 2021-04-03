@@ -16,7 +16,10 @@ namespace OneVote.Models
             }
         }
 
-        public int Selected { get; set; }
-        public int Total { get; set; }
+        //public int Selected { get; set; }
+        //public int Total { get; set; }
+
+        //// used in UI only
+        //public bool IsAccessibility { get; set; }
     }
 }

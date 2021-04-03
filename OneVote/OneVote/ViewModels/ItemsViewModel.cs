@@ -32,21 +32,33 @@ namespace OneVote.ViewModels
         public Action<Signature> SubmittalConfirmation { get; set; }
         public Action<string> ErrorMessage { get; set; }
         public Action<string> ErrorMessage2 { get; set; }
-        public ObservableCollection<CategoryTypeItem> Items { get; set; }
+        public ObservableCollection<CategoryTypeItemViewModel> Items { get; set; }
         public Command LoadItemsCommand { get; }
-        public Command<CategoryTypeItem> ItemTapped { get; }
+        public Command<CategoryTypeItemViewModel> ItemTapped { get; }
         public ICommand SubmitBallotCommand { get; }
 
         public ItemsViewModel()
         {
             Title = "Browse";
-            Items = new ObservableCollection<CategoryTypeItem>();
+            Items = new ObservableCollection<CategoryTypeItemViewModel>();
             SubmitBallotCommand = new Command(async () => await OnSubmitBallot());
-            ItemTapped = new Command<CategoryTypeItem>(OnItemSelected);  
+            ItemTapped = new Command<CategoryTypeItemViewModel>(OnItemSelected);  
             haarcascade_frontalface_alt = PutFileName("haarcascade_frontalface_alt.xml", "ElectionModels", "Haarcascade");
             CaffeModel = PutFileName("res10_300x300_ssd_iter_140000.caffemodel", "ElectionModels", "Dnn");
             PrototextPath = PutFileName("deploy.prototxt", "ElectionModels", "Dnn");
             CheckCanSubmitBallot();
+            PropertyChanged += ItemsViewModel_PropertyChanged;
+        }
+
+        private void ItemsViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IsAccessibility")
+            {
+                foreach(CategoryTypeItemViewModel cti in Items)
+                {
+                    cti.IsAccessibility = this.IsAccessibility;
+                }
+            }
         }
 
         public async void OnAppearing()
@@ -62,9 +74,11 @@ namespace OneVote.ViewModels
                     foreach(CategoryTypeItem ct in DataService.CategoryTypeItems)
                     {
                         (int selected, int total) = DataService.GetCategoryStatus(ct);
-                        ct.Selected = selected;
-                        ct.Total = total;
-                        Items.Add(ct);
+                        CategoryTypeItemViewModel ctvm = new CategoryTypeItemViewModel(ct);
+                        ctvm.IsAccessibility = this.IsAccessibility;
+                        ctvm.Selected = selected;
+                        ctvm.Total = total;
+                        Items.Add(ctvm);
                     }                    
                 }
             }
@@ -74,8 +88,8 @@ namespace OneVote.ViewModels
             }
         }
 
-        private CategoryTypeItem _selectedItem;
-        public CategoryTypeItem SelectedItem
+        private CategoryTypeItemViewModel _selectedItem;
+        public CategoryTypeItemViewModel SelectedItem
         {
             get { return _selectedItem; }
             set
@@ -86,7 +100,7 @@ namespace OneVote.ViewModels
             }
         }
 
-        async void OnItemSelected(CategoryTypeItem item)
+        async void OnItemSelected(CategoryTypeItemViewModel item)
         {
             if (item == null)
                 return;

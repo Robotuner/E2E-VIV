@@ -1,7 +1,6 @@
 ﻿using ElectionModels;
 using OneVote.ViewModels;
 using System;
-using System.ComponentModel;
 using Xamarin.Forms;
 
 namespace OneVote.Views
@@ -19,6 +18,7 @@ namespace OneVote.Views
             //base.OnAppearing();
             if (this.BindingContext is ItemDetailViewModel vm)
             {
+   
             }
         }
 
@@ -32,6 +32,5 @@ namespace OneVote.Views
                 }
             }
         }
-
     }
 }

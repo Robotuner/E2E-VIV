@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:OneVote.ViewModels" Appearing="ContentPage_Appearing"
              x:Class="OneVote.Views.OpenCVPage">
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Controls/OneVoteResourceDictionary.xaml" />
+    </ContentPage.Resources>
     <ContentPage.BindingContext>
         <vm:OpenCVPageViewModel/>
     </ContentPage.BindingContext>
@@ -13,7 +16,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Image Source="{Binding ImgSource}"/>
-            <Label Grid.Row="1" Text="{Binding Message}" FontSize="20" HorizontalOptions="Center" TextColor="Red" />
+            <Label Grid.Row="1" Text="{Binding Message}" Style="{StaticResource largeStyle}" HorizontalOptions="Center" TextColor="Red" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>
