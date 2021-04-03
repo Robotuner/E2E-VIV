@@ -118,7 +118,8 @@
     </p>
     <ul>
         <li>
-            The decrypted ballot authorization to be included with the signature.   Only the registered voter will be able to decrypt the ballot.
+            The decrypted ballot authorization to be included with the signature. Only the registered voter will be able to 
+            decrypt the encrypted ballot authorization code.
         </li>
         <li>
             A head shot
@@ -178,6 +179,11 @@
         The votes recorded for each ballot will be saved to a vote database.  The individual votes will also be saved to a result
         database that simply increments a counter for each candidate.  This maintains a running total for each candidate vote count
         and is much more efficient that quering the vote database periodically.
+    </p>
+    <p>
+        Once the completed ballot is saved.  A confirmation is returned to the register voter. If the voter wishes to see how 
+        he voted after the confirmation, all that is required is to scan the QR code again and enter the authorization code.  
+        If the voter misplaces the QR Code, the State might be able to retrieve it (depending on how they implemented it). 
     </p>
     <p>
         Once polls close, the audit process will begin.

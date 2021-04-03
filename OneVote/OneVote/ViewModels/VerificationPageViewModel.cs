@@ -69,8 +69,8 @@ namespace OneVote.ViewModels
             QRModel model = Models.Utils.DisectQR(DataService.QRText, this.SSN);
             if (model.BallotId != Guid.Empty)
             {
-                Guid ballotid = Guid.Parse("05799411-335b-45a3-b93f-e075aacdc67c");
-                List<VRecord> result = await DataService.GetVRecords(ballotid);
+                //Guid ballotid = Guid.Parse("05799411-335b-45a3-b93f-e075aacdc67c");
+                List<VRecord> result = await DataService.GetVRecords(model.BallotId);
                 VRList = new ObservableCollection<VRecord>(result);
             }
         }
