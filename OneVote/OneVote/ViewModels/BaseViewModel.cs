@@ -2,15 +2,36 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace OneVote.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
+        public ICommand AccessibilityCommand { get; set; }
+        private bool isAccessibility;
+        public bool IsAccessibility
+        {
+            get { return isAccessibility; }
+            set
+            {
+                if (isAccessibility != value)
+                {
+                    isAccessibility = value;
+                    OnPropertyChanged("IsAccessibility");
+                }
+            }
+        }
+
         public BaseViewModel()
         {
             IsBusy = false;
             IsNotBusy = true;
+            isAccessibility = false;
+            AccessibilityCommand = new Command(() => {
+                IsAccessibility = !IsAccessibility;
+            });
         }
 
         private bool isBusy;

@@ -5,12 +5,20 @@
              xmlns:vc="clr-namespace:OneVote.Views"
              xmlns:vm="clr-namespace:OneVote.ViewModels"
              xmlns:models="clr-namespace:OneVote.Models"
-             Title="{Binding Title}"  x:DataType="vm:ItemsViewModel"
+             Title="{Binding Title}"  
+             x:DataType="vm:ItemsViewModel"
              x:Name="BrowseItemsPage">
     <ContentPage.BindingContext>
         <vm:ItemsViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding AccessibilityCommand}"  Order="Primary" Priority="0" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="FontAwesomeSolid"
+                                 Glyph="{x:Static models:FontAwesome.Accessibility}" 
+                                 Color="{StaticResource WhiteBackground}" Size="Medium"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
         <ToolbarItem Text="Party" Clicked="StraightTicket_Clicked"  Order="Primary" Priority="0" >
             <!--<ToolbarItem.IconImageSource>
                 <FontImageSource FontFamily="FontAwesomeSolid"
@@ -19,6 +27,9 @@
             </ToolbarItem.IconImageSource>-->
         </ToolbarItem>
     </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Controls/OneVoteResourceDictionary.xaml" />
+    </ContentPage.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -36,10 +47,10 @@
         </CollectionView>
 
         <StackLayout Grid.Row="1" Orientation="Vertical" Margin="10,0">
-            <Label Text="{Binding EncryptionMessage}"  FontSize="Small"  HorizontalOptions="CenterAndExpand"
-                   VerticalOptions="Center" TextColor="Red"/>
-            <Label Text="{Binding ElapsedTime}" Padding="10,0" FontSize="Medium" HorizontalOptions="Center"
-                   VerticalOptions="Center" TextColor="Red"/>            
+            <Label Text="{Binding EncryptionMessage}" Style="{StaticResource smallWarningStyle}" HorizontalOptions="CenterAndExpand"
+                   TextColor="Red"/>
+            <Label Text="{Binding ElapsedTime}" Padding="10,0" Style="{StaticResource mediumWarningStyle}" HorizontalOptions="Center"
+                   TextColor="Red"/>            
         </StackLayout>
 
         <StackLayout Grid.Row="2" Orientation="Horizontal">

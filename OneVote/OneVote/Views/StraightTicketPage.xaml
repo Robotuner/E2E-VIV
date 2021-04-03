@@ -2,12 +2,27 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:bc="clr-namespace:OneVote.ViewModels"
+             xmlns:models="clr-namespace:OneVote.Models"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              ios:Page.UseSafeArea="true"
+             xmlns:vm="clr-namespace:OneVote.ViewModels"
+             x:DataType="vm:StraightTicketPageViewModel"
              x:Class="OneVote.Views.StraightTicketPage">
     <ContentPage.BindingContext>
         <bc:StraightTicketPageViewModel/>
     </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Controls/OneVoteResourceDictionary.xaml" />
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding AccessibilityCommand}"  Order="Primary" Priority="0" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="FontAwesomeSolid"
+                                 Glyph="{x:Static models:FontAwesome.Accessibility}" 
+                                 Color="{StaticResource WhiteBackground}" Size="Medium"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid Margin="10">
             <Grid.RowDefinitions>
@@ -16,29 +31,29 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Text="On contests were there are multiple candidates of the same party, no candidates are selected." Margin="10"
-                   FontSize="Medium"/>
+                   Style="{StaticResource mediumStyle}"/>
             <CollectionView Grid.Row="1" ItemsSource="{Binding Parties}" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Orientation="Horizontal" Padding="20, 5" >
+                        <StackLayout Orientation="Horizontal" Padding="20, 5" x:DataType="vm:PartyViewModel" >
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer  NumberOfTapsRequired="1" Command="{Binding PartyTapped}" CommandParameter="{Binding .}">
                                 </TapGestureRecognizer>
                             </StackLayout.GestureRecognizers>
                             <Label Text="{Binding Icon}" TextColor="DarkGray" 
-                                HorizontalOptions="Center" VerticalOptions="Center" FontFamily="FontAwesomeSolid"
-                                    FontSize="Large" WidthRequest="40" HeightRequest="24">
+                                HorizontalOptions="Center"  FontFamily="FontAwesomeSolid"
+                                Style="{StaticResource largeStyle}" WidthRequest="40" HeightRequest="24">
                                 <Label.Triggers>
                                     <DataTrigger TargetType="Label" Binding="{Binding Selected}" Value="True">
-                                        <Setter Property="TextColor" Value="DarkGreen"/>
+                                        <Setter Property="TextColor" Value="DarkBlue"/>
                                     </DataTrigger>
                                 </Label.Triggers>
                             </Label>
 
-                            <Label Text="{Binding Description}" VerticalOptions="Center" Margin="10,0" FontSize="Large">
+                            <Label Text="{Binding Description}" VerticalOptions="Center" Margin="10,0" Style="{StaticResource largeStyle}">
                                 <Label.Triggers>
                                     <DataTrigger TargetType="Label" Binding="{Binding Selected}" Value="True">
-                                        <Setter Property="TextColor" Value="Green"/>
+                                        <Setter Property="TextColor" Value="DarkBlue"/>
                                     </DataTrigger>
                                 </Label.Triggers>
                             </Label>

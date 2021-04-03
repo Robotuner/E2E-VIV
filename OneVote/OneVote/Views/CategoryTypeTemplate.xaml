@@ -2,10 +2,13 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
           xmlns:local="clr-namespace:OneVote.ViewModels"  
-          xmlns:model="clr-namespace:OneVote.Models" 
+          xmlns:vm="clr-namespace:OneVote.Models" 
           x:Class="OneVote.Views.CategoryTypeTemplate">
+    <ContentView.Resources>
+        <ResourceDictionary Source="../Controls/OneVoteResourceDictionary.xaml" />
+    </ContentView.Resources>
     <ContentView.Content>
-        <Grid Padding="10" x:DataType="model:CategoryTypeItem">
+        <Grid Padding="10" x:DataType="local:CategoryTypeItemViewModel">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -21,13 +24,13 @@
                 </TapGestureRecognizer>
             </Grid.GestureRecognizers>
             <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0">
-                <Label Text="{Binding Text}" LineBreakMode="NoWrap" FontSize="16" />
-                <Label Text="{Binding Description}"  LineBreakMode="NoWrap" FontSize="13" />
+                <Label Text="{Binding Text}" LineBreakMode="NoWrap" Style="{StaticResource mediumStyle}" />
+                <Label Text="{Binding Description}"  LineBreakMode="NoWrap" Style="{StaticResource defaultStyle}" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
-                <Label Text="{Binding Selected}" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center" TextColor="DarkGray"/>
-                <Label Text="/" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center"/>
-                <Label Text="{Binding Total}" FontSize="18" VerticalOptions="Center" HorizontalOptions="Center" TextColor="DarkGray"/>
+                <Label Text="{Binding Selected}" Style="{StaticResource largeStyle}" HorizontalOptions="Center" TextColor="DarkGray"/>
+                <Label Text="/" Style="{StaticResource largeStyle}" HorizontalOptions="Center"/>
+                <Label Text="{Binding Total}" Style="{StaticResource largeStyle}" HorizontalOptions="Center" TextColor="DarkGray"/>
             </StackLayout>
             <BoxView Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="1" BackgroundColor="Black"/>
         </Grid>

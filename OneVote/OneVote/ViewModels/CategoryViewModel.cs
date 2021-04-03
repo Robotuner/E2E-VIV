@@ -8,8 +8,8 @@ namespace OneVote.ViewModels
 {
     public class CategoryViewModel : BaseViewModel
     {
-        private double ticketTemplateHeightWithoutParty = 42.0;
-        private double ticketTemplateHeight = 48.0;
+        private double ticketTemplateHeightWithoutParty;
+        private double ticketTemplateHeight;
         public Category Category { get; set; }
 
         public Guid Id { get; set; }
@@ -128,8 +128,16 @@ namespace OneVote.ViewModels
             }
         }
 
+        public CategoryViewModel()
+        {
+
+        }
+
         public void SetTicketViewHeight(CategoryTypeEnum ctype)
         {
+            ticketTemplateHeightWithoutParty = this.IsAccessibility ? 40.0 : 38.0;
+            ticketTemplateHeight = this.IsAccessibility ? 96.0 : 70.0;
+
             this.CategoryType = ctype;
             double height =  (ctype == CategoryTypeEnum.legislative || ctype == CategoryTypeEnum.state || ctype == CategoryTypeEnum.federal) ?
                 ticketTemplateHeight:ticketTemplateHeightWithoutParty;

@@ -88,7 +88,7 @@
         public SubmitAuthorizationPageViewModel()
         {
             AuthorizationMsg = Resource.SubmitAuthMessage;
-            Keyboard = "Numeric";
+            Keyboard = "Default";
         }
 
         public void UpdateVisibility()

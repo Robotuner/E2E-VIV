@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:OneVote.ViewModels"
+             xmlns:models="clr-namespace:OneVote.Models"
+             x:DataType="vm:BaseViewModel"
+             x:Class="OneVote.Views.TestPage">
+    <ContentPage.BindingContext>
+        <vm:BaseViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding AccessibilityCommand}"  Order="Primary" Priority="0" >
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="FontAwesomeSolid"
+                                 Glyph="{x:Static models:FontAwesome.Accessibility}" 
+                                 Color="{StaticResource WhiteBackground}" Size="Medium"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary Source="../Controls/OneVoteResourceDictionary.xaml" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Margin="5,0">
+            <Label Text="default text size" Style="{StaticResource defaultStyle}" />
+            <Label Text="micro text size" Style="{StaticResource microStyle}"/>
+            <Label Text="small text size" Style="{StaticResource smallStyle}" />
+            <Label Text="medium text size" Style="{StaticResource mediumStyle}" />
+            <Label Text="large text size" Style="{StaticResource largeStyle}" />
+            <Label Text="body text size" Style="{StaticResource bodyStyle}" />
+            <Label Text="header text size" Style="{StaticResource headerStyle}" />
+            <Label Text="title text size" Style="{StaticResource titleStyle}" />
+            <Label Text="subTitle text size" Style="{StaticResource subTitleStyle}" />
+            <Label Text="caption text size" Style="{StaticResource captionStyle}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
