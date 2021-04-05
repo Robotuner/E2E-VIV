@@ -177,6 +177,9 @@
   <data name="Election-Select-Election" xml:space="preserve">
     <value>Select Election:</value>
   </data>
+  <data name="Election-SortAlphaDown" xml:space="preserve">
+    <value>Sorts Legislative by District or Judicial By County</value>
+  </data>
   <data name="Election-UpButtonToolTip" xml:space="preserve">
     <value>Moves selected category up one position.</value>
   </data>

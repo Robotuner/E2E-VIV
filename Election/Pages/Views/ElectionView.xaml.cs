@@ -1,5 +1,6 @@
 ﻿using Election.Services;
 using Election.ViewModels.Views;
+using ElectionModels;
 using Newtonsoft.Json;
 using System;
 using System.Windows;
@@ -23,7 +24,8 @@ namespace Election.Pages
             if (this.DataContext is ElectionViewModel vm)
             {
                 DataService.Election = null;
-                await vm.LoadData();
+                vm.SetSortButtonVisibility = this.SetSortButtonVisibility;
+                await vm.LoadData();               
             }
         }
 
@@ -77,13 +79,33 @@ namespace Election.Pages
             }
         }
 
+        private void SetSortButtonVisibility(bool value)
+        {
+            this.legislativeJudiciarySort.Visibility = value ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        private void SortButton_Click(Object sender, RoutedEventArgs e)
+        {
+            if (DataContext is ElectionViewModel vm)
+            {
+                switch ((CategoryTypeEnum)vm.SelectedCategoryType.Id)
+                {
+                    case CategoryTypeEnum.legislative:
+                        // sorts legislative by district and updates the sequence to reflect the sort.
+                        vm.SortLegislative();
+                        break;
+                    case CategoryTypeEnum.judicial:
+                        vm.SortJudicial();
+                        break;                   
+                }
+            }
+
+        }
         private async void Elections_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (DataContext is ElectionViewModel vm)
             {                
                 var Election = await DataService.InitElection(vm.SelectedElection.Id);
-                //var json = JsonConvert.SerializeObject(Election);
- 
                 vm.InitializeElection(Election);
             }
         }

@@ -75,6 +75,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Button Content="{x:Static local:FontAwesome.PlusCircle}" Grid.Column="0" Style="{StaticResource FAButtonStyle}" 
                         Click="AddButton_Click" Margin="5,0" HorizontalAlignment="Right" FontFamily="{StaticResource FontAwesomeSolid}"
@@ -82,10 +83,14 @@
                 <Button Content="{x:Static local:FontAwesome.MinusCircle}" Grid.Column="1" Style="{StaticResource FAButtonStyle}" 
                         Click="RemoveButton_Click" Margin="5,0" HorizontalAlignment="Right" FontFamily="{StaticResource FontAwesomeSolid}"
                         ToolTip="{x:Static local:Resource.Election_RemoveButtonToolTip}" IsEnabled="{Binding HasSelectedCategory}"/>
-                <Button Content="{x:Static local:FontAwesome.UpArrow}" Grid.Column="3" Style="{StaticResource FAButtonStyle}" 
+                <Button Content="{x:Static local:FontAwesome.SortAlphaDown}" Grid.Column="3" Style="{StaticResource FAButtonStyle}" 
+                        Click="SortButton_Click" Margin="5,0" HorizontalAlignment="Right" 
+                        x:Name="legislativeJudiciarySort"
+                        ToolTip="{x:Static local:Resource.Election_SortAlphaDown}" />
+                <Button Content="{x:Static local:FontAwesome.UpArrow}" Grid.Column="4" Style="{StaticResource FAButtonStyle}" 
                         Click="UpButton_Click" Margin="5,0" HorizontalAlignment="Right" IsEnabled="{Binding HasSelectedCategory}"
                         ToolTip="{x:Static local:Resource.Election_UpButtonToolTip}" />
-                <Button Content="{x:Static local:FontAwesome.DnArrow}" Grid.Column="4" Style="{StaticResource FAButtonStyle}" 
+                <Button Content="{x:Static local:FontAwesome.DnArrow}" Grid.Column="5" Style="{StaticResource FAButtonStyle}" 
                         Click="DnButton_Click" Margin="5,0" HorizontalAlignment="Right" IsEnabled="{Binding HasSelectedCategory}"
                         ToolTip="{x:Static local:Resource.Election_DnButtonToolTip}"/>
             </Grid>

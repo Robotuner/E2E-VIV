@@ -241,6 +241,15 @@ namespace Election {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sorts Legislative by District or Judicial By County.
+        /// </summary>
+        public static string Election_SortAlphaDown {
+            get {
+                return ResourceManager.GetString("Election-SortAlphaDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Moves selected category up one position..
         /// </summary>
         public static string Election_UpButtonToolTip {
