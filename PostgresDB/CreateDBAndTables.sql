@@ -40,8 +40,10 @@ CREATE TABLE public.Category
     Id uuid NOT NULL,
     ElectionId uuid NOT NULL,
     CategoryTypeId integer NOT NULL,
+	SubcategoryTypeId integer NOT NULL DEFAULT 0,
     Heading text NOT NULL,
     Title text,
+	District integer NOT NULL DEFAULT 0,	
     JudgePosition integer NOT NULL DEFAULT 0,
     Information text,
     SubTitle text,
@@ -247,3 +249,5 @@ GRANT ALL ON TABLE public.signaturenotice TO "Robotuner";
 GRANT ALL ON TABLE public.ticket TO "Robotuner";
 
 GRANT ALL ON TABLE public.vote TO "Robotuner";
+
+GRANT ALL ON TABLE public.voteresult TO "Robotuner";

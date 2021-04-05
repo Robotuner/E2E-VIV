@@ -39,27 +39,28 @@ END;
 $func$ Language plpgsql;
 
 
-CREATE OR REPLACE FUNCTION Category_Insert(id uuid, electionId uuid, categoryTypeId int, heading text,
-										  title text, judgePosition int, information text, subtitle text,
+CREATE OR REPLACE FUNCTION Category_Insert(id uuid, electionid uuid, categorytypeId int, subcategorytypeid int, heading text,
+										  title text, district int, judgeposition int, information text, subtitle text,
 										  sequence int, selection uuid)
 RETURNS SETOF Category AS $func$
 DECLARE
-	sql text ='INSERT INTO Category (id, ElectionId, CategoryTypeId, Heading, CreateDate, LastUpdated, Title, JudgePosition, Information, SubTitle, Sequence, Selection) VALUES 
-	($1, $2, $3, $4, current_timestamp, current_timestamp, $5, $6, $7, $8, $9, $10) RETURNING *';
+	sql text ='INSERT INTO Category (id, ElectionId, CategoryTypeId, SubcategoryTypeid, Heading, CreateDate, LastUpdated, Title, 
+	    District, JudgePosition, Information, SubTitle, Sequence, Selection) VALUES 
+	($1, $2, $3, $4, $5, current_timestamp, current_timestamp, $6, $7, $8, $9, $10, $11, $12) RETURNING *';
 BEGIN	
-	RETURN QUERY EXECUTE sql USING id, electionId, categoryTypeId, heading, title, judgePosition, information, subtitle, sequence, selection;
+	RETURN QUERY EXECUTE sql USING id, electionId, categoryTypeId, subcategorytypeid, heading, title, district, judgePosition, information, subtitle, sequence, selection;
 END;
 $func$ Language plpgsql;
 
-CREATE OR REPLACE FUNCTION Category_Update(id uuid, electionId uuid, categoryTypeId int, heading text, title text, judgePosition int,
+CREATE OR REPLACE FUNCTION Category_Update(id uuid, electionid uuid, categoryTypeid int,subcategorytypeid int,  heading text, title text, district int, judgeposition int,
 										  information text, subtitle text, sequence int, selection uuid)
 RETURNS SETOF Category AS $func$
 DECLARE
 	sql text = 'UPDATE Category Set ElectionId=$2, CategoryTypeId=$3, Heading=$4, LastUpdated=current_timestamp, 
-	        Title=$5, JudgePosition=$6, Information=$7, SubTitle=$8, Sequence=$9, Selection=$10
+	        Title=$5, JudgePosition=$6, Information=$7, SubTitle=$8, Sequence=$9, Selection=$10, subcategorytypeId = $11, district=12
 	WHERE Id=$1 RETURNING *';
 BEGIN	
-	RETURN QUERY EXECUTE sql USING id, electionId, categoryTypeId, heading, title, judgePosition, information, subtitle, sequence, selection;
+	RETURN QUERY EXECUTE sql USING id, electionId, categoryTypeId, heading, title, judgePosition, information, subtitle, sequence, selection, subcategorytypeid, district;
 END;
 $func$ Language plpgsql;
 
