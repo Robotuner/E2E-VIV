@@ -28,8 +28,10 @@ namespace ElectionModels
         public Guid Id { get; set; }
         public Guid ElectionId { get; set; }
         public CategoryTypeEnum CategoryTypeId { get; set; }
+        public CategorySubTypeEnum SubcategoryTypeId { get; set; }
         public string Heading { get; set; }
         public string Title { get; set; }
+        public int District { get; set; }
         public int JudgePosition { get; set; }
         public string Information { get; set; }
         public string SubTitle { get; set; }

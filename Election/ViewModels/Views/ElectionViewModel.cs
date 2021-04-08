@@ -32,6 +32,7 @@ namespace Election.ViewModels.Views
             }
         }
         public string Version { get; set; }
+        public Action<bool> SetSortButtonVisibility { get; set; }
 
         private DateTime startDateLocal;
         public DateTime StartDateLocal
@@ -157,6 +158,8 @@ namespace Election.ViewModels.Views
                     selectedCategory = value;
                     OnPropertyChanged("SelectedCategory");
                     HasSelectedCategory = value != null;
+                    IsLegislatureOrJudiciary = HasSelectedCategory && (value.CategoryTypeId == CategoryTypeEnum.legislative ||
+                        (value.CategoryTypeId == CategoryTypeEnum.judicial)); 
                 }
             }
         }
@@ -200,6 +203,21 @@ namespace Election.ViewModels.Views
                     hasSelectedCategory = value;
                     OnPropertyChanged("HasSelectedCategory");
                 }
+            }
+        }
+
+        private bool isLegislatureOrJudiciary;
+        public bool IsLegislatureOrJudiciary
+        {
+            get { return isLegislatureOrJudiciary; }
+            set
+            {
+                if (isLegislatureOrJudiciary != value)
+                {
+                    isLegislatureOrJudiciary = value;
+                    OnPropertyChanged("IsLegislatureOrJudiciary");                    
+                }
+                SetSortButtonVisibility?.Invoke(value);
             }
         }
 
@@ -265,11 +283,79 @@ namespace Election.ViewModels.Views
         {
             if (SelectedCategoryType != null)
             {
-                var result = CategoryList.Where(n => n.CategoryTypeId == SelectedCategoryType.Id && !n.Delete)?.OrderBy(n => n.Sequence)?.ToList();
+                List<CategoryViewModel> result = null;
+                CategoryTypeEnum ctenum = (CategoryTypeEnum)SelectedCategoryType.Id;
+                switch (ctenum)
+                {
+                    case CategoryTypeEnum.measure: 
+                        result = CategoryList.Where(n => n.CategoryTypeId == ctenum &&
+                        n.SubcategoryTypeId == CategorySubTypeEnum.undefined && !n.Delete)?.OrderBy(n => n.Sequence)?.ToList();
+                        break;
+                    case CategoryTypeEnum.federal:
+                        result = CategoryList.Where(n => n.CategoryTypeId == ctenum && !n.Delete)?.OrderBy(n => n.Sequence)?.ToList();
+                        break;
+                    case CategoryTypeEnum.state:
+                        result = CategoryList.Where(n => n.CategoryTypeId == ctenum &&
+                        n.SubcategoryTypeId == CategorySubTypeEnum.undefined && !n.Delete)?.OrderBy(n => n.Sequence)?.ToList();
+                        break;
+                    case CategoryTypeEnum.legislative:
+                        result = CategoryList.Where(n => n.CategoryTypeId == ctenum &&
+                        n.SubcategoryTypeId == CategorySubTypeEnum.undefined && !n.Delete)?.OrderBy(n => n.Sequence)?.ToList();
+                        break;
+                    case CategoryTypeEnum.judicial:
+                        result = CategoryList.Where(n => n.CategoryTypeId == ctenum &&
+                        !n.Delete)?.OrderBy(n => n.Sequence)?.ToList();
+                        break;
+                }
                 FilteredCategoryList = new ObservableCollection<CategoryViewModel>(result);
                 SelectedCategory = FilteredCategoryList.FirstOrDefault();
                 ResetIndex();
             }
+        }
+
+        public void SortLegislative()
+        {
+            // sorts legislative to by district and updates sequence to match.
+            List<CategoryViewModel> cvmList = FilteredCategoryList.OrderBy(n => n.District)?.ToList();
+            int cnt = 0;
+            foreach(CategoryViewModel cvm in cvmList)
+            {
+                cvm.Sequence = ++cnt;
+            }
+            FilteredCategoryList = new ObservableCollection<CategoryViewModel>(cvmList);
+            SelectedCategory = FilteredCategoryList.FirstOrDefault();
+        }
+
+        public void SortJudicial()
+        {
+            // sorts judicial by CategoryTypeId, then subcategorytypeId, then by judgePosition
+            List<CategoryViewModel> cvmList = FilteredCategoryList?.ToList();
+            List<CategoryViewModel> resultList = new List<CategoryViewModel>();
+            // first get the supreme court judges
+            foreach (CategoryViewModel cvm in cvmList.Where(n => n.CategoryTypeId == CategoryTypeEnum.judicial &&
+                         n.SubcategoryTypeId == CategorySubTypeEnum.supremeCourt).OrderBy(n => n.JudgePosition))
+            {
+                resultList.Add(cvm);
+            }
+            // now add the Court of appeals judges
+            foreach (CategoryViewModel cvm in cvmList.Where(n => n.CategoryTypeId == CategoryTypeEnum.judicial &&
+                         n.SubcategoryTypeId == CategorySubTypeEnum.courtOfAppeals).OrderBy(n => n.JudgePosition))
+            {
+                resultList.Add(cvm);
+            }
+            // now add the Superior courts ordered by Heading
+            foreach (CategoryViewModel cvm in cvmList.Where(n => n.CategoryTypeId == CategoryTypeEnum.judicial &&
+                         n.SubcategoryTypeId == CategorySubTypeEnum.superiorCourt).OrderBy(n => n.Heading).OrderBy(n => n.Heading))
+            {
+                resultList.Add(cvm);
+            }
+            int cnt = 0;
+            foreach (CategoryViewModel cvm in resultList)
+            {
+                cvm.Sequence = ++cnt;
+            }
+            FilteredCategoryList = new ObservableCollection<CategoryViewModel>(resultList);
+            SelectedCategory = FilteredCategoryList.FirstOrDefault();
         }
 
         public async Task LoadData()
@@ -280,7 +366,6 @@ namespace Election.ViewModels.Views
                 Elections = new ObservableCollection<SelectGuidItem>(allElections);
                 if (Elections != null && Elections.Count > 0)
                 {
-                    //InitializeElection(await DataService.InitElection(Elections.First().Id));
                     SelectedElection = Elections.First();
                 }
             }
@@ -342,7 +427,7 @@ namespace Election.ViewModels.Views
             {
                 Id = Guid.NewGuid(),
                 ElectionId = DataService.ElectionId,
-                CategoryTypeId = SelectedCategoryType.Id,
+                CategoryTypeId = (CategoryTypeEnum)SelectedCategoryType.Id,
                 Tickets = new List<TicketViewModel>()
             };
 

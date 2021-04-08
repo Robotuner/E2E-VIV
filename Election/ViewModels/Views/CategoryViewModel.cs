@@ -12,7 +12,9 @@ namespace Election.ViewModels.Views
     {
         public Guid Id { get; set; }
         public Guid ElectionId { get; set; }
-        public int CategoryTypeId { get; set; }
+        public CategoryTypeEnum CategoryTypeId { get; set; }
+        public CategorySubTypeEnum SubcategoryTypeId { get; set; }
+        public int District { get; set; }
         public int Sequence { get; set; }
         public bool Delete { get; set; }
             
@@ -140,7 +142,7 @@ namespace Election.ViewModels.Views
                 {
                     selectedCategoryType = value;
                     OnPropertyChanged("SelectedCategoryType");
-                    this.CategoryTypeId = value.Id;
+                    this.CategoryTypeId = (CategoryTypeEnum)value.Id;
                 }
             }
         }
@@ -215,7 +217,7 @@ namespace Election.ViewModels.Views
                     case CategoryTypeEnum.state:
                         return $"{Title}";
                     case CategoryTypeEnum.legislative:
-                        return $"{Title}";
+                        return $"{Heading} District: {District}";
                     case CategoryTypeEnum.judicial:
                         return $"{Heading} - JP {JudgePosition}";
                     default:
@@ -243,7 +245,7 @@ namespace Election.ViewModels.Views
 
         public void RefreshSelectedCategory()
         {
-            SelectedCategoryType = CategoryTypes.SingleOrDefault(n => n.Id == CategoryTypeId);
+            SelectedCategoryType = CategoryTypes.SingleOrDefault(n => n.Id == (int)CategoryTypeId);
             SubTitleVisible = InformationVisible = true;
         }
 

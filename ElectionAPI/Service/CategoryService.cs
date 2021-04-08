@@ -101,9 +101,11 @@ namespace ElectionAPI.Service
             var p = new DynamicParameters();
             p.Add("@id", data.Id, DbType.Guid, ParameterDirection.Input);
             p.Add("@categorytypeid", data.CategoryTypeId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@subcategorytypeid", data.SubcategoryTypeId, DbType.Int32, ParameterDirection.Input);
             p.Add("@electionid",data.ElectionId, DbType.Guid, ParameterDirection.Input);
             p.Add("@heading", data.Heading, DbType.String, ParameterDirection.Input);
             p.Add("@title", data.Title, DbType.String, ParameterDirection.Input);
+            p.Add("@district", data.District, DbType.Int32, ParameterDirection.Input);
             p.Add("@judgeposition", data.JudgePosition, DbType.Int32, ParameterDirection.Input);
             p.Add("@information", data.Information, DbType.String, ParameterDirection.Input);
             p.Add("@subtitle", data.SubTitle, DbType.String, ParameterDirection.Input);

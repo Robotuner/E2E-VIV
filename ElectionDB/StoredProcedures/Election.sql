@@ -52,16 +52,18 @@ CREATE PROCEDURE [dbo].[Category_Insert]
 	@id UNIQUEIDENTIFIER, 
 	@electionid UNIQUEIDENTIFIER,
 	@categorytypeid int, 
+	@subcategorytypeid int,
 	@heading nvarchar(256),
 	@title nvarchar(100),
+	@district int,
 	@judgeposition int,
 	@information nvarchar(max),
 	@subtitle nvarchar(200),
 	@sequence int,
 	@selection UNIQUEIDENTIFIER
 AS
-	INSERT INTO [dbo].[Category] (id, ElectionId, CategoryTypeId, Heading, CreateDate, LastUpdated, Title, JudgePosition, Information, SubTitle, Sequence, Selection) VALUES 
-	(@id, @electionid, @categorytypeid, @heading, GetUTCDate(), GetUTCDate(), @title, @judgeposition, @information, @subtitle,@sequence, @selection)
+	INSERT INTO [dbo].[Category] (id, ElectionId, CategoryTypeId,SubcategoryTypeId, Heading, CreateDate, LastUpdated, Title, District, JudgePosition, Information, SubTitle, Sequence, Selection) VALUES 
+	(@id, @electionid, @categorytypeid, @subcategorytypeid, @heading, GetUTCDate(), GetUTCDate(), @title,@district, @judgeposition, @information, @subtitle,@sequence, @selection)
 
 	SELECT * FROM [dbo].[Category] WHERE Id = @id
 RETURN 0
@@ -71,16 +73,18 @@ CREATE PROCEDURE [dbo].[Category_Update]
 	@id UNIQUEIDENTIFIER, 
 	@electionid UNIQUEIDENTIFIER,
 	@categorytypeid int, 
+	@subcategorytypeid int,
 	@heading nvarchar(256),
 	@title nvarchar(100),
+	@district int,
 	@judgeposition int,
 	@information nvarchar(max),
 	@subtitle nvarchar(200),
 	@sequence int,
 	@selection UNIQUEIDENTIFIER
 AS
-	UPDATE [dbo].[Category] Set ElectionId=@electionid, CategoryTypeId=@categorytypeid, Heading=@heading, LastUpdated=GetUTCDate(), 
-	        Title=@title, Judgeposition=@judgePosition, Information=@information, SubTitle=@subtitle, Sequence=@sequence, Selection=@selection
+	UPDATE [dbo].[Category] Set ElectionId=@electionid, CategoryTypeId=@categorytypeid, SubcategoryTypeId=@subcategorytypeid, Heading=@heading, LastUpdated=GetUTCDate(), 
+	        Title=@title, District=@district, Judgeposition=@judgePosition, Information=@information, SubTitle=@subtitle, Sequence=@sequence, Selection=@selection
 	WHERE Id=@id
 
 	SELECT * FROM [dbo].[Category] WHERE Id = @id

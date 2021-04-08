@@ -8,6 +8,7 @@
         public static string SolidCircle = "\uf111";
         public static string PlusCircle = "\uf055";
         public static string MinusCircle = "\uf056";
+        public static string SortAlphaDown = "\uf15d";
 
         public static string Building = "\uf1ad";
         public static string Grin = "\uf580";
