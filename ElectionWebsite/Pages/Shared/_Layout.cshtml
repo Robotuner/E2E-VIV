@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ElectionWebsite</title>
+    <title>@ViewData["Title"] - E2E-VIV Website</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -46,7 +46,18 @@
                                     <li><a asp-area="" asp-page="/Requirements/Registration">Ballot</a></li>
                                     <li><a asp-area="" asp-page="/Requirements/VotingApp">Voting App</a></li>
                                     <li><a asp-area="" asp-page="/Requirements/Audit">Vote Counting Server</a></li>
-                                </ul>                                            
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-info" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Commentary
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <ul>                                   
+                                    <li><a asp-area="" asp-page="/Commentary/HowDoesItCompare">How does it compare</a></li> 
+                                </ul>
                             </div>
                         </li>
                         <li class="nav-item">
@@ -54,7 +65,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-page="/Misc/Donation">Donate</a>
-                        </li>    
+                        </li>
                     </ul>
                 </div>
             </div>

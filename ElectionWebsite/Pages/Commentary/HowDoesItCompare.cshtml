@@ -1,0 +1,166 @@
+﻿@page
+@model ElectionWebsite.Pages.Commentary.HowDoesItCompareModel
+@{
+}
+
+<div class="text-left">
+    <h1><img src="../../images/e2e-viv-70x70-1.png" />How does it compare?</h1>
+    <p>
+        In February of 2021 the paper titled <a href="https://academic.oup.com/cybersecurity/article/7/1/tyaa025/6137886">Going 
+        from bad to worse: from Internet Voting to blockchain voting</a> appeared in 
+        the Journal of Cybersecurity.  It’s yet another great paper on a topic of interest. The paper compares internet voting 
+        with blockchain voting and concludes that blockchain voting is less secure.  It does not address to larger question. 
+        <strong>How does internet voting compare with present day voting?</strong>
+    </p>
+    <p>
+        The article lists <i>Minimal election security requirements</i> that can be applied to any form of voting. While the paper 
+        concludes blockchain voting is worse than internet voting, it does not compare 
+        the 2020 election process(s) to internet voting, which is of greater general interest. Since the general consensus has been that internet voting is 
+        less secure than in-person and mail-in voting, then in-person and mail-in voting should be evaluated based on the same criteria. 
+        This article looks at how well the 2020 election satisfy those minimal election security requirements.
+    </p>
+    <h2>Minimal election security requirements</h2>
+    <h3>Evidence-based elections</h3>
+    <p>
+        <i>
+            “election officials should not only find the true winner(s) of an election, but … also provide the electorate convincing
+            evidence that they did”
+        </i>. The 2020 election failed to do that. With the plethora of lawsuits, the majority of which 
+        were rejected by the courts for procedural reasons, nothing revealed convinced the electorate, the evidence 
+        supported the winner.  
+        Papers such as <a href="https://www.scribd.com/document/498454585/2020-Presidential-Election-Contrast-Report?fbclid=IwAR1oPnPR_Y_OTG_oxfT1JsaxrmAwYwHXkF-KbS0GNJ1JZMvdqyTzDu6rapw#from_embed">
+        2020 Presidential Election Contrast Report</a> have since appeared, further eroding the integrity of the election.
+    </p>
+    <p>
+        The auditing of the 2020 election was exposed as a farce, simply auditing the ballot count and not the ballot chain of custody. 
+        This is a clear case of the difference between auditability and auditing.  While mail-in ballots can theoretically be audited, 
+        no infrastructure was in place to audit. Even when considering the separation of ballot signatures from the ballot, the auditability failed.  Once 
+        separated from the ballot, the signature cannot be audited relative to the accompanying ballot. That means if the 
+        signature is later scrutinized and deemed to be invalid, there is no remedy since it is divorced from the ballot.
+    </p>
+    <p>
+        Mail-in ballots fail the Evidence-base elections Minimal election security requirement.
+    </p>
+    <h3>The secret ballot</h3>
+    <p>
+        Paper and mail-in ballots meet this minimal election security requirement that any audit process cannot identify the 
+        voter. Without adequate auditability of the mail-in ballots, this requirement serves to disguise fraudulent ballots, 
+        undermining the integrity of the election. In the case of mail-in ballots, without even a requirement for photo id, 
+        the strength of secrecy undermines the integrity of the election.
+    </p>
+    <p>
+        Mail-in ballots protect the secrecy of the ballot at a cost that undermines the integrity of the election. 
+        (Notice the word <strong>potentially</strong> was omitted.)
+    </p>
+    <h3>Software independence</h3>
+    <p>
+        <i>
+            “Software independence is the property that an undetected change or error in a systems software <strong>cannot</strong> cause an
+            undetectable change in the election outcome.”
+        </i> The 2020 election exposed a “glitch” in the dominion voting machine
+        resulting in Trump votes being counted as Biden votes (Michigan?).  It was only discovered because a Poll representative noticed
+        irregularities.
+    </p>
+    <p>
+        In that one case, an undetected change was detected and later confirmed through an audit.
+    </p>
+    <p>
+        To date, all DRE machines have still not been audited. Sworn testimony from lawsuits after the election contend that the machines where 
+        not completely locked down, USB ports were still accessible and were indeed accessed without proper oversight,
+        machines many have even been accessible by WIFI or internet.
+    </p>
+    <p>
+        The 2020 election exposes the lack of software independence associated with DRE machines. Each individual 
+        machine <strong>would</strong> pass the software independence criteria when checking that the system “(i) recorded votes as intended, 
+        (ii) collected them as recorded, and (iii) counted them as collected, in any given execution.”  
+        The criteria assumes all ballots fed into the machine are all legitimate. It does not prevent a poll worker 
+        from counting the same ballots multiple times. The 2020 polling watcher controversies highlighted the lack of 
+        oversight on each poll counter/DRE machine.
+    </p>
+    <p>
+        Unless every machine is forensically audited prior to certification, DRE (digital recording electronic) 
+        machines are not software independent. <i>“individual voters should be able to detect errors in (i) and (ii), and anyone should 
+        be able to detect errors in (iii).”</i> Clearly, with DRE, detection of errors is possible by an individual, but not verifiable 
+        without a forensic audit.
+    </p>
+    <p>
+        DRE machines pass the software independence of Evidence-based elections Minimal election security requirements, <strong>
+        but require a forensic audit to do so</strong>. Every machine must be forensically audited. Without a forensic audit, undetected changes in software 
+        <strong>can</strong> cause an undetectable change in the election outcome. Since the 2020 election was unable to forensically audit all DRE 
+        machines prior to certification of results, use of DRE machines fail the minimal security requirement.
+    </p>
+    <h3>Voter-verifiable ballots</h3>
+    <p>
+        <i>
+            “Even before ballot casting, a voter composing a ballot must be able to verify for herself that her prepared ballot reflects
+            her intended choices.”
+        </i> This requirement is only satisfied when the voter is at an In-person voting location, fills out 
+        the ballot, inserts it into a vote counting machine, then places the ballot into a locked container. The reality is that 
+        in-person voting fails at this requirement because she does not insert the ballot into the vote counting device. Instead, 
+        she deposits it into a ballot collection box that is transported to the counting location. The chain of custody from the ballot 
+        collection box to the DRE machine is virtually non-existent. For any ballot box, there is no record of who accompanied it from 
+        one location to the next, nor is there a record of oversight for the worker transporting the box. <strong>It is an uncontrolled 
+        chain of custody</strong> that lacks accountability.
+    </p>
+    <p>
+        For mail-in ballots, it is even worse. The voter fills out the ballot, drops it into the postal mail box and eventually it appears at the 
+        counting destination. The 2020 election has discovered ballots in trash cans.  An adequate auditing capability would 
+        detect that ballots did not arrive, not rely on a random individual to stumble on and report discarded ballots.
+    </p>
+    <p>
+        Both in-person and mail-in ballots fail the Evidence-based elections Minimal election security requirements.
+    </p>
+    <h3>Contestability</h3>
+    <p>
+        <i>“when an error is detected, can the one who detected it convince others that an error indeed occurred?”</i> In the case of 
+        DRE machines, possibly, in the case of mail-in ballots that are received from deceased or no longer eligible out of state 
+        voters, also possibly, but not likely, since the signature envelope is separated from the ballot in order to submit to the DRE.
+    </p>
+    <p>
+        When the total votes received in a State exceeds the number of registered voters, no. This is evidenced by the states where more 
+        people voted than were registered. There is no way to identify illegitimate ballots, and as in the 2020 election, it was 
+        largely ignored by the press, which in itself undermines election integrity.
+    </p>
+    <p>
+        In-person and mail-in voting are not contestable, both fail in meeting the minimal election security requirements.
+    </p>
+    <h3>Auditing</h3>
+    <p>
+        <i>
+            “Auditing checks that the evidence is trustworthy and, for casting-and-tallying systems, consistent with the announced
+            election outcome. Both auditability and auditing are necessary for evidence-based elections.”
+        </i>
+    </p>
+    <p>
+        Software auditing is one thing, every single vote counting machine can be forensically audited. In the 2020 election, 
+        the only machines audited were those by court order. Mail-in ballots are not auditable, or least to date there is no 
+        credible infrastructure to audit. Each ballot originates with the voter and traverses the postal service to the DRE 
+        location. It is not possible to certify each ballot originated from a valid registered voter, nor is it possible to 
+        certify the ballot has not been tampered. The number of hands a ballot touches between the registered voter, through 
+        the postal service, to the DRE location where the ballot is opened, the signature envelope is inspected and “validated”,
+        are too numerous to count and at no point is there oversight. There is nothing to even audit.
+    </p>
+    <p>
+        Mail-in ballots are neither auditable or audited. They fail to meet the minimal election security requirements.
+    </p>
+    <h1>Conclusion</h1>
+    <p>
+        We agree with the premise that blockchain voting is less secure than internet voting. We feel that the paper does not address 
+        the more prescient issue, whether the current voting system in place for the 2020 election meet the same minimal election 
+        security requirements used to compare internet voting against blockchain voting. This response concludes that it does not with  
+        results that are equally as catastropic as feared with internet voting.
+    </p>
+    <p>
+        The poignant question has become:  Which can be made to meet the Minimal election security requirements with greater 
+        confidence, internet voting or patching in-person and mail-in voting?
+    </p>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <a href="../Index">< Prev</a>
+            </div>
+        </div>
+    </div>
+</div>
